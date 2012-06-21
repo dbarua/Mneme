@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template
+END
+base.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/base.py
+END
+_ast24.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/_ast24.py
+END
+ast24.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/ast24.py
+END
+plugin.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/plugin.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/__init__.py
+END
+markup.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/markup.py
+END
+directives.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/directives.py
+END
+text.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/text.py
+END
+astutil.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/astutil.py
+END
+loader.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/loader.py
+END
+eval.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/eval.py
+END
+interpolation.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/template/interpolation.py
+END

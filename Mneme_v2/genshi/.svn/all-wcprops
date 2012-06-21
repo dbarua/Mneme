@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi
+END
+core.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/core.py
+END
+path.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/path.py
+END
+util.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/util.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/__init__.py
+END
+input.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/input.py
+END
+output.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/output.py
+END
+builder.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/builder.py
+END

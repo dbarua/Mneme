@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>A Simple Carousel</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+
+<script>
+$(document).ready(function() {
+
+	//rotation speed and timer
+	var speed = 5000;
+	var run = setInterval('rotate()', speed);	
+	
+	//grab the width and calculate left value
+	var item_width = $('#slides li').outerWidth(); 
+	var left_value = item_width * (-1); 
+        
+    //move the last item before first item, just in case user click prev button
+	$('#slides li:first').before($('#slides li:last'));
+	
+	//set the default item to the correct position 
+	$('#slides ul').css({'left' : left_value});
+
+    //if user clicked on prev button
+	$('#prev').click(function() {
+
+		//get the right position            
+		var left_indent = parseInt($('#slides ul').css('left')) + item_width;
+
+		//slide the item            
+		$('#slides ul:not(:animated)').animate({'left' : left_indent}, 200,function(){    
+
+            //move the last item and put it as first item            	
+			$('#slides li:first').before($('#slides li:last'));           
+
+			//set the default item to correct position
+			$('#slides ul').css({'left' : left_value});
+		
+		});
+
+		//cancel the link behavior            
+		return false;
+            
+	});
+
+ 
+    //if user clicked on next button
+	$('#next').click(function() {
+		
+		//get the right position
+		var left_indent = parseInt($('#slides ul').css('left')) - item_width;
+		
+		//slide the item
+		$('#slides ul:not(:animated)').animate({'left' : left_indent}, 200, function () {
+            
+            //move the first item and put it as last item
+			$('#slides li:last').after($('#slides li:first'));                 	
+			
+			//set the default item to correct position
+			$('#slides ul').css({'left' : left_value});
+		
+		});
+		         
+		//cancel the link behavior
+		return false;
+		
+	});        
+	
+	//if mouse hover, pause the auto rotation, otherwise rotate it
+	$('#slides').hover(
+		
+		function() {
+			clearInterval(run);
+		}, 
+		function() {
+			run = setInterval('rotate()', speed);	
+		}
+	); 
+        
+});
+
+//a simple function to click next link
+//a timer will call this function, and the rotation will begin :)  
+function rotate() {
+	$('#next').click();
+}
+        
+        
+        
+</script>
+	
+<style>
+#carousel {
+	width:255px;
+	height:290px;	
+	margin:0 auto;
+	overflow:hidden;
+}
+
+#slides {
+	overflow:hidden;
+	/* fix ie overflow issue */
+	position:relative;
+	width:250px;
+	height:250px;
+	border:1px solid #ccc;
+}
+
+/* remove the list styles, width : item width * total items */	
+#slides ul {
+	position:relative;
+	left:0;
+	top:0;
+	list-style:none;
+	margin:0;
+	padding:0;	
+	width:750px;			
+}
+
+/* width of the item, in this case I put 250x250x gif */
+#slides li {
+	width:250px;
+	height:250px;	
+	float:left;
+}
+
+#slides li img {
+	padding:4px;
+}
+
+/* Styling for prev and next buttons */
+#buttons {
+	padding:0 0 5px 0;	
+	float:right;
+}
+
+#buttons a {
+	display:block; 
+	width:31px; 
+	height:32px;
+	text-indent:-999em;
+	float:left;
+	outline:0;
+}
+
+a#prev {
+	background:url(arrow.gif) 0 -31px no-repeat; 
+}
+
+a#prev:hover {
+	background:url(arrow.gif) 0 0 no-repeat;
+}
+
+a#next {
+	background:url(arrow.gif) -32px -31px no-repeat; 
+}
+
+a#next:hover {
+	background:url(arrow.gif) -32px 0 no-repeat;
+}
+
+.clear {clear:both}
+
+</style>
+</head>
+<body>
+
+
+<div id="carousel">
+
+	<div id="buttons">
+		<a href="#" id="prev">prev</a>
+		<a href="#" id="next">next</a>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="clear"></div>
+
+	<div id="slides"> 
+		<ul>
+			<li><img src="slide1.gif" width="240" height="240" alt="Slide 1"/></li>
+			<li><img src="slide2.gif" width="240" height="240" alt="Slide 2"/></li>
+			<li><img src="slide3.gif" width="240" height="240" alt="Slide 3"/></li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+
+</div>
+
+<br/><br/><br/>
+<a href="http://www.queness.com">Queness.com</a> | <a href="http://www.queness.com/post/923/create-a-simple-infinite-carousel-with-jquery">Back to Tutorial</a>
+
+</body>
+</html>

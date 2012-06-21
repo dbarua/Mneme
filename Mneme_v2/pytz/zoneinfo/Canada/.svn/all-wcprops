@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada
+END
+Central.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Central.py
+END
+Mountain.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Mountain.py
+END
+Saskatchewan.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Saskatchewan.py
+END
+Pacific.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Pacific.py
+END
+Atlantic.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Atlantic.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/__init__.py
+END
+Eastern.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Eastern.py
+END
+East_minus_Saskatchewan.py
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/East_minus_Saskatchewan.py
+END
+Newfoundland.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Newfoundland.py
+END
+Yukon.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/Canada/Yukon.py
+END

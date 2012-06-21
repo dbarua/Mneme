@@ -1,0 +1,184 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+   <xi:include href="layout_home.html"/>
+  <head>
+        <title>$title</title>
+
+        <script src="/static/jquery-ui/ui/jquery.ui.datepicker.js"></script>	   
+        <script type="text/javascript" src="/static/Highcharts/js/highcharts.js"></script>
+        <script type="text/javascript" src="/static/Highcharts/js/highstock.js"></script>
+        <script type="text/javascript" src="/static/Highcharts/js/themes/gray.js"></script>
+	<script type="text/javascript" src="/static/Highcharts/js/modules/exporting.js"></script>	
+		<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="/highslide/highslide-ie6.css" />
+		<![endif]-->
+		<!-- End Highslide code -->
+	<!-- Additional files for the Highslide popup effect -->
+	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
+		<script type="text/javascript">
+ 		  hs.graphicsDir = '/static/highslide/highslide/graphics/';
+		  hs.outlineType = 'rounded-white';
+		  hs.wrapperClassName = 'draggable-header';
+		</script>
+
+        <script type="text/javascript" src="/static/size_pie.js"></script>
+	<!--<script type="text/javascript" src="/static/intraday.js"></script>-->
+
+	<script type="text/javascript">
+        //<![CDATA[
+        (function(){
+		    // remove layerX and layerY
+		    var all = $.event.props,
+			len = all.length,
+			res = [];
+		    while (len--) {
+		      var el = all[len];
+		      if (el != 'layerX' && el != 'layerY') res.push(el);
+		    }
+		    $.event.props = res;
+	}()); 
+        var chart_type2 = 'line';
+        var chart_div2 = 'line_div';  
+      	var action_url2 = '/show_graph_hc?data=';
+        var data = "", period="";
+        function getHealthChart(period){
+                console.log("I am here"+period);
+                var myDataArray = []; 
+                if(period == 'Intraday'){
+	                var myActive = [];
+                        myActive.push(['Sedentary',19]);
+                        myActive.push(['Lightly Active',parseFloat(3)]);
+                        myActive.push(['Moderately Active',1]);
+		        myActive.push(['Very Active',1]);
+		        getIntradayStackChart(chart_div2, myActive);
+		}
+                else{
+                        var mySteps = [], myActiveHours = [], myCalorie = [], myPulse = [];
+			jQuery.getJSON(action_url2+data,
+		             null, function (items) {
+                                 //Plotting each data point from the response JSON object
+                                  //console.log(items);
+	                          $.each(items, function (itemNo, item) { 
+                                     //array, function(index, value)
+                                     console.log(item);
+				     mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
+				     myActiveHours.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.active_time)]);
+				     myCalorie.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.calorie)]);
+				     //myPulse.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.pulse)]);
+                                  
+		                });
+                         myDataArray.push(mySteps);
+		         myDataArray.push(myActiveHours);
+                         myDataArray.push(myCalorie);
+                         //myDataArray.push(myPulse);
+		         getHighStockChart(chart_type2, chart_div2, myDataArray);
+                       });
+               }
+
+	}
+	$(function() {
+	        //Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
+	        //var highchartsOptions = Highcharts.getOptions(); 
+	        var now = new Date();
+	        var today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
+	    	$('#from_date').val(today);
+		Highcharts.setOptions({
+		        colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE', '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92']
+			//colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+	         });
+    
+		$("#from_date").datepicker({
+					changeMonth: true,
+				        changeYear: true,
+					dateFormat: 'dd/mm/yy',
+		});
+                var chart_type = 'pie';
+                var chart_div = 'container';
+		var action_url1 = '/show_size';
+		var action_url2 = '/show_';
+
+                var myStorage = [], myUsage=[], data1 = [], data2 = [];
+		        //Calls the JSON action method
+		jQuery.getJSON(action_url1,
+		             null, function (items) {
+                                 //Plotting each data point from the response JSON object
+                                  //console.log(items);
+	                          $.each(items, function (itemNo, item) { 
+                                     //array, function(index, value)
+                                      console.log(item);
+                                      /*if(item.context == 'Free Space'){
+                                         myStorage.push({name: 'Free Space',y: 50, sliced: true,selected: true})
+                                      }
+				      else*/
+                                      myStorage.push([item.context, parseFloat(item.size)]);
+                                  
+		                });
+                               getSizePieChart(chart_type, chart_div, myStorage);
+
+
+		});
+
+                //getHealthChart(period);
+                //define the options
+  	                   
+		$("#week select").change(function () {
+                   $("#week select option:selected").each(function () {
+		      var from = $('#from_date').val();       
+  	              data = from+'_';	
+                      period = $(this).text();
+                      data += period;
+		      console.log(data);
+		      getHealthChart(period);
+		   });  
+                }).trigger('change');                 		
+       
+ 
+	});
+        //]]>
+	</script>
+  </head>
+  <body>
+   <div id="main_page">
+	   <div class="show_list">
+	     <h1 style="text-indent:35%">Hall of Mneme</h1> 
+	   </div>
+	    <div id="clear_space"></div>
+	    <div id="container" class="charts">
+	    </div>
+	   <div id="clear_space"></div>
+	   <div class="show_list">  
+	   <table class="table">
+	     <tr>
+	      <td><div id="week" style="float:left; margin-left:130px;">
+		      <select name="week_list" id="week_list">
+		                  <option value="day">Intraday</option>
+				  <option value="week">Week</option>
+				  <option value="forthnight">Fortnight</option>
+				  <option value="month">Month</option>
+				  <option value="month">Year</option>
+	   	      </select>
+	      </div></td>
+	      <td></td>  
+	      <td style="width:20px">
+		       <div id="from">
+		        <label for="from_date" style="color:#fff">Date: 
+			  <input type="date" id="from_date" name="from_date" value="Today:"/>
+		        </label>
+	      </div>
+	      </td>
+	      <!--<td><input type="button" class="button" value="Go!"/></td>-->
+	     </tr>
+	     </table> 
+	 
+	   </div>
+	     <div id="line_div" class="charts"></div>   
+
+    </div>
+
+  </body>
+   <xi:include href="layout_footer.html"/>
+</html>

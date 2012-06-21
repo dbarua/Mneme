@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+   <xi:include href="layout_app.html"/>
+  <head>
+    <title>$title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="/static/style.css" type="text/css" charset="utf-8"/>
+  </head>
+  <body>
+	<div id="leftheading" style="margin-left:35px; height:50px;" class="border">
+	  <h2><ul><li>$headline</li></ul></h2>
+	</div>
+       <div id="large_space"></div>
+       <div id="app_list" class="show_list left_class" style="margin-left:35px;">
+        <ul py:if="app_list" class="app_list" >
+              <py:for each="i in range(len(app_list))">
+              <div id="applist">
+               <li>
+                 <a href="#" onclick="toggle('${app_list[i].appname}','$i')">${app_list[i].appname}
+		  <!--<img src="${app_list[i].image}" alt="example" width="150" height="${app_list[i].imageheight}" title="${app_list[i].description}"/>-->
+                  </a>
+                 </li>
+              </div>
+              <div id="clear_space"></div>
+	       <div id="${app_list[i].appname}" style="display:none;">        
+                <form name='frm_reg_list' id = 'frm_reg_list'>   
+                 <input class="button" type="button" id="goals" value="Set Goals"/>
+                 <input class="button" type="button" value="Deactivate" onclick = "/help_um"/>
+                 <input class="button" type="button" value="Update app" onclick = "/help_um/"/>
+                 <input class="button" type="button" value="Delete app" onclick="/help_um/" />
+               </form>  
+               </div>    
+               <div id="clear_space"></div>
+              </py:for>
+         </ul>
+        </div> <!-- end class show_list-->
+</body>
+<xi:include href="layout_footer.html"/>
+</html>

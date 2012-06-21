@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite
+END
+TLSRecordLayer.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/TLSRecordLayer.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/__init__.py
+END
+Checker.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/Checker.py
+END
+X509.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/X509.py
+END
+FileObject.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/FileObject.py
+END
+SessionCache.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/SessionCache.py
+END
+HandshakeSettings.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/HandshakeSettings.py
+END
+messages.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/messages.py
+END
+api.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/api.py
+END
+errors.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/errors.py
+END
+constants.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/constants.py
+END
+mathtls.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/mathtls.py
+END
+BaseDB.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/BaseDB.py
+END
+VerifierDB.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/VerifierDB.py
+END
+TLSConnection.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/TLSConnection.py
+END
+Session.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/Session.py
+END
+SharedKeyDB.py
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/SharedKeyDB.py
+END
+X509CertChain.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/tlslite/X509CertChain.py
+END

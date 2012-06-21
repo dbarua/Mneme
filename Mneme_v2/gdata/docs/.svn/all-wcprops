@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/docs
+END
+data.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/docs/data.py
+END
+client.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/docs/client.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/docs/__init__.py
+END
+service.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/docs/service.py
+END

@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title></title>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="tooltip.jquery.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.tooltip').tooltip({
+							folderurl : 'contents/'
+							});
+				$('.tooltip2').tooltip();	
+				$('.tooltip3').tooltip({
+							folderurl : 'contents/'
+							});
+				$('.tooltip4').tooltip();
+				$('.tooltip5').tooltip({width: '250px'});
+				$('.tooltip6').tooltip({width: '250px', height: '75px'});
+				$('.tooltip7').tooltip({cursor: 'wait'});					
+			});
+		</script>
+	</head>
+<body>
+<a href="javascript:;" id="tooltip_1" class="tooltip">Testing no 1 </a>
+<br><br><br>
+<a href="javascript:;" id="tooltip_2" class="tooltip">Testing no 2 </a>
+<br><br><br>
+<a href="javascript:;" id="This tooltip is developed by using this html tags id attribute" class="tooltip2">Tooltip without static file</a>
+<br><br><br>
+<a href="javascript:;" id="tooltip_3" class="tooltip3">Linux Tux Icon</a>
+<br><br><br>
+<a href="javascript:;" id="tooltip_4" class="tooltip4">Using Hidden Div Tag</a>
+<div style="float:right;"><a href="javascript:;" id="tooltip_4" class="tooltip4">Some Right Align testing</a></div>
+<br><br><br>
+<a href="javascript:;" id="tooltip_5" class="tooltip5">With fixed width tooltip</a>
+<br><br><br>
+<a href="javascript:;" id="tooltip_6" class="tooltip6">With fixed width & Height tooltip</a>
+<br><br><br>
+<a href="javascript:;" id="tooltip_7" class="tooltip7">Now some diffrent cursor</a>
+<div id="data_tooltip_4" style="display:none;">
+Data From hidden div tag of id 	data_tooltip_4;
+</div>
+<div id="data_tooltip_5" style="display:none;">
+Fixed width tooltip test.
+</div>
+<div id="data_tooltip_6" style="display:none;">
+Fixed width & height tooltip test.
+</div>
+
+</body>
+</html>

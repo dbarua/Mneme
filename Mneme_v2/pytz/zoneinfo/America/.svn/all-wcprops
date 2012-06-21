@@ -1,0 +1,761 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America
+END
+Antigua.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Antigua.py
+END
+Guadeloupe.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Guadeloupe.py
+END
+Mendoza.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Mendoza.py
+END
+Recife.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Recife.py
+END
+Chicago.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Chicago.py
+END
+Montserrat.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Montserrat.py
+END
+Virgin.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Virgin.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/__init__.py
+END
+Guayaquil.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Guayaquil.py
+END
+Grenada.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Grenada.py
+END
+Atikokan.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Atikokan.py
+END
+Boise.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Boise.py
+END
+Nipigon.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Nipigon.py
+END
+St_Kitts.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/St_Kitts.py
+END
+Regina.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Regina.py
+END
+Goose_Bay.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Goose_Bay.py
+END
+Iqaluit.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Iqaluit.py
+END
+Phoenix.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Phoenix.py
+END
+Bogota.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Bogota.py
+END
+Eirunepe.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Eirunepe.py
+END
+Mexico_City.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Mexico_City.py
+END
+Fort_Wayne.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Fort_Wayne.py
+END
+Ensenada.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Ensenada.py
+END
+Martinique.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Martinique.py
+END
+Montreal.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Montreal.py
+END
+Thule.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Thule.py
+END
+Shiprock.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Shiprock.py
+END
+Lima.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Lima.py
+END
+Guyana.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Guyana.py
+END
+Manaus.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Manaus.py
+END
+Jamaica.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Jamaica.py
+END
+Louisville.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Louisville.py
+END
+St_Johns.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/St_Johns.py
+END
+Miquelon.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Miquelon.py
+END
+Caracas.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Caracas.py
+END
+Grand_Turk.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Grand_Turk.py
+END
+St_Thomas.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/St_Thomas.py
+END
+Santiago.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Santiago.py
+END
+La_Paz.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/La_Paz.py
+END
+Cordoba.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cordoba.py
+END
+Managua.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Managua.py
+END
+Indianapolis.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Indianapolis.py
+END
+Catamarca.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Catamarca.py
+END
+St_Vincent.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/St_Vincent.py
+END
+Hermosillo.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Hermosillo.py
+END
+Curacao.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Curacao.py
+END
+Paramaribo.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Paramaribo.py
+END
+Atka.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Atka.py
+END
+Monterrey.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Monterrey.py
+END
+Yellowknife.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Yellowknife.py
+END
+Araguaina.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Araguaina.py
+END
+Rainy_River.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Rainy_River.py
+END
+Puerto_Rico.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Puerto_Rico.py
+END
+El_Salvador.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/El_Salvador.py
+END
+Dawson.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Dawson.py
+END
+Anguilla.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Anguilla.py
+END
+Maceio.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Maceio.py
+END
+New_York.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/New_York.py
+END
+Panama.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Panama.py
+END
+Porto_Acre.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Porto_Acre.py
+END
+Havana.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Havana.py
+END
+Guatemala.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Guatemala.py
+END
+Porto_Velho.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Porto_Velho.py
+END
+Santo_Domingo.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Santo_Domingo.py
+END
+Merida.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Merida.py
+END
+Noronha.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Noronha.py
+END
+Bahia.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Bahia.py
+END
+Knox_IN.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Knox_IN.py
+END
+Jujuy.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Jujuy.py
+END
+Mazatlan.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Mazatlan.py
+END
+Cambridge_Bay.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cambridge_Bay.py
+END
+Detroit.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Detroit.py
+END
+Belize.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Belize.py
+END
+Menominee.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Menominee.py
+END
+Halifax.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Halifax.py
+END
+Moncton.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Moncton.py
+END
+Rio_Branco.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Rio_Branco.py
+END
+Buenos_Aires.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Buenos_Aires.py
+END
+Asuncion.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Asuncion.py
+END
+Campo_Grande.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Campo_Grande.py
+END
+Winnipeg.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Winnipeg.py
+END
+Whitehorse.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Whitehorse.py
+END
+Sao_Paulo.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Sao_Paulo.py
+END
+Scoresbysund.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Scoresbysund.py
+END
+Denver.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Denver.py
+END
+Belem.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Belem.py
+END
+Juneau.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Juneau.py
+END
+Fortaleza.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Fortaleza.py
+END
+Blanc_minus_Sablon.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Blanc_minus_Sablon.py
+END
+Aruba.py
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Aruba.py
+END
+Nassau.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Nassau.py
+END
+Tijuana.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Tijuana.py
+END
+Los_Angeles.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Los_Angeles.py
+END
+Pangnirtung.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Pangnirtung.py
+END
+Nome.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Nome.py
+END
+Swift_Current.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Swift_Current.py
+END
+Chihuahua.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Chihuahua.py
+END
+Port_minus_au_minus_Prince.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Port_minus_au_minus_Prince.py
+END
+Adak.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Adak.py
+END
+Port_of_Spain.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Port_of_Spain.py
+END
+St_Lucia.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/St_Lucia.py
+END
+Thunder_Bay.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Thunder_Bay.py
+END
+Toronto.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Toronto.py
+END
+Dawson_Creek.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Dawson_Creek.py
+END
+Inuvik.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Inuvik.py
+END
+Glace_Bay.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Glace_Bay.py
+END
+Boa_Vista.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Boa_Vista.py
+END
+Cancun.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cancun.py
+END
+Costa_Rica.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Costa_Rica.py
+END
+Vancouver.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Vancouver.py
+END
+Cayman.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cayman.py
+END
+Godthab.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Godthab.py
+END
+Montevideo.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Montevideo.py
+END
+Rankin_Inlet.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Rankin_Inlet.py
+END
+Danmarkshavn.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Danmarkshavn.py
+END
+Barbados.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Barbados.py
+END
+Rosario.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Rosario.py
+END
+Coral_Harbour.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Coral_Harbour.py
+END
+Yakutat.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Yakutat.py
+END
+Cayenne.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cayenne.py
+END
+Edmonton.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Edmonton.py
+END
+Dominica.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Dominica.py
+END
+Tortola.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Tortola.py
+END
+Cuiaba.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Cuiaba.py
+END
+Tegucigalpa.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Tegucigalpa.py
+END
+Anchorage.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/pytz/zoneinfo/America/Anchorage.py
+END

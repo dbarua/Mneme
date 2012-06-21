@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/Crypto/Hash
+END
+HMAC.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/Crypto/Hash/HMAC.py
+END
+SHA.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/Crypto/Hash/SHA.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/Crypto/Hash/__init__.py
+END
+MD5.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/Crypto/Hash/MD5.py
+END

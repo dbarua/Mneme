@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/apps/emailsettings
+END
+data.py
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/apps/emailsettings/data.py
+END
+client.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/apps/emailsettings/client.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/apps/emailsettings/__init__.py
+END
+service.py
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/apps/emailsettings/service.py
+END

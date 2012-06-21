@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom
+END
+core.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/core.py
+END
+mock_http.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/mock_http.py
+END
+data.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/data.py
+END
+mock_service.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/mock_service.py
+END
+token_store.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/token_store.py
+END
+client.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/client.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/__init__.py
+END
+http.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/http.py
+END
+http_interface.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/http_interface.py
+END
+mock_http_core.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/mock_http_core.py
+END
+service.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/service.py
+END
+auth.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/auth.py
+END
+url.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/url.py
+END
+http_core.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/atom/http_core.py
+END

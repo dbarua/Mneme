@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/" py:strip="">   
+ <py:match path="head" once="true">
+  <head py:attrs="select('@*')">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+         <title py:with="title = list(select('title/text()'))">
+          Mneme<py:if test="title">: ${title}</py:if>
+         </title>
+        <link rel="stylesheet" type="text/css" href="/static/style_new.css" media="screen"/>
+	<!-- link to the CSS files for this menu type  -->
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish.css"/> 
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish-vertical.css"/> 
+
+        <script type="text/javascript" src="/static/jquery-1.6.1.js"></script>
+
+        <!-- jquery UI  -->
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.draggable.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.accordion.js"></script>
+
+
+        <!--<script type="text/javascript" src="/static/menu.js" ></script>-->
+	<script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+        <script src="/static/jquery.expander.js"></script>
+
+	<!-- link to the JavaScript files (hoverIntent is optional) -->
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/hoverIntent.js"></script> 
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/superfish.js"></script> 
+
+        <script src="/static/menu.js" type="text/javascript"></script>
+        <script src="/static/mneme.js" type="text/javascript"></script>
+        <script src="/static/goals.js" type="text/javascript"></script>
+        <script>
+         $(function(){
+	
+             var log_events = [], log_index = 0;
+             //<![CDATA[
+		$("ul.sf-menu").superfish({ 
+		    animation: {height:'show'},   // slide-down effect without fade-in 
+		    delay:     1200,               // 1.2 second delay on mouseout 
+                    hoverIntent:false
+		});
+                handleSideBar('Goals');                
+	        $('div.expander').expander();
+	        $('.scroll').jScroll();
+                $('.error').hide();
+                $('#create').live('click', function(e){
+		    var comment = "notice_Model Explorer: Create New click event";
+		    log_events[log_index++] = comment; 
+                    console.log('Hello');
+                    //$(this).removeClass().addClass('visited');
+	       });
+
+                
+               //$('#nav ul li#home').addClass('highlighted');
+	       //]]> 
+	   });
+	</script>
+        ${select('*[local-name()!="title"]')} 
+
+   </head>
+ </py:match>
+ <py:match path="body" once="true">
+ <body py:attrs="select('@*')">
+ <div id="main">
+  <div id="contentbg">
+    <div id="contenttxtblank">
+     <div id="menu">
+        <h1>Mneme</h1>
+        <h2>Managing Personal Lifelong Information</h2>
+        <ul id="nav">
+          <li><a href="/browse/" class="main_menu" id="Home">Home</a></li>
+          <li class="menusap"></li>
+          <li><a href="/browse_goals/" class="highlighted main_menu" id="Goals">Goals</a>
+           <!--<ul id="nav2">
+             <li><a href="/show_unreg_apps/">Set goals</a></li>
+             <li><a href="/show_reg_apps/">Manage goals</a></li>
+           </ul>--> 
+          </li>
+          <li class="menusap"></li>
+          <li><a href="/show_unreg_apps/" class="main_menu">Applications</a>
+           <!--<ul id="nav2">
+             <li><a href="/show_unreg_apps/">Install Apps</a></li>
+             <li><a href="/show_reg_apps/">Manage Apps</a></li>
+           </ul>--> 
+          </li>
+          <li class="menusap"></li>
+          <li><a href="/./" class="main_menu">Log out</a></li>
+          <li class="menusap"></li>  
+          <li><a href="/help_um/" class="main_menu">Help</a></li>
+          <li class="menusap"></li>
+         </ul>
+      </div><!--end of menu-->
+
+      <div id="contentleft">
+        <div id="topbuttonsblank">
+          <!--<div id="register"><a href="/submit_um/" class="register">Registration</a></div>-->
+          <!--<div id="bookmark"><a href="#" class="bookmark">Bookmark</a></div>-->
+	    <div class="leftboldtext">Logged in as <a class="lefttxt02">$who</a> <br/> You are now in <a class="lefttxt02">$where</a>
+            </div>
+        </div> 
+            
+            <div id="contentleft_left">                               
+               <ul id="menuleft_goal" class="menu collapsible">
+		      <li><a href="" id="create_goal" name="create">Set new goal</a>
+		      </li>
+               </ul>
+               <div id="clear_space"></div>
+               <ul id="menuleft_store" class="menu collapsible">
+		      <li><a href="" class="visited">Active</a></li>
+		      <li><a href="">Archive</a></li>
+		      <li><a href="">Trash</a></li>
+
+               </ul>
+              
+              <ul id="menuleft" class="sf-menu sf-vertical">               
+		<py:for each="i in range(len(context))"> 
+                  <div py:choose="" id="$i" data-div-div="$len(context)" style="position:relative">              
+                    <span py:when="context[i].level == 0">
+                     <div py:choose="">
+                      <span py:when="len(context[i].children)!=0">
+  		       <li class="expando" id="${context[i].name}" data-div-id="$i">
+                        <div py:choose="">
+                         <span py:when="context[i].visited == 1">
+                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2 visited" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+                           <span class="sf-sub-indicator"> &#187;</span>                                
+            	          </a> 
+                        </span>
+                         <span py:when="context[i].visited == 0">
+                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+                          <span class="sf-sub-indicator"> &#187;</span>                                
+           	        </a> 
+                        </span>
+
+                        </div>
+		      </li> 
+                     </span>
+                     <span py:when="len(context[i].children)==0">
+		      <li class="normal" id="${context[i].name}" data-div-id="$i">
+                        <div py:choose="">
+                         <span py:when="context[i].visited == 1">
+		           <a href="Javascript:void(0);" name="context" class="cmenu2 visited " data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+           	        </a> 
+                        </span>
+                         <span py:when="context[i].visited == 0">
+		           <a href="Javascript:void(0);" name="context" class="cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts.">${context[i].name}
+           	        </a> 
+                        </span>
+                       </div>
+                      </li> 
+                     </span>
+                    </div>
+                    </span>                 
+                   <span py:when="context[i].level != 0">
+                   </span>                     
+                 </div>                                 
+		</py:for>
+	       </ul>                 
+            </div> <!--End of contentleft left-->
+        <div id="contentleft_right">
+           ${select('*|text()')}
+        </div>
+     </div>
+     <div id="contentright">
+         <div id="user_feedback" class="show_list">
+           <form id="feedback_form" method="" action="">    
+             <label>This system is running under a research <br/>study.<br/> Please note down any comment </label>
+             <textarea id="comment" name="comment" cols="28" rows="5"></textarea>
+             <div><input type="button" class="button" id="log_comment" value="Submit"/></div>
+           </form>    
+         </div>  
+   
+       <div id="about" class="expander show_list">
+            <a class="boxclose" id="aboutboxclose"></a>
+	 	<label class="about_header">About this page</label>
+		<p>$about</p>
+       </div>  
+       <div py:if="browser_activity" id="morelinksheading" class="border">
+			  <h5>Recent activities</h5>
+       </div>
+         <div py:if="browser_activity" id="morelinks" class="border">
+             <ul py:if="browser_activity" class="browser_activity" style="margin:5px; padding:3px;">
+	      <ul id="activities" style="list-style:none;margin-left:3px; padding-left:0px;">   
+		<py:for each="i in range(len(browser_activity[-10:]))">               
+		   <li class="linkblank">
+		      <a href="#" class="link" style="font-size:16px;"> ${browser_activity[i].value}
+                                  <?python import datetime                                      
+ 	                          ?> on ${(datetime.datetime.fromtimestamp(browser_activity[i].creation_time)).date()} 	
+		      </a>
+                 
+		  </li>
+		</py:for>
+               </ul>
+              </ul>
+	    </div>  
+            <div id="clear_space"></div>          
+     </div>
+   </div>
+  </div> <!--end of contentbg-->
+  </div><!--end of main-->
+
+     <div class="ui-widget-overlay" id="overlay" style="display:none"></div>		
+           <div class="box" id="set_goal_box">         
+            <a class="boxclose" id="goalboxclose"></a>
+              <h1>Please set a goal relevant to this app:</h1>
+		<form name="frm_set_goal" id="frm_set_goal" action="" method="post">  
+		      <div id="goal" class="show_list">                 
+			 <label>Please select a goal*:
+		 	    <select name="goal_list" id="goal_list">
+				 <option value="null">--Select Goal--</option>
+			    </select>
+			</label>    
+			<div id="goal_desc" class="expander">This goal will help you determine how much active you are. You will find out your activity level based on the Fitbit steps data.</div></div>   
+			<div style="height:10px;"></div> 
+			  <div id="goal_set" class="show_list" >
+			     <div id="number" class="hideable" style="width:380px;">
+				<div id="div_q">
+				     <table>
+                                       <tr>
+		                               <td> <label id="goal_quantity" for="quantity" style="float:left; width:120px; color:#fff" > </label> </td>
+					       <td> <input type="text" id="quantity" name="quantity" value="" size="4" /> </td>
+			   		       <td> <span id="span_q" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </td>                   
+					       <td> <div id="after_q" style="float:right; width:120px; color:#fff "> </div> </td>
+                                       </tr>
+                                     </table>
+				</div>
+				<div style="height:20px;"></div> 
+				<div id="div_t">
+				      <table>
+                                       <tr>
+		                               <td><label id="goal_time" for="time" style="float:left; width:120px; color:#fff"> </label> </td> 
+				       	       <td><input type="text" id="time" name="time" value="" size="4"/></td>
+					       <td><span id="span_t" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+					       <td><div id="after_t" style="float:right; width:120px; color:#fff"> </div> </td>
+                                       </tr>
+                                     </table>
+				 </div>
+				      <div style="height:10px;"></div> 
+				</div><!--End of number-->
+				<table>
+                                       <tr>
+		                             <td><label id="goal_duration" for="duration" style="color:#fff; width:120px;"> Duration </label></td>
+					     <td> <input type="text" id="duration" name="duration" value="1 week" size="7"/></td>
+				      	     <td> <span id="span_duration" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </td>
+                                       </tr>
+                                </table> 
+			 </div><!--End of goal_set div-->
+			 <div style="height:10px;"></div> 
+				  <div id="notify" class="show_list"><label style="width:70px;">Notify me </label>
+				    <label for="mail_notify" style="width:100px;"><input type="checkbox" id="mail_notify"/> by email</label>
+				    <label for="twit_notify" style="width:100px;"><input type="checkbox" id="twit_notify"/>in Twitter</label>
+					<select name="week_list" id="week_list">
+				          <option value="day">Hourly</option>
+					  <option value="day">Daily</option>
+					  <option value="week">Weekly</option>
+					  <option value="forthnight">Fortnightly</option>
+					  <option value="month">Monthly</option>
+					</select>		    
+				    </div>  
+				  <div id="email" class="show_list hideable">
+				  <label style="margin:10px;">Please specify your email address<input type="text" class="text" id="email_input"/></label> 
+				  </div>        
+				  <div id="twitter" class="show_list hideable">
+				  <label style="margin:10px;">Please specify your twitter id<input type="text" class="text" id="twitter_input"/></label> 
+			</div>        
+
+			<div id="button_reg">* fields must be filled<br/>
+				    <input class="button" id="addgoal" type="button" value="Set Goal"/>  
+				    <input class="button" id="back" type="button" value="Back to Browser page"/>
+			</div>
+			<div id="clear_space"></div>
+			<div id="newModel"><ul></ul> </div>
+		</form>         
+
+        </div>
+
+ </body>
+</py:match>
+</html>

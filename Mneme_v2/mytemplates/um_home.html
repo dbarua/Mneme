@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:py="http://genshi.edgewall.org/" py:strip="">
+ <head>
+  <title>$title</title>
+   
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" media="screen" href="/static/style.css" type="text/css" charset="utf-8"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="/static/menu.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui-1.9m1/ui/jquery.ui.tooltip.js"></script>
+    <script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/jquery.expander.js"></script>
+    <script type="text/javascript" src="/static/unobtrusivelib.js"></script>
+    <script type="text/javascript" src="/static/jquery.carousel.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.expander.js"></script><!--<script src="http://cdn.jquerytools.org/1.2.6/jquery.tools.min.js"></script>--><!--<link rel="stylesheet" href="http://thomlx.free.fr/jquery/styles/doc.css" type="text/css" charset="utf-8" media="screen"/>-->
+  
+  <style>
+		.ui-icon { display: inline-block; }
+		fieldset div {
+			margin-bottom: 2em;
+		}
+		.ui-tooltip { width: 210px; }
+		.ui-dialog .ui-dialog-content { 
+			background-color: #4E4E4E; !important 
+			font-size:14px;
+                        font-family:Trebuchet-MS;
+                }
+		.ui-dialog .ui-dialog-buttonpane{background-color: #4E4E4E; !important}
+
+
+	</style>
+  
+  <script type="text/javascript">
+        //<![CDATA[
+        var feedback = "";
+        var register_count = 0;
+        var fname1,lname2,gender;
+        var log_events = [];
+        var index = 0; 
+           (function(){
+		    // remove layerX and layerY
+		    var all = $.event.props,
+			len = all.length,
+			res = [];
+		    while (len--) {
+		      var el = all[len];
+		      if (el != 'layerX' && el != 'layerY') res.push(el);
+		    }
+		    $.event.props = res;
+		}()); 
+
+           $(function(){
+
+                //$('#contentleft_home').scrollable();
+
+                $('#login_reg_div a').click(function(){
+                       var comment = "notice_Welcome Page: Login/Register button clicked";
+                       log_events[index++] = comment; 
+ 	                $('#overlay').fadeIn('fast',function(){
+                               console.log('overlay');
+                               $('#account_box').width('480px'); 
+                               $('#account_box').height('250px'); 
+			       $('#account_box').draggable();
+ 		               $('#account_box').animate({'top':'100px'},500);
+
+		    	});
+		        return false;
+                });  
+                $('#password').keypress(function(e){
+		      if(e.keyCode == 13){
+                           login_to_model();
+                           e.preventDefault();
+		           return false;
+   		         }
+		      });
+
+                function log_comment(comment){
+			  $.ajax({  
+					    type: "POST",  
+					    url: "/comment_log?comment="+comment,  
+					    data: "",  
+				            processdata:true,
+					    success: function(data){
+                                                       console.log(data);
+                                                       $('#comment').val(''); 
+                                         	},                        
+		               });  
+		}	
+                $('#log_comment').click(function(){
+                        var comment = "comment_Welcome page:";
+                        var comment = "notice_Welcome Page: Comment submit button clicked";
+                        console.log(comment);
+                        log_comment(comment); 
+                        comment = comment + $('#comment').val();
+                        console.log(comment);
+			log_events[index++] = comment; 
+                        //return false;
+
+                });
+
+                $('.error').hide();  
+		$('#registerform').hide();
+                $('#loginform').hide();
+                $("#next #next_button").click(function(){
+                  console.log(feedback);
+                  document.location.href = "/login_demo/";
+                });
+
+                $('#acc_boxclose').click(function(){
+                       var comment = "notice_Welcome Page: Account box closed icon clicked";
+                       console.log(comment);
+                       log_events[index++] = comment; 
+                    $('#account_box').animate({'top':'-800px'},500,function(){
+                        $('#overlay').fadeOut('fast');
+			$('#registerform').hide();
+	                $('#loginform').hide();
+                        $('#login').show();
+                        $('#register').show(); 
+		        $('#large_space').hide();
+		        $('#small_space').hide();
+                    
+                    });
+                });
+
+                $('#login').click(function(){
+		    $('#account_box').height('480px'); 
+		    $('#account_box').width('500px'); 
+                    $('#loginform').show('slow');
+                    $('#large_space').hide('slow');
+		    $('#small_space').show('slow');
+                    $('#login').hide('slow'); 
+                    $('#register').show('slow');
+		    $('#registerform').hide('slow');
+                    $('.error').hide();  
+                    var comment = "notice_Welcome Page: Login link clicked";
+                    log_events[index++] = comment; 
+                });
+              
+
+                $('#register').click(function(){
+                    var comment = "notice_Welcome Page: Register link clicked";
+                    log_events[index++] = comment; 
+		    $('#account_box').height('480px');
+		    $('#account_box').width('600px');
+                    $('#registerform').show('slow');
+                    $('#login').show('slow');
+                    $('#loginform').hide('slow');
+                    $('#register').hide('slow');
+                    $('#large_space').show('slow');
+                    $('#small_space').hide('slow');
+                    //$('#clear_space').hide();
+
+                });
+
+                $('#loginform input.nospace').keydown(function(e) {
+		    if (e.keyCode == 32) {
+                        alert('No Space Allowed');
+			return false;
+		    }
+		});
+
+                $('#registerform input.nospace').keydown(function(e) {
+		    if (e.keyCode == 32) {
+                        alert('No Space Allowed');
+			return false;
+		    }
+		});
+
+                $('#next_register').click(function(){
+		    $('.error').hide();
+                    var comment = "notice_Welcome Page: Next button in register form clicked";
+                    console.log(comment);
+                    log_events[index++] = comment; 
+		    var fname1 = $("#fname").val();
+		    if (fname1 == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#fname_error").show();
+				$("#fname").focus();
+				return false;
+ 	             }else{
+				register_count = register_count+1;
+                                console.log(register_count); 
+                     }
+
+
+		    var lname1 = $("#lname").val();
+		    if (lname1 == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#lname_error").show();
+				$("#lname").focus();
+				return false;
+ 	             }else{
+				register_count = register_count+1;
+                                console.log(register_count); 
+                     }
+
+
+                    if(register_count == 2)
+                    {
+		            $('#step2').show('slow');
+		            $('#step1').hide('slow');
+		    }
+                });
+                 $('#back_register').click(function(){
+	  	    $('#step1').show('slow');
+	            $('#step2').hide('slow');
+                    var comment = "notice_Welcome Page: Back button in register form clicked";
+                    console.log(comment);
+                    log_events[index++] = comment; 
+
+                 });
+
+                 $('#cancel_register').click(function(){
+                    var comment = "notice_Welcome Page: Cancel button in register form clicked";
+                    console.log(comment);
+                    log_events[index++] = comment; 
+		    $('#account_box').height('250px');
+		    $('#account_box').width('480px');
+                    $('#registerform').hide('slow');
+                    $('#login').show('slow');
+                    $('#loginform').hide('slow');
+                    $('#register').show('slow');
+                    $('#large_space').hide('slow');
+                    $('#small_space').hide('slow');
+                    $('#clear_space').show();
+                         
+                 });
+
+                $('#submit_login').click(function(){  
+                       var comment = "notice_Welcome Page: Login Submit button clicked";
+                       console.log(comment);
+                       log_events[index++] = comment; 
+                       login_to_model();
+                });
+		function login_to_model(){
+                 	$('.error').hide();                       
+			var name1 = $("#modelname").val();
+                        var count = 0;
+		  	if (name1 == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#model_error").show();
+				$("#modelname").focus();                                
+				return false;
+ 	                 }
+                        else{
+				count = count+1;
+                        }
+
+			var name2 = $("#username").val();
+		  	if (name2 == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#user_error").show();
+				$("#username").focus();
+                        		
+ 				return false;
+ 	                 }
+                        else{
+				count = count+1;
+                        }
+
+
+			var pass = $("#password").val();
+		  	if (pass == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#pass_error").show();
+				$("#password").focus();
+				return false;
+ 	                }
+                        else{
+				count = count+1;
+                        }
+
+                        console.log(count);  
+                        if (count == 3){
+		                data = name1+'_'+name2+'_'+pass; 
+                                for(var i=0; i < log_events.length;i++){
+                                    console.log(log_events[i]);
+                                    log_comment(log_events[i]);
+                                }
+                               
+				$.ajax({  
+					    type: "POST",  
+					    url: "/greetUser?data="+data,  
+					    //data: "",  
+				            //processdata:true,
+					    success: function(data){
+                   			            $('#account_box').animate({'top':'-800px'},500);
+                                                    if(data.indexOf('Sorry') == -1){                                                       
+                                                       //$('#topbuttonsblank').text('You are logged in as '+name2+' and You are in Tutorial page') ;
+                                                       document.location.href = "/browse/"; 
+                                                     }
+                                                    else{
+							   $("#dialog").dialog("destroy");                
+							   $('#overlay').fadeOut('fast');
+                                                           $('#registerform').hide();
+				  	                   $('#loginform').hide();
+			                                   $('#login').show(); 
+							   $('#small_space').hide();
+				                           $("#dialog-message").text(data);					    
+							   $("#dialog-message").dialog({
+									modal: true,
+									buttons: {
+										Ok: function() {
+										       //newUnregApplist();
+				                                                       $(this).dialog('close');
+				                                                 
+				                                              }
+				                                             
+									}
+                                                                                        
+					                   });
+                                                    }
+
+						},                        
+				       });  
+                        }
+                 }
+
+		$(document).ajaxSend(function(event, request, settings) {
+			   //$('#loading-indicator').show();
+                                console.log("Ajax send");
+                                $('#account_box').animate({'top':'-800px'},500); 						    
+				$('.myloading').show();
+			 });
+			 
+		$(document).ajaxComplete(function(event, request, settings) {
+			   //$('#loading-indicator').hide();
+                                console.log("Ajax complete");
+			       $('.myloading').hide();
+			 });
+
+	
+                $('#submit_register').click(function(){  
+                        var comment = "notice_Welcome Page: Register Submit button clicked";
+                        console.log(comment);
+                        log_events[index++] = comment; 
+
+                
+			$('.error').hide();
+			var name1 = $("#newmodelname").val();
+		  	if (name1 == "") {
+                                height = $('#account_box').height()+15;
+                                $('#account_box').height(height+'px');
+				$("#newmodel_error").show();
+				$("#newmodelname").focus();
+				return false;
+ 	                 }
+                        else{
+				register_count = register_count+1;
+                                console.log(register_count); 
+                        }
+
+
+			var name2 = $("#newusername").val();
+		  	if (name2 == "") {
+                                height = $('#account_box').height()+10;
+                                $('#account_box').height(height+'px');
+				$("#newuser_error").show();
+				$("#newusername").focus();
+				return false;
+ 	                 }
+                        else{
+				register_count = register_count+1;
+                                console.log(register_count); 
+                        }
+
+
+			var pass = $("#newpassword").val();
+		  	if (pass == "") {
+                                height = $('#account_box').height()+5;
+                                $('#account_box').height(height+'px');
+				$("#newpass_error").show();
+				$("#newpassword").focus();
+				return false;
+ 	                }
+                        else{
+				register_count = register_count+1;
+                                console.log(register_count); 
+                        }
+                        if(register_count == 5){   
+                               var gender = $("#gender_div input[@name=sex]:checked").val();   
+                               var fname =$('#fname').val();   
+                               var lname =$('#lname').val();   
+                               console.log(fname+","+lname+","+gender);              
+		               var data = fname+'_'+lname+'_'+gender+'_'+name1+'_'+name2+'_'+pass; 
+		              // document.location.href = "/greetUserNew?data="+data; 
+                                for(var i=0; i < index.length;i++){
+                                    log_comment(log_events[i]);
+                                }
+				$.ajax({  
+					    type: "POST",  
+					    url: "/greetUserNew?data="+data,  
+					    data: "",  
+				            processdata:true,
+					    success: function(data){
+					            document.location.href = "/browse/"; 
+                                                    
+						},                        
+				       });  
+
+			}
+                 });
+              $('div.expander').expander();
+   
+           });
+
+	/*$(document).ready(function() {
+              $('#overlay').fadeIn('fast',function(){
+                  $('#mode_box').animate({'top':'160px'},500);
+            });
+            
+        }*/
+        //]]> 
+        </script>
+  
+  <script type="text/javascript">
+	    $(function(){
+
+                $('#tour_div a').click(function(){
+                       var comment = "notice_Welcome Page: Quick tour button clicked";
+                       console.log(comment);
+                       log_events[index++] = comment; 
+
+
+ 	                $('#overlay').fadeIn('fast',function(){
+                               console.log('overlay');
+                               $('#tut_box').width('600px'); 
+                               $('#tut_box').height('340px'); 
+			       //$('#account_box').draggable();
+ 		               $('#tut_box').animate({'top':'100px'},500);
+		    	});
+		        return false;
+                       
+                });
+      	       $("div.tutorial").carousel( {direction: "horizontal"},{ loop: true });
+
+               $('#tutorial_close').click(function(){
+                       var comment = "notice_Welcome Page: Quick tutorial close icon clicked";
+                       console.log(comment);
+                       log_events[index++] = comment;                 
+
+                    $('#tut_box').animate({'top':'-800px'},500,function(){
+                       $('#overlay').fadeOut('fast');
+                    });
+                });
+	    });
+	</script>
+</head>
+<body>
+  <div id="main">
+   <div id="contentbg">
+     <div id="contenttxtblank">
+       <div id="menu">
+          <h1>Mneme</h1>
+            <h2>Managing Personal Lifelong Information.</h2>
+       </div>
+<!--end of menu-->
+<div id="contentleft_home" class="border"> 
+  <div id="leftheading" class="border">
+    <h2>About Mneme </h2>
+  </div>
+  <div id="lefttxtblank">
+   <div id="lefttxt"> $content </div>
+    <div id="dialog-message" title="Model Update" style="margin: 0pt 7px 20px 0pt; float: left;"> </div>
+     <div id="lefttxt">
+      <div id="intro" class="expander"> 
+        This site takes after the Greek goddess of memory, and <i>remembers</i> information you want kept. You can make Mneme collect information via sensors and applications. You can see it, explore it, and see trends.You control the information you decide what applications can use it and even when you want it to <i>forget</i>.
+      </div>
+<div id="clear_space"> </div>
+<table>
+  <tbody>
+    <tr>
+      <!--<td>
+      <div id="tour_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="quick_tour"><font color="#ffffff">Have a quick tour</font></a> </div>
+      </td>-->
+      <td>
+      <div id="login_reg_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="log_reg"> <font color="#ffffff">Login/Register</font></a>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="contentright_home">
+ <div id="user_feedback" class="show_list" style="margin: 10px; padding: 10px;">
+    <form id="feedback_form" method="" action=""> <label>This is a research prototype system. <br/> Please leave comments here.</label> 
+      <textarea id="comment" name="comment" class="textarea"></textarea>
+      <div><input class="button" id="log_comment" value="Submit" type="button"/></div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div> <!--end of contentbg-->
+</div><!--end of main-->
+
+<div class="ui-widget-overlay" id="overlay" style="display:none;"></div>        
+ <div class="myBox" id="account_box">
+  <a class="boxclose" id="acc_boxclose"></a>
+   <h1>Available options to enter your account:</h1>
+   <div id="login_div" class="left_class">
+    <div id="clear_space" class="large_space"> </div>
+    <div id="clear_space" class="large_space"> </div>
+    <div id="login">Log-in to your account</div>
+
+    <!--<form id="login_form" action="" method="post">-->
+    <div id="loginform" class="border hideable" style="padding-top: 10px; padding-bottom: 15px;"> <label style="margin-left: 15px; width: 200px; text-align: center;"></label>
+     <div class="lefttxt02 border" style="text-align:center">Log-in</div>Fields with * must be filled
+       <div id="mname" class="nospace" style="padding: 10px; margin-left: 15px;"> <label for="modelname">Model Directory Name* <span title="Please provide your model directory name." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+       <input id="modelname" name="modelname" class="nospace" value="" title="No space allowed" type="text"/> <label class="error" for="modelname" id="model_error">This field is required.</label> 
+       </div>
+       <div id="uname" class="nospace" style="padding: 10px; margin-left: 15px;"> 
+         <label for="username"> 
+           Model User Name* <span title="Please provide also your model username." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> 
+         </label>
+         <input id="username" name="username" value="" class="nospace" title="No space allowed" type="text"/> <label class="error" for="username" id="user_error">This field is required.</label> 
+       </div>
+       <div id="pass" class="nospace" style="padding: 10px; margin-left: 15px;">
+        <label for="password">Password* <span title="Password for user model." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+        <input id="password" name="password" value="" class="nospace" type="password"/> <label class="error" for="password" id="pass_error">This
+field is required.</label>
+       </div> 
+       <div><input class="button" id="submit_login" value="Submit" type="button"/> </div>
+      </div><!-- End loginform -->
+      <!--</form>-->     
+   </div> <!-- End login_div -->
+  <div class="divider"></div>
+  <div id="clear_space" class="large_space"> </div>
+  <div id="clear_space" class="large_space"> </div>
+
+  <div id="register_div" class="right_class">
+   <div id="small_space" class="hideable"> </div>
+  <div id="register">Register a new account</div>
+   <div id="registerform" class="hideable"> <label style="margin-left: 10px; width: 200px;"></label>
+    <h2>Enter Profile Information</h2>
+	<div id="step1" class="app border"> <label style="padding: 5px; width: 200px;"></label>
+	 <div class="lefttxt02 border"> Step 1: Personal information </div>Fields with * must be filled
+          <div id="fname_div" style="padding: 10px; margin-left: 10px;"> 
+            <label for="fname">Given Name* <span title="Please provide your given name." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+            <input id="fname" name="fname" type="text"/> <label class="error" for="fname" id="fname_error">This field is required.</label> 
+          </div>
+          <div id="lname_div" style="padding: 10px; margin-left: 15px;"> 
+           <label for="lname">Family Name* <span title="Please provide your family name." class="ui-state- default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+           <input id="lname" name="lname" type="text"/> <label class="error" for="lname" id="lname_error">This field is required.</label> 
+          </div>
+          <div id="gender_div" style="padding: 10px; margin-left: 15px;"> <label>Gender*</label>
+            <label for="male"><input id="male" name="sex" value="male" type="radio"/>Male</label>
+            <label for="female"><input id="female" name="sex" value="female" type="radio"/> Female</label> 
+          </div>
+          <div id="buttonapp" style="padding: 10px; margin-left: 10px;"> 
+             <input class="button" id="next_register" value="Next" type="button"/> 
+             <input class="button" id="cancel_register" value="Cancel" type="button"/> 
+          </div>
+       </div> 
+       <div id="step2" class="app border" style="display: none;"> 
+        <label style="padding: 5px; width: 200px;"> </label>
+         <div class="lefttxt02 border">Step 2:User Model Information</div> Fields with * must be filled
+          <div id="model_div" style="padding: 10px; margin-left: 10px;"> 
+           <label for="modelname">Model Directory Name* <span title="Please provide your model directory name." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+           <input id="newmodelname" name="newmodelname" class="nospace" title="No space allowed" type="text"/> <label class="error" for="newmodelname" id="newmodel_error">This field is required.</label>
+         </div>
+         <div id="user_div" style="padding: 10px; margin-left: 10px;"> 
+           <label for="username">Model User Name* <span title="Please provide also your model username." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+           <input id="newusername" name="newusername" class="nospace" title="No space allowed" type="text"/> <label class="error" for="newusername" id="newuser_error">This field is required.</label> 
+         </div>
+         <div id="pass_div" style="padding: 10px; margin-left: 10px;"> <label for="password">Password* <span title="Password for user model." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </label>
+          <input id="newpassword" name="newpassword" class="nospace" title="No space allowed" type="password"/> <label class="error" for="newpassword" id="newpass_error">This field is required.</label> 
+         </div>
+         <div id="buttonapp" style="padding: 10px; margin-left: 10px;"> 
+           <input class="button" id="back_register" value="Back" type="button"/> 
+           <input class="button" id="submit_register" value="Submit" type="button"/>
+         </div>
+     </div> 
+  </div> 
+ </div> 
+</div> <!-- End account box -->
+
+<div class="myBox" id="tut_box">
+<div class="carousel tutorial" id="tut_div">
+<ul class="no_list_style">
+  <li><img src="/static/images/1_1.png" alt="example pic 1" height="335" width="500"/></li>
+  <li><img src="/static/images/2.png" alt="example pic 2" height="335" width="500"/></li>
+  <li><img src="/static/images/3.png" alt="example pic 3" height="335" width="500"/></li>
+  <li><img src="/static/images/4.png" alt="example pic 1" height="335" width="500"/></li>
+  <li><img src="/static/images/5.png" alt="example pic 2" height="335" width="500"/></li>
+  <li><img src="/static/images/6.png" alt="example pic 3" height="335" width="500"/></li>
+  <li><img src="/static/images/7.png" alt="example pic 1" height="335" width="500"/></li>
+  <li><img src="/static/images/8.png" alt="example pic 2" height="335" width="500"/></li>
+  <li><img src="/static/images/9.png" alt="example pic 3" height="335" width="500"/></li>
+  <li><img src="/static/images/10.png" alt="example pic 1" height="335" width="500"/></li>
+  <li><img src="/static/images/11.png" alt="example pic 2" height="335" width="500"/></li>
+  <li><img src="/static/images/12.png" alt="example pic 3" height="335" width="500"/></li>
+  <li><img src="/static/images/13.png" alt="example pic 1" height="335" width="500"/></li>
+  <li><img src="/static/images/14.png" alt="example pic 1" height="335" width="500"/></li>
+</ul>
+</div>
+</div>
+
+<xi:include href="layout_footer.html"></xi:include>
+</body></html>

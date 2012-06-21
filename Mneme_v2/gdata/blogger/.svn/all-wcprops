@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/blogger
+END
+data.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/blogger/data.py
+END
+client.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/blogger/client.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/blogger/__init__.py
+END
+service.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/gdata/blogger/service.py
+END

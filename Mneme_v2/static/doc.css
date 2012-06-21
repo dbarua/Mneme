@@ -1,0 +1,68 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;border:0;font-size:100%;background:transparent;}
+body{line-height:1;font:12px Arial, Helvetica, sans-serif;color:#333;background:#fff;}
+ol, ul{list-style:none;}
+blockquote, q{quotes:none;}
+blockquote:before, blockquote:after,
+q:before, q:after{content:'';content:none;}
+ins{text-decoration:none;}
+table{border-collapse:collapse;border-spacing:0;} /* tables still need 'cellspacing="0"' in the markup */
+.IE button{width:1%;overflow:visible;}
+a, a span{cursor:pointer;}
+a{color:#fff;}
+
+body{font:11pt "DejaVu Sans Condensed",Lucida,"Lucida Sans",Arial,Sans-serif;color:#fff;background:#1f1f1f;}
+
+h1{overflow:hidden;margin-bottom:.5em;padding:20px 0;font-size:280%;letter-spacing:0;color:#5db0e6;border-bottom:1px solid #2f2f2f;font-family:myriad,"Myriad Pro";font-style:italic;}
+h1 a{float:right;margin-top:-2em;font-size:13px;color:#fff;font-weight:normal;}
+h2{margin:1em 0 .5em;font-size:190%;color:#999;font-family:myriad,"Myriad Pro";font-weight:normal;}
+a{color:#5db0e6;}
+ul{padding-left:1em;list-style:inside disc;}
+ul li{margin:2px 0;}
+pre{margin:10px 0;padding:10px;background:#000;}
+#container{overflow:hidden;margin:0 auto 20px;width:990px;}
+div.box-primary{display:inline;float:left;width:620px;}
+div.box-secondary{display:inline;float:right;padding-left:15px;width:350px;}
+div.box-inner{overflow:hidden;padding-bottom:15px;border-bottom:1px solid #2f2f2f;zoom:1;} 
+#container .js{overflow:hidden;zoom:1;}
+#container .carousel,
+#container .carousel .carousel-wrap{margin:0;border:0;zoom:1;}
+#container .js .carousel-wrap{display:inline-block;vertical-align:middle;width:500px;margin:0 5px 15px;border:1px solid #4f4f4f;background:#1a1a1a;}
+.IE #container .js .carousel-wrap{display:inline;}
+#container .carousel ul{margin:0;padding:0;zoom:1;}
+#container .js ul li{overflow:hidden;display:inline;float:left;width:500px;height:335px;text-align:center;zoom:1;}
+#container .carousel .carousel-control{overflow:hidden;display:inline-block;vertical-align:middle;width:40px;height:40px;cursor:pointer;line-height:999px;zoom:1;border:0;text-indent:-9999px;}
+#container .carousel .carousel-next{background:url(../images/buttons/next.png) 0 0 no-repeat;}
+#container .carousel .carousel-previous{background:url(../images/buttons/prev.png) 0 0 no-repeat;}
+#container .carousel .carousel-control:hover{-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
+#container .carousel .disabled,#container .carousel .disabled:hover{-moz-opacity:.1;opacity:0.10;filter:alpha(opacity=10);cursor:default;}
+#container .carousel div{margin:0;padding:0;border:0;}
+#container .carousel ul{padding:0;list-style:none;}
+#container .carousel ul li{position:relative;width:500px;margin:0;}
+#container .carousel ul li cite{position:absolute;bottom:3px;right:10px;line-height:19px;font-size:11px;}
+#container .carousel ul li cite a img{vertical-align:middle;}
+#container .carousel ul li cite a{color:#fff;text-decoration:none;}
+#container div.center-wrap{overflow:hidden;clear:both;zoom:1;}
+#container div.center-wrap div{border:0;margin:15px 0;}
+#container div.center-wrap a{margin:0 2px;padding:2px 5px;border:1px solid #4f4f4f;background:#333;cursor:pointer;color:#fff;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;}
+#container div.center-wrap a.active{font-weight:bold;color:#5db0e6;}
+#examples{margin-top:2em;border:0;}
+#examples ul{overflow:hidden;padding:0;zoom:1;}
+#examples ul li{display:inline;float:left;margin:0 2px 0 0;list-style:none;}
+#examples ul li a{display:block;padding:10px 15px;text-decoration:none;background:#333;}
+#examples ul li a.active{color:#fff;}
+#examples p{margin:0 0 15px;}
+#examples .tabs-frames{border:2px solid #333;padding:10px;}
+#examples .js ul{overflow:hidden;zoom:1;}
+#examples .js ul li{overflow:hidden;width:250px;height:167px;}
+#examples .js .carousel-wrap{width:250px;margin-bottom:0;zoom:1;}
+#examples .example-4 .carousel-wrap{width:750px;margin-bottom:0;zoom:1;}
+#examples h3{color:#5DB0E6;}

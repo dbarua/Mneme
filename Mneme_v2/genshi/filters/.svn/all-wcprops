@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/filters
+END
+transform.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/filters/transform.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/filters/__init__.py
+END
+i18n.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/filters/i18n.py
+END
+html.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dbarua/!svn/ver/477/trunk/Mneme/Mneme_v2/genshi/filters/html.py
+END

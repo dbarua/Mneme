@@ -1,0 +1,64 @@
+[Thu May 31 10:28:38 2012] [notice] Welcome to Mneme
+[Thu May 31 10:28:48 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 10:28:48 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 10:30:34 2012] [notice] Welcome to Mneme
+[Thu May 31 10:30:45 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 10:30:45 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 10:31:57 2012] [error] Login failure:cannot access model 'dbarua', server 'vm1-chai2.it.usyd.edu.au'
+[Thu May 31 10:33:55 2012] [error] Login failure:cannot access model 'dbarua', server 'vm1-chai2.it.usyd.edu.au'
+[Thu May 31 10:46:48 2012] [notice] Welcome to Mneme
+[Thu May 31 10:47:26 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 10:47:26 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 10:47:26 2012] [notice] Welcome Page: Login Submit button clicked
+[Thu May 31 10:49:50 2012] [notice] Welcome to Mneme
+[Thu May 31 10:50:02 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 10:50:02 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 10:50:35 2012] [error] Login failure:cannot access model 'dbarua', server 'vm1-chai2.it.usyd.edu.au'
+[Thu May 31 10:53:12 2012] [error] Login failure:cannot access model 'dbarua', server 'vm1-chai2.it.usyd.edu.au'
+[Thu May 31 11:10:01 2012] [notice] Welcome to Mneme
+[Thu May 31 11:10:12 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 11:10:12 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 11:10:12 2012] [notice] Successful login
+[Thu May 31 11:10:13 2012] [notice] Browser Clicked: Operation Successful
+[Thu May 31 11:10:38 2012] [notice] Get all subcontext successful
+[Thu May 31 11:10:38 2012] [notice] Get all subcontext successful
+[Thu May 31 11:10:38 2012] [notice] Get all subcontext successful
+[Thu May 31 11:10:39 2012] [notice] Get all subcontext successful
+[Thu May 31 11:11:17 2012] [notice] Goals Clicked: Operation Successful
+[Thu May 31 11:11:17 2012] [notice] Show goals visualisation
+[Thu May 31 11:11:21 2012] [notice] Show unregistered apps list operation successful
+[Thu May 31 11:11:23 2012] [notice] Goals Clicked: Operation Successful
+[Thu May 31 11:11:23 2012] [notice] Show goals visualisation
+[Thu May 31 11:11:27 2012] [notice] Get Goals operation successful
+[Thu May 31 11:11:27 2012] [notice] Get Goals operation successful
+[Thu May 31 11:11:30 2012] [notice] Browser Clicked: Operation Successful
+[Thu May 31 11:13:35 2012] [notice] Browser Clicked: Operation Successful
+[Thu May 31 11:14:30 2012] [notice] Browser Clicked: Operation Successful
+[Thu May 31 11:14:31 2012] [notice] Show size visualisation
+[Thu May 31 11:15:16 2012] [notice] Welcome to Mneme
+[Thu May 31 11:15:28 2012] [notice] Welcome Page: Login/Register button clicked
+[Thu May 31 11:15:28 2012] [notice] Welcome Page: Login link clicked
+[Thu May 31 11:15:28 2012] [notice] Successful login
+[Thu May 31 11:15:28 2012] [notice] Browser Clicked: Operation Successful
+[Thu May 31 11:15:29 2012] [notice] Show size visualisation
+[Wed Jun 06 16:34:29 2012] [notice] Welcome to Mneme
+[Wed Jun 06 16:34:40 2012] [notice] Welcome Page: Login/Register button clicked
+[Wed Jun 06 16:34:40 2012] [notice] Welcome Page: Login link clicked
+[Wed Jun 06 16:34:40 2012] [notice] Successful login
+[Wed Jun 06 16:34:40 2012] [notice] Browser Clicked: Operation Successful
+[Wed Jun 06 16:34:40 2012] [notice] Show size visualisation
+[Wed Jun 06 16:34:43 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:43 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:43 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:44 2012] [notice] Subdirectories Clicked: operation successful
+[Wed Jun 06 16:34:46 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:46 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:46 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:46 2012] [notice] Get all subcontext successful
+[Wed Jun 06 16:34:49 2012] [notice] Goals Clicked: Operation Successful
+[Wed Jun 06 16:34:50 2012] [notice] Show goals visualisation
+[Wed Jun 06 16:34:51 2012] [notice] Show unregistered apps list operation successful
+[Wed Jun 06 16:34:58 2012] [notice] Goals Clicked: Operation Successful
+[Wed Jun 06 16:34:58 2012] [notice] Show goals visualisation
+[Wed Jun 06 16:34:59 2012] [notice] Get Goals operation successful
+[Wed Jun 06 16:34:59 2012] [notice] Get Goals operation successful
