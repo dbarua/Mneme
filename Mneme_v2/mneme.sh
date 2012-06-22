@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 export PYTHONPATH=/home/jbu/src/jbu-personis/Src:/home/jbu/src/jbu-personis/Src/Util
-#/home/chai/llum/llum/Personis/Src
+python main_new.py --appconfig app.jbu.conf --globalconfig global.jbu.conf
 
-python main_new.py
+#export PYTHONPATH=/home/chai/llum/llum/Personis/Src:/home/chai/llum/llum/Personis/Src/Util
+#python main_new.py
 

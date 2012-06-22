@@ -57,7 +57,7 @@
 
                 //$('#contentleft_home').scrollable();
 
-                $('#login_reg_div a').click(function(){
+               /* $('#login_reg_div a').click(function(){
                        var comment = "notice_Welcome Page: Login/Register button clicked";
                        log_events[index++] = comment; 
  	                $('#overlay').fadeIn('fast',function(){
@@ -67,7 +67,7 @@
 			       $('#account_box').draggable();
  		               $('#account_box').animate({'top':'100px'},500);
 
-		    	});
+		    	});*/
 		        return false;
                 });  
                 $('#password').keypress(function(e){
@@ -483,7 +483,7 @@
       <div id="tour_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="quick_tour"><font color="#ffffff">Have a quick tour</font></a> </div>
       </td>-->
       <td>
-      <div id="login_reg_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="log_reg"> <font color="#ffffff">Login/Register</font></a>
+      <div id="login_reg_div" class="show_list home_tools" style="width: 150px;"> <a href="/do_login" id="log_reg"> <font color="#ffffff">Login with Gmail</font></a>
       </div>
       </td>
     </tr>
