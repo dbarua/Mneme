@@ -13,10 +13,10 @@ ACCESS_TYPE = 'Server'
 fitbit = fitbit_plugin()
 
 try:
-   #personis_um = Personis_Access(ACCESS_TYPE, 'james', 'James', 'secret')
-   personis_um = Personis_Access(ACCESS_TYPE, 'dbarua', 'Debjanee', 'qsbnjuj312')
+    #personis_um = Personis_Access(ACCESS_TYPE, 'james', 'James', 'secret')
+    personis_um = Personis_Access(ACCESS_TYPE, 'dbarua', 'Debjanee', 'qsbnjuj312')
 except Exception,e:
-   print e
+    print e
 
 res = fitbit.get_access_code(personis_um)
 print res
