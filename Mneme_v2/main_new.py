@@ -5,6 +5,16 @@
 
 import os, sys
 
+sys.path.insert(0, '/home/jbu/src/jbu-personis/Src')
+
+import httplib, oauth2
+from optparse import OptionParser
+import httplib2 
+
+from oauth2client.file import Storage
+from oauth2client.client import AccessTokenRefreshError, Storage, Credentials, OAuth2WebServerFlow
+from oauth2client.tools import run
+
 import cherrypy
 import wsgiref.handlers
 import ConfigParser
@@ -16,7 +26,7 @@ import cgi, cgitb
 import string, operator
 
 #Time, date, timezone
-from datetime import datetime, date, time, timedelta
+from datetime import date, time, timedelta
 import time
 #from pytz import timezone, tzfile
 #import pytz
@@ -28,6 +38,8 @@ import webbrowser
 from Personis_Access import *
 from Personis_App_Manager import *
 from Personis_Visualisation_Manager import *
+import Personis_util
+import connection
 
 from types import *
 
@@ -103,116 +115,6 @@ class WelcomePage():
         return genshi_tmpl.welcome_template()
     index.exposed = True
 
-
-
-    #----------------------------------Start Greetings functions--------------------------------------------------------#
-
-   # Greet new user
-
-    #@print_timing
-    def greetUserNew(self, data=None):
-        greeting = ""
-        fname, lname, sex, modelname, username, password = data.split('_')
-        self.__curSession = "Session 1"
-        self.personis_mkmodel = Personis_Build_Model()
-        if fname != None:
-            # Greet the user!
-            if lname != None:
-                # make a user model
-                print "%s %s" % (fname, lname)
-                print "%s" % sex
-                print "%s %s" % (modelname, username)
-                try:
-                    if(self.personis_mkmodel.build_model(fname, lname, sex, modelname, username,password)):
-                    #if ACCESS_TYPE == 'Server':
-                        greeting1 = "Congratulations"
-                        greeting2 = "You have successfully built your user model. "
-                        greeting2 += "Your username is:"+username+"  and your model dirctory is: "+modelname
-                        self.personis_um = Personis_Access(ACCESS_TYPE, modelname, username, password)
-                        self.username = username
-                        self.password = password
-                        self.modelname = modelname
-
-                        #self.access_model(modelname, username, password)
-                        self.personis_um.tell_login_time('log-in')
-                        if self.personis_um.create_app_context():
-                            print "Success"
-                        else:
-                            print "Error creating Apps"
-                    else:
-                        greeting1 = "Sorry"
-                        greeting2 = "Model already exists or an Error occured while creating new model. "
-                        greeting2 = greeting2 + ". Try again or Login to existing model. "
-
-                    write_log('notice','Successfully modol created')
-
-                except OSError, e:
-                    greeting1 = "Sorry"
-                    greeting2 = "Failed due to error: "+str(e)+" Contact Administrator."
-                    __time = datetime.datetime.fromtimestamp(int(time.time())).strftime("%a, %d %b %Y %H:%M:%S +0000")
-                    write_log('error','Login failure:'+str(e))
-
-                message = greeting1+' '+fname+' '+lname+','+greeting2
-                return message
-
-    greetUserNew.exposed = True
-
-
-    #Greet existing user
-    def greetUser(self, data=None):
-        t1 = time.clock()
-        global tmpl
-        self.__curSession = "Session 1"
-        self.__curContext = "None"
-        try:
-            modelname, username, password = data.split('_')
-            if((modelname!="")and(username!="")and(password!="")):
-                self.personis_um = Personis_Access(ACCESS_TYPE, modelname, username, password)
-                self.personis_app_manager = Personis_App_Manager(ACCESS_TYPE, self.personis_um)
-                self.username = username
-                self.password = password
-                self.modelname = modelname
-
-                #self.access_model(modelname, username, password)
-
-                self.personis_um.tell_login_time('log-in')
-                #self.applist = personis_um.get_list_apps()
-                #self.um_applist = peronis_um.um.listapps()
-
-                #sensor_list = list()
-                #sensor_list=self.check_for_registered_sensors()
-                #self.run_sensors(sensor_list)
-                greeting1 = "Welcome"
-                greeting2 = "You have successfully logged in \n your user model"
-
-                write_log('notice','Successful login')
-
-
-            else:
-                greeting1 = "Sorry"
-                username = ""
-                greeting2="Login failure due to lack of sufficient information. Please provide all information currectly."
-
-                write_log('error','Login failure due to lack of sufficient information')
-
-
-        except Exception, e:
-            print e
-            greeting1 = "Sorry"
-            greeting2 = "Your user model does not exist or "+str(e)+" Please build a new user model."
-            write_log('error','Login failure:'+str(e))
-
-
-        message = greeting1+' '+username+','+greeting2
-
-        t2 = time.clock()
-        print 'greetUser took %0.3fms' % ((t2-t1)*1000.0)
-
-        return message
-
-    greetUser.exposed = True
-
-
     #----------------------------------Start Browsing functions--------------------------------------------------------#
 
     #get directories and subdirectories for context
@@ -221,11 +123,12 @@ class WelcomePage():
         keys = ('dir','subdir')
         main_um_dirs = list()
         context_list = []
-        context_list = self.personis_um.all_access_model()
+        um = cherrypy.session.get('um')
+        context_list = um.all_access_model()
 
         for context in self.context_list:
             temp_list = list()
-            subcontext, component = self.personis_um.get_all_component(context_list);
+            subcontext, component = um.get_all_component(context_list);
             if subcontext:
                 temp_list.append(context)
                 temp_list.append(subcontext)
@@ -236,19 +139,22 @@ class WelcomePage():
     # browse list of contexts
     @print_timing
     def browse(self,**data):
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        um = cherrypy.session.get('um')
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         self.__curAction = "Browser"
         self.context_list = []
-        #size = self.personis_um.get_size()
+        #size = um.get_size()
         #print size
 
-        self.modeltree = self.personis_um.build_modeldef_tree()
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, self.username, self.browser_activities)
+        modeltree = um.build_modeldef_tree()
 
-        if type(self.modeltree) is ListType:
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+
+        if type(modeltree) is ListType:
             write_log('notice','Browser Clicked: Operation Successful')
-            self.modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
-            return genshi_tmpl.browse_template(ACCESS_TYPE, self.modeltree, self.username)
+            modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
+            cherrypy.session['modeltree'] = modeltree
+            return genshi_tmpl.browse_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
         else:
             e = self.context_list
             write_log('error','Browser Clicked: Operation Failed; Error:'+str(e))
@@ -279,18 +185,18 @@ class WelcomePage():
 
     #@print_timing
     def get_sub_context(self,context=None):
-
+        um = cherrypy.session.get('um')
         try:
             #context_list = context_list.rstrip('')
             context_list = context.split('/')
             print context_list
             newlist = []
-            contexts,components = self.personis_um.get_all_component(context_list);
+            contexts,components = um.get_all_component(context_list);
             if type(contexts) is ListType:
                 for sub in contexts:
                     context_list.append(sub)
                     newlist = []
-                    subcontexts,components = self.personis_um.get_all_component(context_list);
+                    subcontexts,components = um.get_all_component(context_list);
                     if subcontexts:
                         context_list.remove(sub)
                         contexts.remove(sub)
@@ -317,7 +223,8 @@ class WelcomePage():
     # browse list of sub-contexts and components
     #@print_timing
     def show_sub_context(self,context=None):
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        um = cherrypy.session.get('um')
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         print "Printing browser act.."
         print self.browser_activities
 
@@ -330,10 +237,10 @@ class WelcomePage():
         context = udata.encode("ascii","ignore")
         context_list = context.split('/')
 
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, self.username, self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
         try:
             #contexts, components = self.personis_um.all_access_model(context_list);
-            contexts,components = self.personis_um.get_all_component(context_list);
+            contexts,components = um.get_all_component(context_list);
             if type(contexts) is ListType:
                 t2 = time.clock()
                 print 'show_subcontext took %0.3fms' % ((t2-t1)*1000.0)
@@ -356,6 +263,7 @@ class WelcomePage():
     show_sub_context.exposed = True
 
     def get_component_list(self,context=None):
+        um = cherrypy.session.get('um')
         data = []
         print context
         self.__curComponent = ""
@@ -365,7 +273,7 @@ class WelcomePage():
         context_list = context.split('/')
         print context_list
         try:
-            contexts,components = self.personis_um.get_all_component(context_list)
+            contexts,components = um.get_all_component(context_list)
             if type(contexts) is ListType:
                 for con in contexts:
                     data.append(con)
@@ -396,12 +304,13 @@ class WelcomePage():
         t1 = time.clock()
         header = ["value", "flags", "source", "evidence_type", "creation_time", "time", "useby", "owner", "comment"] # 3 lines
         #users_list = test_data_to_list(test_data) # 4 lines
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, self.username)
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'))
 
         if self.__curComponent != 'None':
             print "getting new"
             context = self.__curContext.split()
-            reslist = self.personis_um.get_evidence_new(context, self.__curComponent)
+            um = cherrypy.session.get('um')
+            reslist = um.get_evidence_new(context, self.__curComponent)
             self.__curComponent = 'None'
         else:
             print "getting default"
@@ -465,11 +374,12 @@ class WelcomePage():
        #show_id = request.GET.get('name')
         res = ""
         t1 = time.clock()
+        um = cherrypy.session.get('um')
         try:
             print data
             udata = data.decode("utf-8")
             data = udata.encode("ascii","ignore")
-            if self.personis_um.add_new_evidence(self.__curContext, data):
+            if um.add_new_evidence(self.__curContext, data):
                 res = """ Successfully added"""
                 write_log('notice','Add new evidence operation successful')
 
@@ -493,9 +403,10 @@ class WelcomePage():
         if self.__curContext == "None" or data[3] == "Home":
             context = []
         print context
+        um = cherrypy.session.get('um')
         if data[0] == 'component':
             try:
-                self.personis_um.make_new_component(data[1],'attribute', 'string',None,data[2],context)
+                um.make_new_component(data[1],'attribute', 'string',None,data[2],context)
                 write_log('notice','Add new component operation successful')
 
                 return "Successfully added %s: %s" % (data[0],data[1])
@@ -506,7 +417,7 @@ class WelcomePage():
                 return "Error in operation. Creation failed as %s" % str(e)
         elif data[0] == 'context':
             try:
-                res = self.personis_um.make_new_context(data[1],data[2],context)
+                res = um.make_new_context(data[1],data[2],context)
                 if res == "Success":
                     write_log('notice','Add new context operation successful')
 
@@ -533,20 +444,21 @@ class WelcomePage():
     @print_timing
     def apps_plugin(self):
         # Ask for the user's name.
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession,self.username)
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'))
         return genshi_tmpl.app_template()
     apps_plugin.exposed = True
 
     @print_timing
     def show_unreg_apps(self):
+        um = cherrypy.session.get('um')
         print "Showing unregistered apps"
-        self.modeltree = self.personis_um.build_modeldef_tree()
+        self.modeltree = um.build_modeldef_tree()
         self.modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession,self.username,self.browser_activities)
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username') ,self.browser_activities)
         try:
             #context_list = self.personis_um.all_access_model()
-            self.applist = self.personis_app_manager.get_list_apps()
+            self.applist = cherrpy.session.get('appmgr').get_list_apps()
             print self.applist
             write_log('notice','Show unregistered apps list operation successful')
 
@@ -570,7 +482,7 @@ class WelcomePage():
             else:
                 self.__setgoal = False
 
-            result = self.personis_app_manager.register_app(data)
+            result = cherrypy.session.get('appmgr').register_app(data)
 
             if "Error" not in result:
                 write_log('notice','Apps register operation successful')
@@ -593,13 +505,14 @@ class WelcomePage():
 
     @print_timing
     def show_reg_apps(self):
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        print self.username
+        um = cherrypy.session.get('um')
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        print cherrypy.session.get('username')
         print "Showing registered apps"
         global stream
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, self.username, self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
         try:
-            new_um_applist =self.personis_app_manager.get_register_applist()
+            new_um_applist =cherrypy.session.get('appmgr').get_register_applist()
             print new_um_applist
             if type(new_um_applist) is ListType:
 
@@ -644,7 +557,7 @@ class WelcomePage():
         #context_list = self.personis_um.all_access_model()
         data = []
         try:
-            self.applist = self.personis_app_manager.get_list_apps()
+            self.applist = cherrypy.session.get('appmgr').get_list_apps()
             print self.applist
             for app in self.applist:
                 data.append(self.todict(app, app.appname))
@@ -661,11 +574,11 @@ class WelcomePage():
     def fitbit_authentication(self, oauth_token=None, oauth_verifier=None):
         #self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         print "Hello Fitbit"
+        um = cherrypy.session.get('um')
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
 
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession,self.username, self.browser_activities)
-
-        result = self.personis_app_manager.complete_fitbit_install(oauth_verifier)
+        result = cherrypy.session.get('appmgr').complete_fitbit_install(oauth_verifier)
         #Add installation evidence to 'browseractivity' component
         if result == 'ok':
 
@@ -675,8 +588,8 @@ class WelcomePage():
             today = datetime.datetime.now()
             end_date = date(today.year, today.month, today.day)
             start_date = end_date-timedelta(days=2)
-            self.personis_app_manager.get_minute_steps(start_date, end_date)
-            #self.personis_um.add_rules(context=['Device','Fitbit'])
+            cherrypy.session.get('appmgr').get_minute_steps(start_date, end_date)
+            #um.add_rules(context=['Device','Fitbit'])
             return genshi_tmpl.fitbit_template("Fitbit Confirmation",self.__setgoal,self.modeltree)
 
         else:
@@ -715,12 +628,13 @@ class WelcomePage():
 
 
         print "Creating Goal context "
-        self.personis_um.um.mkcontext(context,ctx_obj)
+        um = cherrypy.session.get('um')
+        um.um.mkcontext(context,ctx_obj)
         context.append('Goals')
         goal = "Dummy goal"
         try:
-            self.personis_um.make_new_component(goal,'attribute', 'string',None,'None',context)
-            self.personis_um.add_evidence(context=['Admin'], component='browseractivity', value="Goal:"+goal+" is set", comment="/show_sub_context?context=Health/Goals")
+            um.make_new_component(goal,'attribute', 'string',None,'None',context)
+            um.add_evidence(context=['Admin'], component='browseractivity', value="Goal:"+goal+" is set", comment="/show_sub_context?context=Health/Goals")
 
             write_log('notice','Set goals operation successful')
 
@@ -732,17 +646,18 @@ class WelcomePage():
     set_goals.exposed = True
 
     def browse_goals(self):
-        self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        um = cherrypy.session.get('um')
+        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         self.__curAction = "Goals"
         self.context_list = []
-        self.modeltree = self.personis_um.build_modeldef_tree()
+        self.modeltree = um.build_modeldef_tree()
         #self.modeltree = set(self.modeltree)
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, self.username, self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
 
         if type(self.modeltree) is ListType:
             write_log('notice','Goals Clicked: Operation Successful')
             self.modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
-            return genshi_tmpl.browse_goal_template(ACCESS_TYPE, self.modeltree, self.username)
+            return genshi_tmpl.browse_goal_template(ACCESS_TYPE, self.modeltree, cherrypy.session.get('username'))
         else:
             e = self.context_list
             write_log('error','Goals Clicked: Operation Failed; Error:'+str(e))
@@ -762,8 +677,9 @@ class WelcomePage():
     #----------------------------------Start Visualisation functions--------------------------------------------------------#
     def show_size(self):
         t1 = time.clock()
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        res = self.personis_vis.show_size(self.modeltree)
+        personis_vis = cherrypy.session.get('vismgr')
+        modeltree = cherrypy.session.get('modeltree')
+        res = personis_vis.show_size(self.modeltree)
 
         t2 = time.clock()
         print res
@@ -779,8 +695,8 @@ class WelcomePage():
     #@print_timing
     def show_health(self):
         t1 = time.clock()
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        res = self.personis_vis.show_health()
+        personis_vis = cherrypy.session.get('vismgr')
+        res = personis_vis.show_health()
         t2 = time.clock()
         write_log('notice','Show health visualisation')
         print 'show_health took %0.3fms' % ((t2-t1)*1000.0)
@@ -791,15 +707,15 @@ class WelcomePage():
     #@print_timing
     def show_graph_hc(self,data=None):
         write_log('notice','Get data from um for visualisation')
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        return self.personis_vis.show_graph_hc(data)
+        personis_vis = cherrypy.session.get('vismgr')
+        return personis_vis.show_graph_hc(data)
 
     show_graph_hc.exposed = True
 
     def show_goals(self):
         t1 = time.clock()
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        res = self.personis_vis.show_goals()
+        personis_vis = cherrypy.session.get('vismgr')
+        res = personis_vis.show_goals()
         t2 = time.clock()
         write_log('notice','Show goals visualisation')
         print 'show_goal took %0.3fms' % ((t2-t1)*1000.0)
@@ -809,16 +725,17 @@ class WelcomePage():
 
     @print_timing
     def show_people(self):
-        write_log('notice','Show people visualisation')
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        return self.personis_vis.term_cloud()
+        personis_vis = cherrypy.session.get('vismgr')
+        um = cherrypy.session.get('um')
+        modeltree = cherrypy.session.get('modeltree')
+        return personis_vis.term_cloud()
 
     show_people.exposed = True
 
     #@print_timing
     def show_timeline(self):
         write_log('notice','Show timeline visualisation')
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
+        personis_vis = cherrypy.session.get('vismgr')
         return self.personis_vis.show_timeline()
 
     show_timeline.exposed = True
@@ -826,27 +743,32 @@ class WelcomePage():
     #@print_timing
     def show_annual(self):
         write_log('notice','Show annual visualisation')
-        self.personis_app_manager = Personis_App_Manager(ACCESS_TYPE, self.personis_um)
-        #self.personis_app_manager.get_fitbit_data()
-        self.personis_um.get_size()
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
-        return self.personis_vis.annual_records()
+        personis_vis = cherrypy.session.get('vismgr')
+        um = cherrypy.session.get('um')
+        modeltree = cherrypy.session.get('modeltree')
+        app_manager = cherrypy.session.get('appmgr')
+        #sapp_manager.get_fitbit_data()
+        #um.get_size()
+        return personis_vis.annual_records()
 
     show_annual.exposed = True
 
     def show_calories(self):
-        #self.personis_app_manager = Personis_App_Manager(ACCESS_TYPE, self.personis_um)
-        #self.personis_app_manager.get_calorie_data()
-        self.personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, self.personis_um)
+        #app_manager = cherrypy.session.get('appmgr')
+        #app_manager = Personis_App_Manager(ACCESS_TYPE, self.personis_um)
+        #app_manager.get_calorie_data()
+        personis_vis = cherrypy.session.get('vismgr')
+        um = cherrypy.session.get('um')
         write_log('notice','Show calories visualisation')
-        fitbit_plugin.get_fitbit_data(self.personis_um)
-        self.personis_vis.show_graph_steps()
-        return self.personis_vis.annual_records()
+        fitbit_plugin.get_fitbit_data(um)
+        personis_vis.show_graph_steps()
+        return personis_vis.annual_records()
 
     show_calories.exposed = True
 
     def get_timeline_data(self):
-        return self.personis_vis.get_timeline_data()
+        personis_vis = cherrypy.session.get('vismgr')
+        return personis_vis.get_timeline_data()
     get_timeline_data.exposed = True
 
 
@@ -885,20 +807,81 @@ class WelcomePage():
     comment_log.exposed = True
 
     def logout(self):
-        self.personis_um = None
+        cherrypy.session.pop('um')
         genshi_tmpl = LoadGenshiTemplate(self.__curSession)
         write_log('notice','Log out operation successful')
         return genshi_tmpl.welcome_template()
     logout.exposed = True
 
+    @cherrypy.expose
+    def do_login(self):
+        if cherrypy.session.get('connection') <> None:
+            raise IOError()
+        flow = OAuth2WebServerFlow(client_id='personis_client_mneme',
+                                   client_secret='personis_client_mneme_secret',
+                                   scope='https://www.personis.info/auth/model',
+                                   user_agent='mneme-server/1.0',
+                                   auth_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/authorize',
+                                   token_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/request_token')
+        callback = callback = 'http://enterprise.it.usyd.edu.au:8000/authorized'
+        authorize_url = flow.step1_get_authorize_url(callback)
+        cherrypy.session['flow'] = flow
+        raise cherrypy.HTTPRedirect(authorize_url)
+    
+    @cherrypy.expose
+    def authorized(self, code, state=None):
+        flow = cherrypy.session.get('flow')
+        if not flow:
+            raise IOError()
+        print cherrypy.request.params
+        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+        h = httplib2.Http(proxy_info=p)
+        credentials = flow.step2_exchange(cherrypy.request.params, h)
+        ht = httplib2.Http(proxy_info=p)
+        c = connection.Connection(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', credentials = credentials, http = ht)
+        #credentials.authorize(ht)
+        cherrypy.session['connection'] = c
 
-#cherrypy.root.browse = BrowsePage()
+        self.__curSession = "Session 1"
+        self.__curContext = "None"
+        um = Personis_Access(connection=c, debug=True)
+        app_manager = Personis_App_Manager(ACCESS_TYPE, um)
+        personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, um)
+
+        cherrypy.session['um'] = um
+        cherrypy.session['appmgr'] = app_manager
+        cherrypy.session['vismgr'] = personis_vis
+
+        reslist = um.um.ask(context=["Personal"],view=['firstname'])
+        Personis_util.printcomplist(reslist)
+        cherrypy.session['username'] = reslist[0].value
+
+        um.tell_login_time('log-in')
+        redir = cherrypy.session.get('redirect')
+        if redir == None:
+            redir = '/browse/'
+        raise cherrypy.HTTPRedirect(redir)
 
 if __name__ == '__main__':
 
+    parser = OptionParser()
+    parser.add_option("-a", "--appconfig",
+              dest="appconf", metavar='FILE',
+              help="App Config file", default='app.conf')
+    parser.add_option("-g", "--globalconfig",
+              dest="globalconf", metavar='FILE',
+              help="Global Config file", default='global.conf')
 
-    cherrypy.config.update('global.conf')
-    cherrypy.quickstart(WelcomePage(),'/',config='app.conf')
+    (options, args) = parser.parse_args()
+
+    httplib2.debuglevel=0
+    cherrypy.config.update(options.globalconf)
+    cherrypy.tree.mount(WelcomePage(),'/',config=options.appconf)
+    
+    #cherrypy.server.ssl_certificate = "server.crt"
+    #cherrypy.server.ssl_private_key = "server.key" 
+    cherrypy.engine.start()
+    cherrypy.engine.block()
     #import subprocess
     #ret = subprocess.call(["ssh","chai@vm1-chai2","python /home/chai/um-browser/serv.py"]);
 
