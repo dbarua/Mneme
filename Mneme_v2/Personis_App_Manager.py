@@ -20,7 +20,7 @@ from Personis_util import printcomplist
 #model_dir = '/home/dbarua/Desktop/llum/Personis/models'
 
 #_curdir = os.path.join(os.getcwd(), os.path.dirname(__file__))
-model_dir = '/home/chai/llum/llum/Personis/models'
+#model_dir = '/home/chai/llum/llum/Personis/models'
 
 #Apps model
 from AppList import *

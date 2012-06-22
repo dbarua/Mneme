@@ -8,6 +8,7 @@ import os, sys
 import Personis
 import Personis_base
 import Personis_a
+from Personis_util import printcomplist
 
 #Time, date, timezone
 from datetime import date, time, timedelta
@@ -24,7 +25,7 @@ import time
 
 #_curdir = os.path.join(os.getcwd(), os.path.dirname(__file__))
 
-model_dir = '/home/chai/llum/llum/Personis/models'
+#model_dir = '/home/chai/llum/llum/Personis/models'
 
 #Apps model
 from AppList import *
@@ -42,25 +43,13 @@ class model_tree(object):
         self.visited = 0
 
 class Personis_Access(object):
-    # initialise personis um object and access to server
-    def __init__(self,access_type=None, modelname=None, username=None, password=None):
-        print access_type
-        self.access_type = access_type
-        self.username = username
-        self.modelname = modelname
-        self.password = password
-        if access_type != 'Server':
-            self.um = Personis_base.Access(model= self.modelname, modeldir=model_dir, user=self.username, password=self.password)
 
-        else:
-            parts = []
-            parts.append(modelname)
-            #parts.append('@vm1-chai2.it.usyd.edu.au')
-            server_modelname = ''.join(parts)
-            #self.modelname = server_modelname
-            self.modelname = modelname
-            self.um = Personis.Access(model= self.modelname, user=self.username, password=self.password)
-            #modelfile = "saved-model"
+    # initialise personis um object and access to the server
+    def __init__(self, connection=None, debug=0):
+        self.connection = connection
+
+        self.um = Personis.Access(connection = self.connection, debug=True)
+            # modelfile = "saved-model"
             #print "importing:", modelfile
             #modeljson = open(modelfile).read()
             #self.um.import_model(partial_model=modeljson)
@@ -154,14 +143,7 @@ class Personis_Access(object):
             print "Subscriptions: %s" % str(thesubs)
 
             for dirs in contexts:
-                if self.access_type == 'Base':
-                    context = []
-                    context.append(dirs)
-                    context_info = self.um.getcontext(context)
-                    #print context_info['Identifier'], context_info['Description']
-                    context_list.append(context_info)
-                else:
-                    context_list.append(dirs)
+                context_list.append(dirs)
             return context_list
         except ValueError, e:
             err_msg = "ask failed: %s" % (e)
@@ -263,7 +245,7 @@ class Personis_Access(object):
             print e
             return e
 
-    def getpermission(context, app):
+    def getpermission(self, context, app):
         perms = self.um.getpermission(context=["Devices"], app=app)
         return perms
 
@@ -359,7 +341,7 @@ class Personis_Access(object):
 
     def add_access_records(self,componentid=None):
         try:
-            self.um = Personis_base.Access(model= self.modelname, modeldir=model_dir, user=self.username, password=self.password)
+            self.um = Personis.Access(connection = self.connection, debug=True)
             ev = Personis_base.Evidence(source="build_model.py", evidence_type="explicit", value=str(componentid))
             ev.comment = "Access Record for " + componentid
             context = self.__curContext.split('/')
