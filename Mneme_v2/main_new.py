@@ -4,16 +4,6 @@
 # this program is using some code from Cherrypy and Personis tutorial
 
 import os, sys
-"""
-sys.path.insert(0, '/home/dbarua/Desktop/llum/Personis/Src')
-sys.path.insert(0, '/home/dbarua/Python/gmail-sensors')
-sys.path.insert(0, '/home/dbarua/Python/gmail-sensors/mail-trends')
-sys.path.insert(0, '/home/dbarua/Python/gmail-sensors/gmail_lib')
-"""
-sys.path.insert(0, '/home/chai/llum/Personis/Src')
-#sys.path.insert(0, '/home/dbarua/llum/gmail-sensors')
-#sys.path.insert(0, '/home/dbarua/llum/gmail-sensors/mail-trends')
-#sys.path.insert(0, '/home/dbarua/llum/gmail-sensors/gmail_lib')
 
 import cherrypy
 import wsgiref.handlers

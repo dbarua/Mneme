@@ -5,8 +5,6 @@
 
 import os, sys
 
-sys.path.insert(0, '/home/chai/llum/llum/Personis/Src')
-
 #Personis
 import Personis
 import Personis_base, Personis_a

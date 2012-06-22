@@ -4,7 +4,6 @@
 # this program is using some code from Cherrypy and Personis tutorial
 
 import os, sys
-sys.path.insert(0, '/home/chai/llum/llum/Personis/Src')
 
 #Personis
 import Personis

@@ -7,8 +7,6 @@ import datetime
 
 import os, sys
 
-sys.path.insert(0, '/home/chai/llum/llum/Personis/Src')
-
 GOAL = 10000
 #Personis
 import Personis
