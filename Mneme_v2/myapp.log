@@ -461,3 +461,168 @@ AttributeError: WelcomePage instance has no attribute 'username'
 [22/Jun/2012:16:44:45] ENGINE Bus EXITED
 [22/Jun/2012:16:44:45] ENGINE Waiting for child threads to terminate...
 [22/Jun/2012:16:44:45] ENGINE Waiting for thread CP Server Thread-10.
+[25/Jun/2012:14:33:10] ENGINE Bus STARTING
+[25/Jun/2012:14:33:10] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:14:33:10] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:14:33:10] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:14:33:10] ENGINE Bus STARTED
+[25/Jun/2012:14:33:21] ENGINE Started monitor thread 'Session cleanup'.
+[25/Jun/2012:14:33:37] ENGINE Keyboard Interrupt: shutting down bus
+[25/Jun/2012:14:33:37] ENGINE Bus STOPPING
+[25/Jun/2012:14:33:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:14:33:37] ENGINE Stopped thread 'Session cleanup'.
+[25/Jun/2012:14:33:37] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:14:33:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:14:33:37] ENGINE Bus STOPPED
+[25/Jun/2012:14:33:37] ENGINE Bus EXITING
+[25/Jun/2012:14:33:37] ENGINE Bus EXITED
+[25/Jun/2012:14:33:37] ENGINE Waiting for child threads to terminate...
+[25/Jun/2012:14:45:14] ENGINE Bus STARTING
+[25/Jun/2012:14:45:14] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:14:45:14] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:14:45:14] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:14:45:14] ENGINE Bus STARTED
+[25/Jun/2012:14:45:39] ENGINE Started monitor thread 'Session cleanup'.
+[25/Jun/2012:14:45:39] HTTP 
+Request Headers:
+  REFERER: http://enterprise.it.usyd.edu.au:8000/
+  HOST: enterprise.it.usyd.edu.au:8000
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=128a9bb7e7fdcdca4cc4d1c4b71e3a3250a33f30
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[25/Jun/2012:14:45:39] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "main_new.py", line 822, in do_login
+    flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
+TypeError: string indices must be integers, not str
+
+[25/Jun/2012:14:46:49] ENGINE Restarting because /home/jbu/src/Mneme/Mneme_v2/main_new.py changed.
+[25/Jun/2012:14:46:49] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:14:46:49] ENGINE Bus STOPPING
+[25/Jun/2012:14:46:49] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:14:46:49] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:14:46:49] ENGINE Stopped thread 'Session cleanup'.
+[25/Jun/2012:14:46:49] ENGINE Bus STOPPED
+[25/Jun/2012:14:46:49] ENGINE Bus EXITING
+[25/Jun/2012:14:46:49] ENGINE Bus EXITED
+[25/Jun/2012:14:46:49] ENGINE Waiting for child threads to terminate...
+[25/Jun/2012:14:46:49] ENGINE Re-spawning main_new.py --appconfig app.jbu.conf --globalconfig global.jbu.conf
+[25/Jun/2012:14:46:49] ENGINE Bus STARTING
+[25/Jun/2012:14:46:49] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:14:46:49] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:14:46:49] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:14:46:49] ENGINE Bus STARTED
+[25/Jun/2012:14:46:54] ENGINE Started monitor thread 'Session cleanup'.
+[25/Jun/2012:14:46:54] HTTP 
+Request Headers:
+  REFERER: http://enterprise.it.usyd.edu.au:8000/
+  HOST: enterprise.it.usyd.edu.au:8000
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=e39c11e099af08ae7df37e7c4dad14c2acfd8a25
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[25/Jun/2012:14:46:54] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "main_new.py", line 823, in do_login
+    flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
+TypeError: string indices must be integers, not str
+
+[25/Jun/2012:14:47:08] ENGINE Keyboard Interrupt: shutting down bus
+[25/Jun/2012:14:47:08] ENGINE Bus STOPPING
+[25/Jun/2012:14:47:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:14:47:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:14:47:08] ENGINE Stopped thread 'Session cleanup'.
+[25/Jun/2012:14:47:08] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:14:47:08] ENGINE Bus STOPPED
+[25/Jun/2012:14:47:08] ENGINE Bus EXITING
+[25/Jun/2012:14:47:08] ENGINE Bus EXITED
+[25/Jun/2012:14:47:08] ENGINE Waiting for child threads to terminate...
+[25/Jun/2012:14:47:34] ENGINE Bus STARTING
+[25/Jun/2012:14:47:34] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:14:47:34] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:14:47:34] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:14:47:34] ENGINE Bus STARTED
+[25/Jun/2012:14:47:38] ENGINE Started monitor thread 'Session cleanup'.
+[25/Jun/2012:14:47:38] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=985e2d5b3022015e507f671857667cb0548b036f
+  HOST: enterprise.it.usyd.edu.au:8000
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[25/Jun/2012:14:47:38] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "main_new.py", line 823, in do_login
+    flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
+TypeError: string indices must be integers, not str
+
+[25/Jun/2012:14:48:29] ENGINE Restarting because /home/jbu/src/Mneme/Mneme_v2/main_new.py changed.
+[25/Jun/2012:14:48:29] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:14:48:29] ENGINE Bus STOPPING
+[25/Jun/2012:14:48:29] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:14:48:29] ENGINE Stopped thread 'Session cleanup'.
+[25/Jun/2012:14:48:29] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:14:48:29] ENGINE Bus STOPPED
+[25/Jun/2012:14:48:29] ENGINE Bus EXITING
+[25/Jun/2012:14:48:29] ENGINE Bus EXITED
+[25/Jun/2012:14:48:29] ENGINE Waiting for child threads to terminate...
+[25/Jun/2012:14:48:29] ENGINE Re-spawning main_new.py --appconfig app.jbu.conf --globalconfig global.jbu.conf --oauthconf oauth.yaml
+[25/Jun/2012:14:48:34] ENGINE Bus STARTING
+[25/Jun/2012:14:48:34] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:14:48:34] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:14:48:34] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:14:48:34] ENGINE Bus STARTED
+[25/Jun/2012:14:48:39] ENGINE Started monitor thread 'Session cleanup'.
+[25/Jun/2012:15:05:59] ENGINE Keyboard Interrupt: shutting down bus
+[25/Jun/2012:15:05:59] ENGINE Bus STOPPING
+[25/Jun/2012:15:05:59] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:15:05:59] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:15:05:59] ENGINE Stopped thread 'Session cleanup'.
+[25/Jun/2012:15:05:59] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:15:05:59] ENGINE Bus STOPPED
+[25/Jun/2012:15:05:59] ENGINE Bus EXITING
+[25/Jun/2012:15:05:59] ENGINE Bus EXITED
+[25/Jun/2012:15:05:59] ENGINE Waiting for child threads to terminate...
+[25/Jun/2012:15:07:07] ENGINE Bus STARTING
+[25/Jun/2012:15:07:07] ENGINE Started monitor thread 'Autoreloader'.
+[25/Jun/2012:15:07:07] ENGINE Started monitor thread '_TimeoutMonitor'.
+[25/Jun/2012:15:07:07] ENGINE Serving on enterprise.it.usyd.edu.au:8000
+[25/Jun/2012:15:07:07] ENGINE Bus STARTED
+[25/Jun/2012:17:17:18] ENGINE Keyboard Interrupt: shutting down bus
+[25/Jun/2012:17:17:18] ENGINE Bus STOPPING
+[25/Jun/2012:17:17:18] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8000)) shut down
+[25/Jun/2012:17:17:18] ENGINE Stopped thread '_TimeoutMonitor'.
+[25/Jun/2012:17:17:18] ENGINE Stopped thread 'Autoreloader'.
+[25/Jun/2012:17:17:18] ENGINE Bus STOPPED
+[25/Jun/2012:17:17:18] ENGINE Bus EXITING
+[25/Jun/2012:17:17:18] ENGINE Bus EXITED
+[25/Jun/2012:17:17:18] ENGINE Waiting for child threads to terminate...
