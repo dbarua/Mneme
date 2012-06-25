@@ -142,7 +142,7 @@ class WelcomePage():
         browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
          
         cur_action = "Browser"
-        cherrypy.session['curact'] = cur_action
+        cherrypy.session['cur_action'] = cur_action
                 
         modeltree = um.build_modeldef_tree()
                
@@ -454,6 +454,7 @@ class WelcomePage():
     def show_unreg_apps(self):
         um = cherrypy.session.get('um')
         print "Showing unregistered apps"
+        cherrypy.session['cur_action'] = "Install Application Plugin"
         modeltree = um.build_modeldef_tree()
         modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
         cherrypy.session['modeltree'] = modeltree
@@ -649,7 +650,7 @@ class WelcomePage():
     def browse_goals(self):
         um = cherrypy.session.get('um')
         browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        cherrypy.session['cur_action'] = "Goals"
+        cherrypy.session['cur_action'] = "Browse Goals"
         
         modeltree = um.build_modeldef_tree()
         
