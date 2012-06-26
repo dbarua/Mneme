@@ -32,6 +32,7 @@ import time
 #import pytz
 
 import webbrowser
+import yaml
 
 #Access Personis
 #from Personis_Build_Model import *
@@ -103,6 +104,8 @@ class WelcomePage():
 
     #_cp_config = { 'tool.sessions.on': True }
 
+    def __init__(self, oauthconf = None):
+        self.oauthconf = yaml.load(file(oauthconf,'r'))
 
     @print_timing
     def index(self):
@@ -324,6 +327,7 @@ class WelcomePage():
             cherrypy.session['cur_component'] = 'firstname'
             reslist = um.get_evidence_new()
 
+        #users_list = test_data_to_list(test_data) # 4 lines
         evdlist = []
         i = 0
         #{'comment': None, 'evidence_type': 'explicit', 'creation_time': 1322914468.889158, 'value': 'Bob',
@@ -526,13 +530,15 @@ class WelcomePage():
             new_um_applist =cherrypy.session.get('appmgr').get_register_applist()
             #print new_um_applist
             if type(new_um_applist) is ListType:
+
                 write_log('notice','Show registered apps list operation successful')
+
                 return genshi_tmpl.reg_apps_template(new_um_applist)
             else:
                 e = ", No installed app plugin has been found. Please install app or contact administrator."
                 write_log('error','Show registered list Operation Failed; Error:'+str(e))
-                return genshi_tmpl.greeting_template(e, "Show registered apps", modeltree)
 
+                return genshi_tmpl.greeting_template(e, "Show registered apps",self.modeltree)
         except Exception,e:
             err = ", An error occured during loading page. " + str(e) + "Please contact administrator."
             write_log('error','Show registered list Operation Failed; Error:'+str(e))
@@ -832,15 +838,14 @@ class WelcomePage():
     def do_login(self):
         if cherrypy.session.get('connection') <> None:
             raise IOError()
-        print "Hello"
-        flow = OAuth2WebServerFlow(client_id='3914194987395884500',
-                                   client_secret='8557841434120157466',
+        print self.oauthconf
+        flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
+                                   client_secret=self.oauthconf['client_secret'],
                                    scope='https://www.personis.info/auth/model',
                                    user_agent='mneme-server/1.0',
-                                   auth_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/authorize',
-                                   token_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/request_token')
-        #callback = callback = 'http://enterprise.it.usyd.edu.au:8000/authorized'
-        callback = callback = 'http://vm1-chai2.cs.usyd.edu.au:2001/authorized'        
+                                   auth_uri=self.oauthconf['personis_uri']+'/authorize',
+                                   token_uri=self.oauthconf['personis_uri']+'/request_token')
+        callback = callback = self.oauthconf['callback']
         authorize_url = flow.step1_get_authorize_url(callback)
         cherrypy.session['flow'] = flow
         raise cherrypy.HTTPRedirect(authorize_url)
@@ -855,7 +860,7 @@ class WelcomePage():
         h = httplib2.Http(proxy_info=p)
         credentials = flow.step2_exchange(cherrypy.request.params, h)
         ht = httplib2.Http(proxy_info=p)
-        c = connection.Connection(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', credentials = credentials, http = ht)
+        c = connection.Connection(uri = self.oauthconf['personis_uri'], credentials = credentials, http = ht)
         #credentials.authorize(ht)
         cherrypy.session['connection'] = c
 
@@ -893,12 +898,15 @@ if __name__ == '__main__':
     parser.add_option("-g", "--globalconfig",
               dest="globalconf", metavar='FILE',
               help="Global Config file", default='global.conf')
+    parser.add_option("-o", "--oauthconf",
+              dest="oauthconf", metavar='FILE',
+              help="Oauth Config file", default='oauth.yaml')
 
     (options, args) = parser.parse_args()
 
     httplib2.debuglevel=0
     cherrypy.config.update(options.globalconf)
-    cherrypy.tree.mount(WelcomePage(),'/',config=options.appconf)
+    cherrypy.tree.mount(WelcomePage(options.oauthconf),'/',config=options.appconf)
     
     #cherrypy.server.ssl_certificate = "server.crt"
     #cherrypy.server.ssl_private_key = "server.key" 
