@@ -15,7 +15,7 @@ class LoadGenshiTemplate(object):
         self.browser_activity = browser_activity
 
     def welcome_template(self):
-        tmpl = loader.load('um_home.html')
+        tmpl = loader.load('index.html')
         #tmpl = loader.load('browse_tabs.html')
         content = """"""
         stream = tmpl.generate(session=self.__curSession, title="Long term User Model Browser", headline="About Mneme", content=content)

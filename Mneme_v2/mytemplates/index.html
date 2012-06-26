@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:py="http://genshi.edgewall.org/" py:strip="">
+ <head>
+  <title>$title</title>
+   
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<link rel="stylesheet" media="screen" href="/static/style.css" type="text/css" charset="utf-8"/>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui-1.9m1/ui/jquery.ui.tooltip.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  
+  <style>
+		.ui-icon { display: inline-block; }
+		fieldset div {
+			margin-bottom: 2em;
+		}
+		.ui-tooltip { width: 210px; }
+		.ui-dialog .ui-dialog-content { 
+			background-color: #4E4E4E; 
+			font-size:14px;
+                        font-family:Trebuchet-MS;
+                }
+		.ui-dialog .ui-dialog-buttonpane{background-color: #4E4E4E; }
+        body{
+        		margin: 0;
+				background-color: #f1f1f1;
+				border: 0;
+				padding: 0;
+				color: #000;
+				font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+				font-size: 11pt;
+                overflow-x:hidden;				
+        }
+        #content{
+        	  margin: 0 13%;
+        	  padding:0 15% 0 15%;
+              width:42%;
+              background-color: #f1f1f1;             
+        }
+        #contentleft_home{
+		      float:left;
+              margin:10% 2% 10% 2%;
+              padding:2%;         	
+        	  background-color: #f1f1f1;
+        }
+        #contentright{
+			width:20%;
+			float:right;
+	        margin:6% 1% 1% 1%;
+	        padding:1%;
+	                
+   	    }
+	   #login_reg_div{
+			width:120px;
+			margin:5px;
+			padding:5px;
+		}
+	  .link{
+		    margin:5px;
+			padding:5px;
+		}
+	  .button {
+		    display: inline-block;
+			line-height: 1;
+			padding: 7px 10px;
+			text-decoration: none;
+			font-weight: bold; 
+	        font-size:14px;       
+			color: #fff;
+			background-color: #171717;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-khtml-border-radius: 5px;
+			border-radius: 5px;
+   	  }
+     .border{
+  	        border:2px solid #333;
+			-moz-border-radius: 20px;
+			-webkit-border-radius:20px;
+			-khtml-border-radius:20px;
+			-moz-box-shadow: 0 1px 5px #333;
+			-webkit-box-shadow: 0 1px 5px #333;
+       }
+
+     .show_list{
+           
+            background-color:#39628b;
+            color:#FFF;
+            margin:1%;
+            padding:2%;            
+            border:2px solid #ccc;
+            -moz-border-radius: 20px;
+            -webkit-border-radius:20px;
+            -khtml-border-radius:20px;
+            -moz-box-shadow: 0 1px 5px #333;
+            -webkit-box-shadow: 0 1px 5px #333;
+            z-index:101;
+    }
+    .clear_space{
+    	height: 20px;
+    }
+    table.role { margin: 0px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+    td.role { text-align: right; font-size: 100%; font-weight: bold; color: #fff; }
+    td img.decor { display: block; }
+    table { font-size: 10pt; }    
+       
+ </style>
+  
+</head>
+<body>
+   <!--<div id="header">      
+   </div> -->
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">
+   <tbody><tr>
+    <td style="width: 200px;">
+      <a href="http://www.usyd.edu.au/">
+        <img border="0" src="http://www.it.usyd.edu.au/images/common/university_sydney_logo.gif" alt="School of IT" class="decor" />
+      </a>
+    </td>
+    <td style="width: 100%;"></td>
+    <td style="width: 400px;">
+      <a href="Home">
+        <img border="0" class="decor" alt="CHAI: computer human adapted interaction" src="http://chai.it.usyd.edu.au/Images/chai_banner.png" />
+      </a>
+    </td>
+  </tr>
+  </tbody></table>   
+   <div id="content">
+	<div id="contentleft_home" class="border"> 
+     	<h1>Mneme</h1>
+         <h2>Managing Personal Lifelong Information.</h2>
+ 	  	   <h2>$content </h2>
+	
+	  <div id="lefttxtblank">
+	      <div id="intro"> 
+	        This site takes after the Greek goddess of memory, and <i>remembers</i> information you want kept. You can make Mneme collect information via sensors and applications. You can see it, explore it, and see trends.You control the information you decide what applications can use it and even when you want it to <i>forget</i>.
+	      </div>
+	      <div class="clear_space"></div>
+			<table style="width:100%">
+			  <tbody>
+			    <tr>
+			      <!--<td>
+			      <div id="tour_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="quick_tour"><font color="#ffffff">Have a quick tour</font></a> </div>
+			      </td>-->
+			      <td style="width:32.5%"></td>
+			      <td>
+			      <div id="login_reg_div" class="show_list home_tools"> <a href="/do_login" id="log_reg" class="link"> <font color="#ffffff">Login with Gmail</font></a>
+			      </div>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+	  </div>
+	</div>
+ </div>
+<!--<div id="contentright" class="border">
+ <div id="user_feedback" class="show_list" style="margin: 10px; padding: 10px;">
+    <form id="feedback_form" method="" action=""> <label>This is a research prototype system. <br/> Please leave comments here.</label> 
+      <textarea id="comment" name="comment" class="textarea"></textarea>
+      <div><input class="button" id="log_comment" value="Submit" type="button"/></div>
+    </form>
+   </div>
+  </div>
+ -->
+</body>
+</html>
