@@ -26,7 +26,7 @@ import cgi, cgitb
 import string, operator
 
 #Time, date, timezone
-from datetime import date, time, timedelta
+from datetime import datetime, date, time, timedelta
 import time
 #from pytz import timezone, tzfile
 #import pytz
@@ -92,6 +92,7 @@ def print_timing(func):
     return wrapper
 
 def write_log(mode,text):
+    import datetime
     __time = datetime.datetime.fromtimestamp(int(time.time())).strftime("%a %b %d %H:%M:%S %Y")
     note = '['+__time+'] ['+mode+'] '+text+'\n'
     f = open('comment.log','a')
@@ -108,7 +109,7 @@ class WelcomePage():
 
     @print_timing
     def index(self):
-        curSession = '1'
+        curSession = 'Session 1'
         cherrypy.session['cur_session'] = curSession  
 
         write_log('notice','Welcome to Mneme')
@@ -141,25 +142,32 @@ class WelcomePage():
     # browse list of contexts
     @print_timing
     def browse(self,**data):
-        um = cherrypy.session.get('um')
-        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-         
-        cur_action = "Browser"
-        cherrypy.session['cur_action'] = cur_action
-                
-        modeltree = um.build_modeldef_tree()
-               
-        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
+        try:
+            um = cherrypy.session.get('um')
 
-        if type(modeltree) is ListType:
-            write_log('notice','Browser Clicked: Operation Successful')
-            modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
-            cherrypy.session['modeltree'] = modeltree
-            return genshi_tmpl.browse_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
-        else:
-            e = modeltree
+            modeltree = browser_activities = []
+            cur_action = "Browser"
+            cherrypy.session['cur_action'] = cur_action
+            if um != None: 
+               browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')                
+               modeltree = um.build_modeldef_tree()               
+            print "User name:",cherrypy.session.get('username')   
+            genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
+
+            if type(modeltree) is ListType:
+               write_log('notice','Browser Clicked: Operation Successful')
+               modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
+               cherrypy.session['modeltree'] = modeltree
+               return genshi_tmpl.browse_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
+            else:
+               e = modeltree
+               write_log('error','Browser Clicked: Operation Failed; Error:'+str(e))
+               return genshi_tmpl.greeting_template(e,"Browse",modeltree)
+        except Exception, e:
+            genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'))
             write_log('error','Browser Clicked: Operation Failed; Error:'+str(e))
             return genshi_tmpl.greeting_template(e,"Browse")
+            
     browse.exposed = True
 
 
@@ -236,7 +244,7 @@ class WelcomePage():
         context = udata.encode("ascii","ignore")
         context_list = context.split('/')
         modeltree = cherrypy.session.get('modeltree')
-
+        
         genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
         try:
             #contexts, components = self.personis_um.all_access_model(context_list);
@@ -808,6 +816,7 @@ class WelcomePage():
     open_page.exposed = True
 
     def comment_log(self,comment):
+        import datetime
         __time = datetime.datetime.fromtimestamp(int(time.time())).strftime("%a %b %d %H:%M:%S %Y")
         comment = comment.split('_')
         note = '['+__time+'] ['+comment[0]+'] '+comment[1]+'\n'
@@ -865,15 +874,20 @@ class WelcomePage():
         cherrypy.session['appmgr'] = app_manager
         cherrypy.session['vismgr'] = personis_vis
 
+        ev = Personis_base.Evidence(source="build_model.py", evidence_type="explicit", value='testname')
+        um.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
+
         reslist = um.um.ask(context=["Personal"],view=['firstname'])
         Personis_util.printcomplist(reslist)
         cherrypy.session['username'] = reslist[0].value
-
-        um.tell_login_time('log-in')
+        print "user name: "+str(cherrypy.session['username'])
+        #um.tell_login_time('log-in')
         redir = cherrypy.session.get('redirect')
+        
         if redir == None:
+            print "No redirect found"+str(redir)
             redir = '/browse/'
-        raise cherrypy.HTTPRedirect(redir)
+        raise cherrypy.InternalRedirect(redir)
 
 if __name__ == '__main__':
 
