@@ -43,7 +43,7 @@ class LoadGenshiTemplate(object):
         return stream.render('xhtml')
 
 
-    def greeting_template(self,data, where,context_list):
+    def greeting_template(self,data, where,context_list=[]):
         greeting1 = "Dear user "
         fname = self.who
         greeting2 = str(data)
