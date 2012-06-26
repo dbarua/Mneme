@@ -101,20 +101,19 @@ def write_log(mode,text):
 #Main page
 class WelcomePage():
 
-    _cp_config = { 'tool.sessions.on': True }
+    #_cp_config = { 'tool.sessions.on': True }
 
     def __init__(self, oauthconf = None):
         self.oauthconf = yaml.load(file(oauthconf,'r'))
 
     @print_timing
     def index(self):
-        self.__curSession = "Session 1"
-        self.__curComponent = 'None'
-        self.__curContext = 'None'
+        curSession = '1'
+        cherrypy.session['cur_session'] = curSession  
 
         write_log('notice','Welcome to Mneme')
 
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession)
+        genshi_tmpl = LoadGenshiTemplate(curSession)
         return genshi_tmpl.welcome_template()
     index.exposed = True
 
@@ -128,8 +127,8 @@ class WelcomePage():
         context_list = []
         um = cherrypy.session.get('um')
         context_list = um.all_access_model()
-
-        for context in self.context_list:
+        cherrypy.session['context_list'] = context_list
+        for context in context_list:
             temp_list = list()
             subcontext, component = um.get_all_component(context_list);
             if subcontext:
@@ -143,15 +142,14 @@ class WelcomePage():
     @print_timing
     def browse(self,**data):
         um = cherrypy.session.get('um')
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        self.__curAction = "Browser"
-        self.context_list = []
-        #size = um.get_size()
-        #print size
-
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+         
+        cur_action = "Browser"
+        cherrypy.session['cur_action'] = cur_action
+                
         modeltree = um.build_modeldef_tree()
-
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+               
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
 
         if type(modeltree) is ListType:
             write_log('notice','Browser Clicked: Operation Successful')
@@ -159,20 +157,20 @@ class WelcomePage():
             cherrypy.session['modeltree'] = modeltree
             return genshi_tmpl.browse_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
         else:
-            e = self.context_list
+            e = modeltree
             write_log('error','Browser Clicked: Operation Failed; Error:'+str(e))
-
-        return genshi_tmpl.greeting_template(e,"Browse")
+            return genshi_tmpl.greeting_template(e,"Browse")
     browse.exposed = True
 
 
     @print_timing
     def get_prev_context(self):
         try:
-            context_list = self.__curContext.split('/')
-            print context_list
+            cur_context = cherrypy.session.get('cur_context')
+            context_list = cur_context.split('/')
+            #print context_list
             prev_context = '/'.join([str(x) for x in context_list[:-1]])
-            print prev_context
+            #print prev_context
 
             write_log('notice','Get previous operation successful')
 
@@ -181,7 +179,7 @@ class WelcomePage():
             return prev_context
 
         except Exception,e:
-            print e
+            #print e
             write_log('error','Get previous context Operation Failed; Error:'+str(e))
             return "Error"
     get_prev_context.exposed = True
@@ -192,7 +190,7 @@ class WelcomePage():
         try:
             #context_list = context_list.rstrip('')
             context_list = context.split('/')
-            print context_list
+            #print context_list
             newlist = []
             contexts,components = um.get_all_component(context_list);
             if type(contexts) is ListType:
@@ -210,14 +208,14 @@ class WelcomePage():
                 contexts = contexts + newlist
                 subcontext = json.dumps(contexts)
                 write_log('notice','Get all subcontext successful')
-                print subcontext
+                #print subcontext
                 return subcontext
 
             else:
                 return []
 
         except Exception,e:
-            print e
+            #print e
             write_log('error','Get previous context Operation Failed; Error:'+str(e))
             return []
 
@@ -227,20 +225,19 @@ class WelcomePage():
     #@print_timing
     def show_sub_context(self,context=None):
         um = cherrypy.session.get('um')
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        print "Printing browser act.."
-        print self.browser_activities
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
 
         t1 = time.clock()
         print context
-        self.__curComponent = ""
-        self.__curContext = context
+        
+        cherrypy.session['cur_context'] = context
 
         udata = context.decode("utf-8")
         context = udata.encode("ascii","ignore")
         context_list = context.split('/')
+        modeltree = cherrypy.session.get('modeltree')
 
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
         try:
             #contexts, components = self.personis_um.all_access_model(context_list);
             contexts,components = um.get_all_component(context_list);
@@ -248,33 +245,33 @@ class WelcomePage():
                 t2 = time.clock()
                 print 'show_subcontext took %0.3fms' % ((t2-t1)*1000.0)
                 write_log('notice','Subdirectories Clicked: operation successful')
-                for item in self.modeltree:
+                for item in modeltree:
                     if item.name == context_list[0]:
                         item.visited = 1
                     else:
                         item.visited = 0
-                return genshi_tmpl.browse_sub_elements(self.__curContext, self.__curComponent, sorted(contexts), sorted(components,key=operator.attrgetter('Identifier')), self.modeltree)
+                return genshi_tmpl.browse_sub_elements(context, "", sorted(contexts), sorted(components,key=operator.attrgetter('Identifier')), self.modeltree)
             else:
-                e = self.context_list
+                e = contexts
                 write_log('error','Subdirectories Clicked: Operation Failed; Error:'+str(e))
-                return genshi_tmpl.greeting_template(e, "Browse"+self.__curComponent, self.modeltree)
+                return genshi_tmpl.greeting_template(e, "Browse", modeltree)
 
         except Exception,e:
-            print e
+            #print e
             write_log('error','Sub browser Clicked: Operation Failed; Error:'+str(e))
-            return genshi_tmpl.greeting_template(e, "Browse"+self.__curComponent, self.modeltree)
+            return genshi_tmpl.greeting_template(e, "Browse", modeltree)
     show_sub_context.exposed = True
 
     def get_component_list(self,context=None):
         um = cherrypy.session.get('um')
         data = []
         print context
-        self.__curComponent = ""
-        self.__curContext = context
+        curComponent = ""
+        cherrypy.session['cur_context'] = context
         udata = context.decode("utf-8")
         context = udata.encode("ascii","ignore")
         context_list = context.split('/')
-        print context_list
+        #print context_list
         try:
             contexts,components = um.get_all_component(context_list)
             if type(contexts) is ListType:
@@ -287,16 +284,17 @@ class WelcomePage():
 
                 return json.dumps(data)
         except Exception,e:
-            print e
+            #print e
+            modeltree = cherrypy.session.get('modeltree')
             write_log('error','Get component list Operation Failed; Error:'+str(e))
-            return genshi_tmpl.greeting_template(e, "Browse"+self.__curComponent)
+            return genshi_tmpl.greeting_template(e, "Browse", modeltree)
 
     get_component_list.exposed = True
 
     # get current component
     def get_component(self, componentid=None):
-        self.__curComponent = componentid
-        print componentid
+        cherrypy.session['cur_component'] = componentid
+        #print componentid
         return "Success"
     get_component.exposed = True
 
@@ -306,19 +304,20 @@ class WelcomePage():
         """Returns all users from test_data in a json format that's compatible with jqGrid.""" # 2 lines
         t1 = time.clock()
         header = ["value", "flags", "source", "evidence_type", "creation_time", "time", "useby", "owner", "comment"] # 3 lines
-        #users_list = test_data_to_list(test_data) # 4 lines
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'))
-
-        if self.__curComponent != 'None':
-            print "getting new"
-            context = self.__curContext.split()
+        reslist = []
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'))
+        cur_component = cherrypy.session.get('cur_component')
+        cur_context = cherrypy.session.get('cur_context')        
+        if cur_component != 'None':
+            #print "getting new"
+            context = cur_context.split()
             um = cherrypy.session.get('um')
-            reslist = um.get_evidence_new(context, self.__curComponent)
-            self.__curComponent = 'None'
+            reslist = um.get_evidence_new(context, cur_component)
+            cherrypy.session['cur_component'] = 'None'
         else:
-            print "getting default"
-            self.__curComponent = 'firstname'
-            reslist = self.personis_um.get_evidence_new()
+            #print "getting default"
+            cherrypy.session['cur_component'] = 'firstname'
+            reslist = um.get_evidence_new()
 
         #users_list = test_data_to_list(test_data) # 4 lines
         evdlist = []
@@ -351,9 +350,9 @@ class WelcomePage():
                             myEvd[__index+1]=value
                 evdlist.append(myEvd)
                 i = i+1
-                print "Evidence: %d" %i
-                for val in myEvd:
-                    print val
+                #print "Evidence: %d" %i
+                #for val in myEvd:
+                #    print val
 
             import my_jqGrid
             result_page = my_jqGrid.jqgrid_json(self, evdlist, header, rows=rows, sidx=sidx, _search=_search,
@@ -366,23 +365,26 @@ class WelcomePage():
             return result_page
 
         else:
-            print reslist
+            #print reslist
             e = reslist
             write_log('error','Show evidence list Operation Failed; Error:'+str(e))
-            return genshi_tmpl.greeting_template(e,"Evidencelist upload")
+            modeltree = cherrypy.session.get('modeltree')
+            return genshi_tmpl.greeting_template(e, "Evidencelist upload", modeltree)
     users_json.exposed = True
 
     #add new evidence to the model
     def add_new_evidence(self,data=None):
-       #show_id = request.GET.get('name')
+        #show_id = request.GET.get('name')
         res = ""
         t1 = time.clock()
         um = cherrypy.session.get('um')
         try:
-            print data
+            #print data
             udata = data.decode("utf-8")
             data = udata.encode("ascii","ignore")
-            if um.add_new_evidence(self.__curContext, data):
+            cur_context = cherrypy.session.get('cur_context')
+
+            if um.add_new_evidence(cur_context, data):
                 res = """ Successfully added"""
                 write_log('notice','Add new evidence operation successful')
 
@@ -391,7 +393,7 @@ class WelcomePage():
                 write_log('error','Show evidence list Operation Failed; Error:'+str(res))
 
         except Exception, e:
-            print e
+            #print e
             res = """Failed to add""" + str(e)
             write_log('error','Add new evidence Operation Failed; Error:'+str(e))
 
@@ -402,8 +404,9 @@ class WelcomePage():
 
     def add_new_element(self,data):
         data = data.split('_')
-        context = self.__curContext.split('/')
-        if self.__curContext == "None" or data[3] == "Home":
+        cur_context = cherrypy.session.get('cur_context')
+        context = cur_context.split('/')
+        if cur_context == "None" or data[3] == "Home":
             context = []
         print context
         um = cherrypy.session.get('um')
@@ -447,7 +450,7 @@ class WelcomePage():
     @print_timing
     def apps_plugin(self):
         # Ask for the user's name.
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'))
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'))
         return genshi_tmpl.app_template()
     apps_plugin.exposed = True
 
@@ -455,21 +458,21 @@ class WelcomePage():
     def show_unreg_apps(self):
         um = cherrypy.session.get('um')
         print "Showing unregistered apps"
-        self.modeltree = um.build_modeldef_tree()
-        self.modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username') ,self.browser_activities)
+        cherrypy.session['cur_action'] = "Install Application Plugin"
+        modeltree = um.build_modeldef_tree()
+        modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
+        cherrypy.session['modeltree'] = modeltree
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username') ,browser_activities)
         try:
             #context_list = self.personis_um.all_access_model()
-            self.applist = cherrpy.session.get('appmgr').get_list_apps()
-            print self.applist
+            self.applist = cherrpy.session.get('appmgr').get_list_apps()           
             write_log('notice','Show unregistered apps list operation successful')
-
-            return genshi_tmpl.unreg_apps_template(self.applist,self.modeltree)
+            return genshi_tmpl.unreg_apps_template(self.applist, modeltree)
 
         except Exception, e:
             write_log('error','Show unregistered list Operation Failed; Error:'+str(e))
-            return genshi_tmpl.greeting_template('Unregistered App load fails: '+str(e),"Unregistered Apps", self.modeltree)
+            return genshi_tmpl.greeting_template('Unregistered App load fails: '+str(e),"Unregistered Apps", modeltree)
 
 
     show_unreg_apps.exposed = True
@@ -509,14 +512,15 @@ class WelcomePage():
     @print_timing
     def show_reg_apps(self):
         um = cherrypy.session.get('um')
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         print cherrypy.session.get('username')
-        print "Showing registered apps"
+        #print "Showing registered apps"
         global stream
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
+        modeltree = cherrypy.session.get('modeltree')
         try:
             new_um_applist =cherrypy.session.get('appmgr').get_register_applist()
-            print new_um_applist
+            #print new_um_applist
             if type(new_um_applist) is ListType:
 
                 write_log('notice','Show registered apps list operation successful')
@@ -531,13 +535,14 @@ class WelcomePage():
             err = ", An error occured during loading page. " + str(e) + "Please contact administrator."
             write_log('error','Show registered list Operation Failed; Error:'+str(e))
 
-            return genshi_tmpl.greeting_template(err, "Show registered apps", self.modeltree)
+            return genshi_tmpl.greeting_template(err, "Show registered apps", modeltree)
 
     show_reg_apps.exposed = True
 
     def show_app_greeting(self):
         greeting = " Authorisation successful"
-        return genshi_tmpl.greeting_template(greeting, "Show registered apps", self.modeltree)
+        modeltree = cherrypy.session.get('modeltree')
+        return genshi_tmpl.greeting_template(greeting, "Show registered apps", modeltree)
 
     def todict(self, obj, classkey=None):
         if isinstance(obj, dict):
@@ -578,8 +583,8 @@ class WelcomePage():
         #self.browser_activities = self.personis_um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
         print "Hello Fitbit"
         um = cherrypy.session.get('um')
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('session'), cherrypy.session.get('username'), browser_activities)
 
         result = cherrypy.session.get('appmgr').complete_fitbit_install(oauth_verifier)
         #Add installation evidence to 'browseractivity' component
@@ -650,28 +655,31 @@ class WelcomePage():
 
     def browse_goals(self):
         um = cherrypy.session.get('um')
-        self.browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
-        self.__curAction = "Goals"
-        self.context_list = []
-        self.modeltree = um.build_modeldef_tree()
+        browser_activities = um.get_evidence_new(context = ['Admin'], componentid = 'browseractivity')
+        cherrypy.session['cur_action'] = "Browse Goals"
+        
+        modeltree = um.build_modeldef_tree()
+        
         #self.modeltree = set(self.modeltree)
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession, cherrypy.session.get('username'), self.browser_activities)
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username'), browser_activities)
 
-        if type(self.modeltree) is ListType:
+        if type(modeltree) is ListType:
             write_log('notice','Goals Clicked: Operation Successful')
-            self.modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
-            return genshi_tmpl.browse_goal_template(ACCESS_TYPE, self.modeltree, cherrypy.session.get('username'))
+            modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
+            cherrypy.session['modeltree'] = modeltree
+            return genshi_tmpl.browse_goal_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
         else:
-            e = self.context_list
+            e = modeltree
             write_log('error','Goals Clicked: Operation Failed; Error:'+str(e))
 
-        return genshi_tmpl.greeting_template(e,"Goals",self.modeltree)
+        return genshi_tmpl.greeting_template(e,"Goals",modeltree)
 
     browse_goals.exposed = True
 
     def run_sensor_apps(self):
         import fitbit_plugin
-        fitbit_plugin.get_fitbit_data(self.personis_um)
+        um = cherrypy.session.get('um')
+        fitbit_plugin.get_fitbit_data(um)
     run_sensor_apps.exposed = True
     #----------------------------------End Application functions -----------------------------------------------------------#
 
@@ -682,7 +690,7 @@ class WelcomePage():
         t1 = time.clock()
         personis_vis = cherrypy.session.get('vismgr')
         modeltree = cherrypy.session.get('modeltree')
-        res = personis_vis.show_size(self.modeltree)
+        res = personis_vis.show_size(modeltree)
 
         t2 = time.clock()
         print res
@@ -780,15 +788,16 @@ class WelcomePage():
 
     @print_timing
     def help_um(self):
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession,)
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'))
+        modeltree = cherrypy.session.get('modeltree')
         e = " This page is under development. Thank you for patience."
-        return genshi_tmpl.greeting_template(e,"Help page",self.modeltree)
+        return genshi_tmpl.greeting_template(e,"Help page",modeltree)
     help_um.exposed = True
 
 
     def show_tabhelp(self):
-
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession)
+         
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'))
         return genshi_tmpl.show_help()
 
     show_tabhelp.exposed = True
@@ -811,7 +820,7 @@ class WelcomePage():
 
     def logout(self):
         cherrypy.session.pop('um')
-        genshi_tmpl = LoadGenshiTemplate(self.__curSession)
+        genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'))
         write_log('notice','Log out operation successful')
         return genshi_tmpl.welcome_template()
     logout.exposed = True
@@ -846,8 +855,8 @@ class WelcomePage():
         #credentials.authorize(ht)
         cherrypy.session['connection'] = c
 
-        self.__curSession = "Session 1"
-        self.__curContext = "None"
+        cherrypy.session['cur_session'] = "Session 1"
+
         um = Personis_Access(connection=c, debug=True)
         app_manager = Personis_App_Manager(ACCESS_TYPE, um)
         personis_vis = Personis_Visualisation_Manager(ACCESS_TYPE, um)
