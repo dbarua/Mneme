@@ -837,7 +837,7 @@ class WelcomePage():
     @cherrypy.expose
     def do_login(self):
         if cherrypy.session.get('connection') <> None:
-            raise IOError()
+            cherrypy.InternalRedirect('/browse/')
         print self.oauthconf
         flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
                                    client_secret=self.oauthconf['client_secret'],
@@ -874,8 +874,8 @@ class WelcomePage():
         cherrypy.session['appmgr'] = app_manager
         cherrypy.session['vismgr'] = personis_vis
 
-        ev = Personis_base.Evidence(source="build_model.py", evidence_type="explicit", value='testname')
-        um.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
+        #ev = Personis_base.Evidence(source="build_model.py", evidence_type="explicit", value='testname')
+        #um.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 
         reslist = um.um.ask(context=["Personal"],view=['firstname'])
         Personis_util.printcomplist(reslist)
@@ -887,7 +887,7 @@ class WelcomePage():
         if redir == None:
             print "No redirect found"+str(redir)
             redir = '/browse/'
-        raise cherrypy.InternalRedirect(redir)
+        raise cherrypy.HTTPRedirect(redir)
 
 if __name__ == '__main__':
 
