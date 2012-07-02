@@ -7,11 +7,12 @@
          <title py:with="title = list(select('title/text()'))">
           Mneme<py:if test="title">: ${title}</py:if>
          </title>
-        <link rel="stylesheet" type="text/css" href="/static/style.css" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="/static/style2.css" media="screen"/>
 	<!-- link to the CSS files for this menu type  -->
-        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish.css"/> 
 	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish-vertical.css"/> 
+	<link rel="stylesheet" href="/static/jquery-treeview/jquery.treeview.css" />	 
 
         <script type="text/javascript" src="/static/jquery-1.6.1.js"></script>
 
@@ -27,6 +28,9 @@
 	<script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
         <script src="/static/jquery.expander.js"></script>
 
+        <!-- jquery Tree View -->
+        <script src="/static/jquery-treeview/jquery.cookie.js" type="text/javascript"></script>
+	<script src="/static/jquery-treeview/jquery.treeview.js" type="text/javascript"></script>
 
 	<!-- link to the JavaScript files (hoverIntent is optional) -->
 	<script type="text/javascript" src="/static/superfish-1.4.8/js/hoverIntent.js"></script> 
@@ -119,53 +123,56 @@
       </div><!--end of menu-->
 
       <div id="contentleft">
-      	
         <div id="topbuttonsblank">
- 	     <div class="leftboldtext">Logged in as <a class="lefttxt02">$who</a> <br/> You are now in <a class="lefttxt02">$where</a>
-         </div>
+          <!--<div id="register"><a href="/submit_um/" class="register">Registration</a></div>-->
+          <!--<div id="bookmark"><a href="#" class="bookmark">Bookmark</a></div>-->
+	    <div class="leftboldtext">Logged in as <a class="lefttxt02">$who</a> <br/> You are now in <a class="lefttxt02">$where</a>
+            </div>
         </div> 
-        <div style="height:60px"></div>    
-        <div id="contentleft_left">                               
-           <ul id="menu_left" data-div-id="$where" class="menu collapsible">
+            
+            <div id="contentleft_left">                               
+               <ul id="menu_left" data-div-id="$where" class="menu collapsible">
 		      <li><a href="">Create New</a>
 		       <ul id="new_element">
-				<li><a href="#" id="context" value="Context">Context</a></li>
-				<li><a href="#" id="component" value="Component">Component</a></li>
+			<li><a href="#" id="context" value="Context">Context</a></li>
+			<li><a href="#" id="component" value="Component">Component</a></li>
 		       </ul>
 		      </li>
-           </ul>
-           <div id="clear_space"></div>
-           <ul id="menuleft_store" class="menu collapsible">
+               </ul>
+               <div id="clear_space"></div>
+               <ul id="menuleft_store" class="menu collapsible">
 		      <li><a href="" class="visited">Active</a></li>
 		      <li><a href="">Archive</a></li>
 		      <li><a href="">Trash</a></li>
-           </ul> 
+
+               </ul>
               
-          <ul id="menuleft" class="sf-menu sf-vertical">               
-		     <py:for each="i in range(len(context))"> 
-                <div py:choose="" id="$i" data-div-div="$len(context)">              
+              <ul id="menuleft" class="sf-menu sf-vertical">               
+		        <py:for each="i in range(len(context))"> 
+                  <div py:choose="" id="$i" data-div-div="$len(context)" style="position:relative">              
                     <span py:when="context[i].level == 0">
                      <div py:choose="">
                       <span py:when="len(context[i].children)!=0">
-  		               <li class="expando" id="${context[i].name}" data-div-id="$i">
-                        <div py:choose="">
-                         <span py:when="context[i].visited == 1">
-                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2 visited"  style="width:100%;" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+  		                <li class="expando" id="${context[i].name}" data-div-id="$i">
+                         <div py:choose="">
+                          <span py:when="context[i].visited == 1">
+                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2 visited" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
                            <span class="sf-sub-indicator"> &#187;</span>                                
             	          </a> 
                         </span>
                          <span py:when="context[i].visited == 0">
                           <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
-                           <span class="sf-sub-indicator"> &#187;</span>                                
-             	          </a> 
-                         </span>
+                          <span class="sf-sub-indicator"> &#187;</span>                                
+           	        </a> 
+                        </span>
+
                         </div>
-		             </li> 
-                 </span>
-                 <span py:when="len(context[i].children)==0">
-		          <li class="normal" id="${context[i].name}" data-div-id="$i">
-                    <div py:choose="">
-                      <span py:when="context[i].visited == 1">
+		      </li> 
+                     </span>
+                     <span py:when="len(context[i].children)==0">
+		      <li class="normal" id="${context[i].name}" data-div-id="$i">
+                        <div py:choose="">
+                         <span py:when="context[i].visited == 1">
 		           <a href="Javascript:void(0);" name="context" class="cmenu2 visited " data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
            	        </a> 
                         </span>
@@ -181,7 +188,7 @@
                    <span py:when="context[i].level != 0">
                    </span>                     
                  </div>                                 
-		     </py:for>
+		</py:for>
 	       </ul>                 
             </div> <!--End of contentleft left-->
         <div id="contentleft_right">
@@ -211,7 +218,7 @@
 		<py:for each="i in range(len(browser_activity[-10:]))">               
 		   <li class="linkblank">
 		      <a href="#" class="link" style="font-size:16px;"> ${browser_activity[i].value}
-                                  <?python import datetime                                      
+                              <?python import datetime                                      
  	                          ?> on ${(datetime.datetime.fromtimestamp(browser_activity[i].creation_time)).date()} 	
 		      </a>
                  
