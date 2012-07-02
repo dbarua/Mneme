@@ -474,7 +474,7 @@ class WelcomePage():
         genshi_tmpl = LoadGenshiTemplate(cherrypy.session.get('cur_session'), cherrypy.session.get('username') ,browser_activities)
         try:
             #context_list = self.personis_um.all_access_model()
-            self.applist = cherrpy.session.get('appmgr').get_list_apps()           
+            self.applist = cherrypy.session.get('appmgr').get_list_apps()           
             write_log('notice','Show unregistered apps list operation successful')
             return genshi_tmpl.unreg_apps_template(self.applist, modeltree)
 
@@ -673,7 +673,7 @@ class WelcomePage():
 
         if type(modeltree) is ListType:
             write_log('notice','Goals Clicked: Operation Successful')
-            modeltree = sorted(self.modeltree, key=attrgetter('level', 'name'))
+            modeltree = sorted(modeltree, key=attrgetter('level', 'name'))
             cherrypy.session['modeltree'] = modeltree
             return genshi_tmpl.browse_goal_template(ACCESS_TYPE, modeltree, cherrypy.session.get('username'))
         else:
@@ -887,7 +887,7 @@ class WelcomePage():
         if redir == None:
             print "No redirect found"+str(redir)
             redir = '/browse/'
-        raise cherrypy.HTTPRedirect(redir)
+        raise cherrypy.InternalRedirect(redir)
 
 if __name__ == '__main__':
 
