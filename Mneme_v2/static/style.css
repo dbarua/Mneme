@@ -1,15 +1,13 @@
-/* CSS Document */
-
 html,body
 	{
-                width:100%;
-		margin:0px;
+        width:100%;
+		margin:0 auto;
 		padding:0px;
-		background-image: url(images/leafbgNew.jpg);
-		background-repeat:repeat-x top right;
-		background-color:#FFF;
-                overflow-x:hidden;
-                /*overflow-y:scroll;*/
+		/*background-image: url(images/leafbgNew.jpg);
+		background-repeat:repeat-x top right;*/
+		background-color:#F1F1F1;
+        overflow-x:hidden;
+        /*overflow-y:scroll;*/
 	}
 h1,h2,h3,h4,h5,h6,span
 	{
@@ -30,23 +28,23 @@ h1,h2,h3,h4,h5,h6,span
 	{
 		width:100%;
 		float: left;
-		margin-left:2%;
- 		padding-left:2%;
+		margin: 0 auto;
+ 		padding: 0px;
 	}
 #contenttxtblank
 	{
-		width:90%;
+		width:100%;
 		float: left;
 		margin:0 auto;
-		padding:0 0 2% 2%;
+		padding:0px ;
 		/*background-image:url(images/contentbg.jpg);
 		background-repeat:no-repeat;*/
-		background-color: #008B8B;
+		background-color: #F1F1F1;
 	}
 /*-------------------Menu navgiation-----------------------*/
 #menu
 	{
-		width:98%;
+		width:100%;
 		height:150px;
 		float: left;
 		margin:0 auto;
@@ -66,15 +64,15 @@ h1,h2,h3,h4,h5,h6,span
 	}
 #menu h1
     {
-                padding:5px 11px 0 11px;
+        padding:5px 11px 0 50px;
 		font-family: "Georgia Times New Roman Times Trebuchet MS";
 		font-size:35px;
 		font-weight:bold;
-		color:#00CDCD;		
+		color:#F1F1F1;		
     }	
 #menu h2
     {
-                padding:5px 11px 0 11px;
+        padding:5px 11px 0 50px;
 		font-family: "Georgia Times New Roman Times Trebuchet MS";
 		font-size:20px;
 		font-weight:bold;
@@ -118,7 +116,7 @@ h1,h2,h3,h4,h5,h6,span
 		font-size:16px;
 		font-weight:bold;
 		color:#fff;
-                background-color:#008B8B
+        background-color:#3399CC;
 		text-align:center;
 		text-decoration:none;
 		text-transform:uppercase;
@@ -136,7 +134,7 @@ h1,h2,h3,h4,h5,h6,span
 		text-align:center;
 		text-decoration:none;
 		text-transform:uppercase;
-                background-color:#008B8B;
+        background-color:#39628B;
 		background-image: url(images/menuover.jpg);
 		background-repeat:no-repeat;
 		background-position:center bottom;
@@ -166,9 +164,9 @@ h1,h2,h3,h4,h5,h6,span
 		margin:0px;
 		padding:0px;
 		width:225px;
-                color:#FFF; 
-                text-align:center;
-                text-transform:uppercase;  
+        color:#F1F1F1; 
+        text-align:center;
+        text-transform:uppercase;  
 		}
 #menu li:hover li a{
 		background:none;
@@ -180,7 +178,7 @@ h1,h2,h3,h4,h5,h6,span
 		font-family: "Georgia Times New Roman Times Trebuchet MS";
 		font-size:16px;
 		font-style:normal;
-                color:#FFF;
+        color:#F1F1F1;
 		margin:0px;
 		padding:0px 10px 0px 15px;
 		text-align:left;
@@ -189,8 +187,8 @@ h1,h2,h3,h4,h5,h6,span
 #menu li ul#nav2 a:hover, #menu li ul#nav2 li:hover a{
 			background:#008B8B url('images/hover_sub.gif') center left no-repeat;
 			border:0px;
-			color:#fff;
- 		        font-family: "Georgia Times New Roman Times Trebuchet MS";
+			color:#F1F1F1;
+ 		    font-family: "Georgia Times New Roman Times Trebuchet MS";
 			text-decoration:none;
 			}
 
@@ -243,141 +241,150 @@ h1,h2,h3,h4,h5,h6,span
 		clear:left;
 		}	
 .highlighted{
-      background:#008B8B;
+      background:#336699;
 }
 /*------------------------------------------------------MENU---------------------------------------------END--------------------------------------------------------------------------------*/	
 #contentleft
 	{
 		width:75%;
-		margin:0 auto;
+		margin-left:2%;
 		padding:0;
-                float:left;  
+        float:left; 
 	}
+#contentleft #contentleft_left,#contentleft_right{
+		float:left;
+}
 #contentleft_home{
 		width:50%;
 		float:left;
-                margin:10% 2% 10% 2%;
-                padding:2%; 
+        margin:25% 2% 10% 3%;
+        padding:2%; 
 }
 
 #contentleft_left{
-                /*height:250px;*/
-		width:22%;      
-		margin:1%;
+               
+		width:17%;	
+		height:auto;	
+		margin:0 auto;
 		padding:1%;  
-  	        border:2px solid #33333;
+  	    border:2px solid #333333;
 		-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
 		-webkit-box-shadow: 0 1px 5px #333;	
 		cursor:pointer;
-                  
-                /*background-color:#282828;  */          
+                 
+        /*background-color:#282828;  */          
 }
-#menuleft{
-    margin:15px 10px 10px 10px;
-    float:left;
+#contentleft_left #menuleft{
+    margin:15px 10px 10px 4px;
+    padding:2%;
+    width:80%;
+    display:block;
 }
+
 #contentleft_left ul.menu, ul.menu ul {
 	    list-style-type:none;
-	    margin: 0 0 0 10px;
+	    margin: 0 0 0 5px;
 	    padding: 0;
+        width:80%;	    
 	    font-family:"Georgia Times New Roman Times Trebuchet MS";
-	    width: 80%;
 }
 
 #contentleft_left ul.menu a {
-  display: block;
-  text-decoration: underline;
-  text-align:left;
-  width:80%;	
+	  display: block;
+	  text-decoration: underline;
+	  text-align:left;
+	  width:80%;
 }
 #contentleft_left ul.menu li.normal{
-  margin-top: 1px;
-  text-align:left;
-  width:80%;
-  height:35px;
-  background: #333;
-
+	  margin-top: 1px;
+	  text-align:left;
+      width:80%;
+	  height:35px;
+	  background: #336699;
 }
 
 #contentleft_left ul.menu li.expando {
-  margin-top: 1px;
-  text-align:left;
-  width:80%;
-  height:35px;
-  background: #333 url(images/expand.png) no-repeat 2% 50%;
+	  margin-top: 1px;
+	  text-align:left;
+      width:80%;	  
+	  height:35px;
+	  background: #336699 url(images/expand.png) no-repeat 2% 50%;
+	  
 }
 
 #contentleft_left ul.menu li.collapse{
-  margin-top: 1px;
-  text-align:left;
-  width:80%;
-  height:35px;
-  background: #333 url(images/collapse.png) no-repeat 2% 50%;;
+	  margin-top: 1px;
+	  text-align:left;
+      width:80%;	  
+	  height:35px;
+	  background: #336699 url(images/collapse.png) no-repeat 2% 50%;
 }
 
 #contentleft_left ul.menu li a{
-  color: #fff;	
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:80%;
-  height:25px;
-  background: #333;
-  border: 1px solid #008B8B;
+	  color: #fff;	
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height:25px;
+	  background: #2A2A2A;
+	  border: 1px solid #F1F1F1;
 }
+
 #contentleft_left ul.menu li a.visited{
-  color: #fff;	
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:80%;
-  height:25px;
-  background: #004F4D;
-  font-style: bold;
-  border: 1px solid #fff;
+	  color: #fff;	
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height:25px;
+	  background: #336699;
+	  font-weight: bold;
+	  border: 1px solid #F1F1F1;
 }
 
 #contentleft_left ul.menu li a:hover {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:80%;
-  height:25px;
-  background: #4E4E4E;
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height:25px;
+	  background: #3399CC;
+	  color: #000;
 }
 #contentleft_left ul.menu li ul{
-  position:relative;
-  display:none;
+	  position:relative;
+	  display:none;
+	  width:80%;
 }
 #contentleft_left ul.menu li ul li a {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:80%;
-  height: 25px;
-  background:#4E4E4E;
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height: 25px;
+	  background:#4E4E4E;
 }
 
 #contentleft_left ul.menu li ul li a:hover {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:80%;
-  height: 25px;
-  background:#747474;
-  color: #000;
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height: 25px;
+	  background:#3399CC;
+	  color: #F1F1F1;
 }
 #contentleft_right{
-		width:73%;
+		width:80%;
 		float:right;
-		margin:1% 0 0 0;
+		margin:0 auto;
 		padding:0;
-                background-color: 
-  	        border:2px solid #33333;
+        background-color:#f1f1f1; 
+  	    border: 2px solid #333333;
 		-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
 		-webkit-box-shadow: 0 1px 5px #333;
-                z-index:2; 
 		cursor:pointer;
 
 }
@@ -407,9 +414,9 @@ h1,h2,h3,h4,h5,h6,span
 		float:left;
 		margin:1%;
 		padding:1%;
-                font-family:"Georgia Times New Roman Times Trebuchet MS";
+        font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:18px;
-                color: #FFF;
+        color: #5E5E5E;
         }
 
 #app_list{
@@ -420,53 +427,7 @@ h1,h2,h3,h4,h5,h6,span
 .table {
   width:400px;
 }
-/*#register
-	{
-		width:135px;
-		height:29px;
-		float:left;
-		margin:0px;
-		padding:5px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-	}
-.register
-	{
-		width:120px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-decoration:none;
-		text-transform:uppercase;		
-		background-repeat:no-repeat;
-	}
-.register:hover
-	{
-		width:120px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-		background-image: url(images/registerover.jpg);
-		background-repeat:no-repeat;
-	}*/
+
 #bookmark
 	{
 		width:130px;
@@ -564,7 +525,7 @@ h1,h2,h3,h4,h5,h6,span
 		font-size:25px;
 		font-weight:normal;
 		color:#00CDCD; 
-                text-indent:30%;               
+        text-indent:30%;               
 	}
 #lefttxtblank
 	{
@@ -581,7 +542,7 @@ h1,h2,h3,h4,h5,h6,span
 		padding:0px;
 		font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:20px;
-		color:#fff;
+		color:#F1F1F1;
 	}
 #lefttxt
 	{
@@ -591,22 +552,22 @@ h1,h2,h3,h4,h5,h6,span
 		padding:0;
 		font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:18px;
-		color:#fff;
+		color:#545454;
 		line-height:20px;
 	}
 
 #lefttxt a, #applist li a{
-           color:#fff;
+           color:#5E5E5E;
            font-size:18px;
            width: 25px;
            text-align:center;  
 }
 #applist li{
            font-size:18px;
-           color:#fff;
+           color:#5E5E5E;
 }
 #contentleft li a{
-           color:#fff;
+           color:#F1F1F1;
            font-size:18px;
            /*width: 125px;
            text-align:center; */
@@ -626,21 +587,21 @@ h1,h2,h3,h4,h5,h6,span
 		font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:18px;
 		font-weight:bold;
-		color:#171717;
+		color:#5E5E5E;
 	}
 .lefttxt
 	{
 		font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:18px;
-		color:#FFF;
-		background-color:#171717;
+		color:#5E5E5E;
+		background-color:#5E5E5E;
 	}
 .lefttxt02
 	{
 		font-family:"Georgia Times New Roman Times Trebuchet MS";
 		font-size:18px;
-		color:#FFF;
-		background-color:#4E4E4E;
+		color:#F1F1F1;
+		background-color:#336699;
 		padding:0 27px 0 10px;
                  
 	}
@@ -684,7 +645,7 @@ h1,h2,h3,h4,h5,h6,span
             -khtml-border-radius:20px;
             -moz-box-shadow: 0 1px 5px #333;
             -webkit-box-shadow: 0 1px 5px #333;
-            z-index:101;
+   
         }
 .box #login{
          color: #FFF;
@@ -694,7 +655,7 @@ h1,h2,h3,h4,h5,h6,span
             border-bottom: 1px dashed #7F7F7F;
             margin:-20px -20px 0px -20px;
             padding:10px;
-            background-color:#008B8B;
+            background-color:#336699;
             color:#FFF;
             -moz-border-radius:20px 20px 0px 0px;
             -webkit-border-top-left-radius: 20px;
@@ -707,7 +668,7 @@ a.boxclose{
             width:26px;
             height:26px;
             background:transparent url(images/cancel.png) repeat top left;
-            font: sans-serif;
+            font-family: sans-serif;
             margin-top:-30px;
             margin-right:-30px;
             cursor:pointer;
@@ -747,8 +708,8 @@ a.scrollboxclose{
             height: 350px;
 	    width:700px; 
             padding:20px;
-            overflow:scroll;
-            scroll: auto; 
+            /*overflow:scroll;
+            scroll: auto;*/ 
 	    background-color:#282828;
             color:#FFF;
             -moz-border-radius: 20px;
@@ -1023,30 +984,28 @@ textarea .textarea{
 	{
 		width:30%;
 		float:right;
-                margin:10% 2% 10% 2%;
-                padding:2%;
-  	        border:2px solid #33333;
+        margin:10% 2% 10% 2%;
+        padding:2%;
+  	    border:2px solid #333333;
 		-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
 		-webkit-box-shadow: 0 1px 5px #333;
-		z-index:101;
-                
+               
 	}
 #contentright
 	{
-		width:20%;
+		width:18.5%;
+        margin:4.75% 2% 0 0;
+        padding:1%;
 		float:right;
-                margin:6% 1% 1% 1%;
-                padding:1%;
-  	        border:2px solid #33333;
+        border:2px solid #333333;
 		-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
 		-webkit-box-shadow: 0 1px 5px #333;
-		z-index:101;
                 
 	}
 #search
@@ -1170,12 +1129,12 @@ textarea .textarea{
        color:#fff;
        margin:2%;
        padding:2%;
-       font-style: "Georgia";
+       font-family: "Georgia";
        
 }
 #about a{
        color:#fff;
-       font-style: "Georgia";
+       font-family: "Georgia";
 }
 #about a.boxclose{
        margin:0;
@@ -1184,7 +1143,7 @@ textarea .textarea{
 }
 .about_header{
      font-size: 22px;
-     font-style:"Gerogia";
+     font-family:"Georgia";
      /*text-decoration: underline;
      padding-left:50px;*/
 }
@@ -1219,10 +1178,10 @@ box-sizing: border-box;
 		padding:0px;
 	}
 .contextnav, .rightnav{
-               width:200;
+               width:200px;
 }
 .compnav{
-               width:280;
+               width:280px;
 
 }
 #rightnav ul
@@ -1512,12 +1471,12 @@ box-sizing: border-box;
 /*------------------------------------------------------------------CONTENTPART-------------------------------------------------------------------------------------END---------------------*/	
 #footerbg
 	{
-		width:90%;
+		width:100%;
 		height:136px;
 		float: left;
-		margin-left:4%;
-		padding-left:2%;
-		background-image:url(images/footbg.jpg);
+		margin:0 auto;
+		padding-left:0;
+		background-image:url(images/footbgNew.jpg);
 		background-repeat:repeat-x top left;
 	}
 #footerlinks
@@ -1557,7 +1516,7 @@ box-sizing: border-box;
 	{
 		width:76.5%;
 		height:13px;
-		margin:4% 0 0 0;
+		margin:2% 0 0 0;
 		padding-left:5%;
 		font-family: "Georgia Times New Roman Times Trebuchet MS";
 		font-size:12px;
@@ -1667,26 +1626,13 @@ box-sizing: border-box;
 		text-decoration:none;
 	}
 /* Button*/	
-.button {
-	display: inline-block;
-	line-height: 1;
-	padding: 7px 10px;
-	text-decoration: none;
-	font-weight: bold; 
-        font-size:14px;       
-	color: #fff;
-	background-color: #171717;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	border-radius: 5px;
-}
+
 input.button{
 	border: 0px none;
 }
 input.button:hover{
-	background-color: #828282;
-        color: #000;
+	background-color: #545454;
+    color: #3399CC;
 }
 .buttonwrap {
 	display: inline-block;
@@ -1712,19 +1658,19 @@ input.button:hover{
 	text-decoration: none;
 	font-weight: bold; 
 	font-family: "Georgia Times New Roman Times Trebuchet MS";
-	color: #000;
-	background-color: #00EEEE;
+	color: #F1F1F1;
+	background-color: #336699;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	border-radius: 5px;
 }
 .backbutton{
-        width: 100px;
+    width: 100px;
 	font-weight: bold; 
 	font-family: "Georgia Times New Roman Times Trebuchet MS";
 	color: #FFF;
-	background-color: #333333;
+	background-color: #336699;
 }
 
 #readmore
@@ -1846,6 +1792,6 @@ ul#activities li a{
   position:relative;
 }
 .visited{
-  background: #004F4D;
+  background: #336699;
 }
 
