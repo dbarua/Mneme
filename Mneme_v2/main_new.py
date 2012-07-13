@@ -745,7 +745,17 @@ class WelcomePage():
     def add_notes_to_activity(self, note):        
         data = note.split('_')
         print "Add notes: "+ str(data[0]) + "on "+ str(data[1])        
-    add_notes_to_activity = True    
+    add_notes_to_activity.exposed = True    
+
+
+    def get_break_records(self):
+        break_list = [{'breakTime':'8:30', 'breakDuration':'2:00'},{'breakTime':'9:10', 'breakDuration':'6:00'},{'breakTime':'9:35', 'breakDuration':'1:30'},{'breakTime':'10:00', 'breakDuration':'18:00'}]
+                       
+        import json
+        breaks = json.dumps(break_list)
+        print breaks
+        return breaks   
+    get_break_records.exposed = True
 
     @print_timing
     def show_people(self):

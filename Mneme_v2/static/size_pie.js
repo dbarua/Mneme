@@ -415,41 +415,59 @@ function getInactivityAnnual(chart_div, myActive){
         });
 }
 function getIntradayInactivity(){
-	var breaks = ['8:30','9:00','9:10','10:00','10:25','11:00','11:30','12:06','12:20','12:55','13:15','13:40','14:05','14:30','15:00'];
-       var duration= ['1:30','2:00','5:10','4:00','15:25','1:00','1:30','2:06','2:20','10:55','3:15','3:40','4:05','1:30','5:00'];
-       d1 = new Date("20 Aug 2000 08:00");  
-       console.log('Starting time');
-       console.log(d1);        
-       for(var i = 0; i < breaks.length; i++){
-	   var d2 = new Date('20 Aug 2000 '+breaks[i]);
-         console.log(d2);
-         for(var j = 0; j < 60; j++){		 
-		 if(d2.getTime() == d1.getTime()){
-                    console.log('Break!!!');
-		    break_length = parseInt(duration[i][0]); 
-                
-		    for(var k=0; k < break_length; k++){
-		       $('#colorchart').append('<a title="You have taken a break at '+breaks[i]+' hours for '+duration[i]+' minutes" ><div class="active" style="float:left"></div></a>');		    	
-               d1.setMinutes(d1.getMinutes() + 1);    	
-		    }
-               break;
-		 }
-		 else{                    
-		       $('#colorchart').append('<div class="inactive" style="float:left"></div>');
-               d1.setMinutes(d1.getMinutes() + 1);    
-		 }
-        }
-     }
-     var dEnd = new Date("20 Aug 2000 18:00");
-     var difference = dEnd.getTime() - d1.getTime();
-     console.log(difference); 
-     var minutesDifference = parseInt((difference / 60)/1000);
-     console.log(minutesDifference);
-     for(var i = 0; i< minutesDifference+5; i++){
-         $('#colorchart').append('<div class="inactive" style="float:left"></div>');           
-     }
-     $('#colorchart a').dcTooltip({
-        classWrapper: 'tooltip-2',
-	    distance: 10
-     });
+       var break_list = [];
+       $.ajax({  
+			    type: "POST",  
+			    url: "/get_break_records",  
+			    data: "",  
+                processdata:true,
+			    success: function(data){
+					   	   					   			
+                break_list = eval(data);
+                console.log(break_list);
+				var i = 0;
+		        d1 = new Date("20 Aug 2000 08:00");  
+		        console.log('Starting time');
+		        console.log(d1);        
+		        for(var i = 0; i < break_list.length; i++){
+		        	console.log(break_list[i].breakTime);
+			        var d2 = new Date('20 Aug 2000 '+break_list[i].breakTime);
+		            console.log(d2);
+		            for(var j = 0; j < 60; j++){		 
+				       if(d2.getTime() == d1.getTime()){
+		                   console.log('Break!!!');
+		                   var break_minutes = break_list[i].breakDuration.split(':');
+				           var break_length = parseInt(break_minutes[0]); 
+		                   for(var k=0; k < break_length; k++){
+				               $('#colorchart').append('<a title="You have taken a break at '+break_list[i].breakTime+' hours for '+break_length+' minutes" ><div class="active" style="float:left"></div></a>');		    	
+		                       d1.setMinutes(d1.getMinutes() + 1);    	
+				           }
+		                   break;
+				       }
+				       else{                    
+				           $('#colorchart').append('<div class="inactive" style="float:left"></div>');
+		                   d1.setMinutes(d1.getMinutes() + 1);    
+				        }
+				     }  
+				}
+		   	     var dEnd = new Date("20 Aug 2000 18:00");
+			     var difference = dEnd.getTime() - d1.getTime();
+			     console.log(difference); 
+			     var minutesDifference = parseInt((difference / 60)/1000);
+			     console.log(minutesDifference);
+			     for(var i = 0; i< minutesDifference+4; i++){
+			         $('#colorchart').append('<div class="inactive" style="float:left"></div>');           
+			     }
+				  $('#colorchart a').dcTooltip({
+			        classWrapper: 'tooltip-2',
+				    distance: 10
+			     });		
+   
+					   
+			   }
+			});
+
+	   
+
 }
+	
