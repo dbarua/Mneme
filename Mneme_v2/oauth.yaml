@@ -1,4 +1,4 @@
-'client_id' : '4574298994434706872'
-'client_secret' : '2622287655161152331'
-'callback' : 'http://enterprise.it.usyd.edu.au:8000/authorized'
+'client_id' : '3914194987395884500'
+'client_secret' : '8557841434120157466'
+'callback' : 'http://vm1-chai2.cs.usyd.edu.au:2001/authorized'
 'personis_uri' : 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/'

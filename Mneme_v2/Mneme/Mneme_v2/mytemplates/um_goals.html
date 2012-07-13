@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+   <xi:include href="layout_goals.html"/>
+  <head>
+        <script type="text/javascript" src="/static/Highcharts/js/highcharts.js"></script>
+        <script type="text/javascript" src="/static/Highcharts/js/highstock.js"></script>
+        <!--<script type="text/javascript" src="/static/Highcharts/js/themes/gray.js"></script>-->
+	<script type="text/javascript" src="/static/Highcharts/js/modules/exporting.js"></script>	
+		<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="/highslide/highslide-ie6.css" />
+		<![endif]-->
+		<!-- End Highslide code -->
+	<!-- Additional files for the Highslide popup effect -->
+	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
+		<script type="text/javascript">
+ 		  hs.graphicsDir = '/static/highslide/highslide/graphics/';
+		  hs.outlineType = 'rounded-white';
+		  hs.wrapperClassName = 'draggable-header';
+		</script>
+
+        <script type="text/javascript" src="/static/goals.js"></script>
+        <script type="text/javascript" src="/static/size_pie.js"></script>
+        <title>$title</title>
+	<script type="text/javascript">
+        //<![CDATA[ 
+        var uniqueId = 0;
+        
+        function saveNotes(){
+                   var myInput = document.getElementsByClassName('sticky');
+                   //for(i = 0; i<myInput.length;i++)
+                   //   console.log(i+"_"+myInput[i].value);
+                   var last = myInput.length - 1; 
+		   if (myInput[last].tagName == 'INPUT' && myInput[last].type == 'text') {
+			    var com = myInput[last].value;
+			    com = com+'_'+myInput[last].id;
+                            console.log('add '+com);
+                            //addNotes(com);
+		            getGoalRecords(com);
+
+		  }
+                 
+        }
+        function addNotes(notes){
+             console.log('hello'); 
+             $.ajax({  
+			    type: "POST",  
+			    url: "/add_notes?note="+notes,  
+			    data: "",  
+                            processdata:true,
+			    success: function(data){
+                                }
+                        });
+	}
+       //]]>
+        </script>
+        <script>
+          $(function(){                         
+		getGoalRecords('None');		         
+        });
+        </script> 
+  </head>
+  <body >
+   <div id="goal_display" class="show_list"><h1> My Goal Visualisations</h1></div>
+   <div id="container" class="charts"></div>
+  </body>
+   <xi:include href="layout_footer.html"/>
+</html>

@@ -11,7 +11,7 @@ import Personis_a
 from Personis_util import printcomplist
 
 #Time, date, timezone
-from datetime import date, time, timedelta
+from datetime import datetime, date, time, timedelta
 import time
 #from pytz import timezone, tzfile
 #import pytz
@@ -331,7 +331,8 @@ class Personis_Access(object):
     def tell_login_time(self, comp_id):
 
         try:
-            time = datetime.now()
+            import datetime
+            time = datetime.datetime.now()
             ev = Personis_base.Evidence(source="build_model.py", evidence_type="explicit", value=time)
             self.um.tell(context=["Personal"], componentid=comp_id, evidence=ev)
         except Exception, e:

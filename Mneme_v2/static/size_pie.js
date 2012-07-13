@@ -299,7 +299,7 @@ function getIntradayStackChart(chart_div, myActive){
 		data: [0, 0, 0, 0, 0, 20, 20, 30, 30, 20, 12, 20, 30, 0, 0],
                 stack: 'Active' 
             },{
-                name:"Pie",  
+        name:"Pie",  
 		type: 'pie',
 		data: myActive,
 		size: '50%',
@@ -310,41 +310,41 @@ function getIntradayStackChart(chart_div, myActive){
         //chart.render();
 }
 function getInactivityAnnual(chart_div, myActive){
-        var data = [{
-                    y: 30.45,
+        var data1 = [{
+                    y: 5.45,
                     color: '#24CBE5',
                 }, {
-                    y: 21.35,
+                    y: 6.35,
                     color: '#24CBE5',
                 }, {
-                    y: 21.80,
+                    y: 6.80,
                     color: '#24CBE5',	
                 }, {
-                    y: 20.78,
+                    y: 5.78,
                     color: '#24CBE5',
                 }, {
-                    y: 22.56,
+                    y: 7.56,
                     color: '#24CBE5',
                 },{
-                    y: 24.56,
+                    y: 6.56,
                     color: '#24CBE5',
                 },{
-                    y: 22.67,
+                    y: 7.67,
                     color: '#24CBE5',
                 },{
-                    y: 24.23,
+                    y: 4.23,
                     color: '#24CBE5',
                 },{
-                    y: 27.45,
+                    y: 7.45,
                     color: '#24CBE5',
                 },{
-                    y: 28.56,
+                    y: 8.56,
                     color: '#24CBE5',
                 },{
-                    y: 26.56,
+                    y: 6.56,
                     color: '#24CBE5',
                 },{
-                    y: 25.45,
+                    y: 5.45,
                     color: '#24CBE5',
                 },];
         var series = [{
@@ -409,8 +409,47 @@ function getInactivityAnnual(chart_div, myActive){
                 }
             },
             legend:{
-	       enabled:false
+	            enabled:false
             },
            series: series
         });
+}
+function getIntradayInactivity(){
+	var breaks = ['8:30','9:00','9:10','10:00','10:25','11:00','11:30','12:06','12:20','12:55','13:15','13:40','14:05','14:30','15:00'];
+       var duration= ['1:30','2:00','5:10','4:00','15:25','1:00','1:30','2:06','2:20','10:55','3:15','3:40','4:05','1:30','5:00'];
+       d1 = new Date("20 Aug 2000 08:00");  
+       console.log('Starting time');
+       console.log(d1);        
+       for(var i = 0; i < breaks.length; i++){
+	   var d2 = new Date('20 Aug 2000 '+breaks[i]);
+         console.log(d2);
+         for(var j = 0; j < 60; j++){		 
+		 if(d2.getTime() == d1.getTime()){
+                    console.log('Break!!!');
+		    break_length = parseInt(duration[i][0]); 
+                
+		    for(var k=0; k < break_length; k++){
+		       $('#colorchart').append('<a title="You have taken a break at '+breaks[i]+' hours for '+duration[i]+' minutes" ><div class="active" style="float:left"></div></a>');		    	
+               d1.setMinutes(d1.getMinutes() + 1);    	
+		    }
+               break;
+		 }
+		 else{                    
+		       $('#colorchart').append('<div class="inactive" style="float:left"></div>');
+               d1.setMinutes(d1.getMinutes() + 1);    
+		 }
+        }
+     }
+     var dEnd = new Date("20 Aug 2000 18:00");
+     var difference = dEnd.getTime() - d1.getTime();
+     console.log(difference); 
+     var minutesDifference = parseInt((difference / 60)/1000);
+     console.log(minutesDifference);
+     for(var i = 0; i< minutesDifference+5; i++){
+         $('#colorchart').append('<div class="inactive" style="float:left"></div>');           
+     }
+     $('#colorchart a').dcTooltip({
+        classWrapper: 'tooltip-2',
+	    distance: 10
+     });
 }

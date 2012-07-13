@@ -741,6 +741,11 @@ class WelcomePage():
         return res
 
     show_goals.exposed = True
+    
+    def add_notes_to_activity(self, note):        
+        data = note.split('_')
+        print "Add notes: "+ str(data[0]) + "on "+ str(data[1])        
+    add_notes_to_activity = True    
 
     @print_timing
     def show_people(self):

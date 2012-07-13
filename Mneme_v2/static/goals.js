@@ -16,7 +16,7 @@ function initGoalOptions() {
                     });
                 });
 
-		      $("#goal select").change(function () {
+        $("#goal select").change(function () {
 			    var goal = "";
 		            $("#goal select option:selected").each(function () {
 				     goal = $(this).text();
@@ -201,22 +201,21 @@ function getGoals(appname){
 }
 function getGoalRecords(note){
 		      	var action_url = '/show_goals';
-                        var chart_div = 'container';    
-                        var mySteps = [], myIntense = [], myModerate = [], myNote = [], myDataArray = [];
+                var chart_div = ['container1','container2','container3'];    
+                var mySteps = [], myIntense = [], myModerate = [], myNote = [], myDataArray = [];
 
-			jQuery.getJSON(action_url,
+			    jQuery.getJSON(action_url,
 		             null, function (items) {
                                  //Plotting each data point from the response JSON object
                                   //console.log(items);
-	                          $.each(items, function (itemNo, item) { 
-                                     //array, function(index, value)
-                                     //console.log(item);
-				     mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
-				     myModerate.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.moderate)]);
-				     myIntense.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.intense)]);
-                                     if(item.note != "")
-                                        myNote.push({name:'title',x:Date.UTC(item.year,item.month - 1,item.day),title:item.note, text:item.note});
-                                  
+	                 $.each(items, function (itemNo, item) { 
+                     //array, function(index, value)
+                          //console.log(item);
+				          mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
+				          myModerate.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.moderate)]);
+				          myIntense.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.intense)]);
+                          if(item.note != "")
+                             myNote.push({name:'title',x:Date.UTC(item.year,item.month - 1,item.day),title:item.note, text:item.note});                                  
 		                });
                          if(note!='None'){
                             var data = note.split("_"); 
@@ -225,10 +224,10 @@ function getGoalRecords(note){
                          }  
                          myDataArray.push(mySteps);
                          myDataArray.push(myModerate);
-		         myDataArray.push(myIntense);
-			 myDataArray.push(myNote);
+		                 myDataArray.push(myIntense);
+			             myDataArray.push(myNote);
                          //myDataArray.push(myPulse);
-			 getGoalVisual(chart_div, myDataArray);
+			             getStepGoalLongTerm(chart_div, myDataArray);
                       }); 
 
 }
@@ -239,7 +238,7 @@ function getGoalVisual(chart_div, myArray) {
         
         options = {
 			    chart: {
-				renderTo: chart_div,
+				renderTo: chart_div[0],
 				zoomType: 'xy'
 			    },
 			    title: {
@@ -335,7 +334,7 @@ function getGoalVisual(chart_div, myArray) {
 			   tooltip: {
 					    formatter: function(){
 						console.log(this)
-                                                var unit;
+                        var unit;
 						if(this.point) {
 						    return "this is a note added on " + new Date(this.point.x).toDateString()
 						}
@@ -374,19 +373,19 @@ function getGoalVisual(chart_div, myArray) {
 				 series: {
 				    cursor: 'pointer',
 				    point: {
-				       events: {
-					  click: function() {
+				    events: {
+					    click: function() {
 				            if(this.series.name == 'Steps')
 				               unit = this.y+'k steps/day';
 				            if(this.series.name == 'Intense Activity')
 				               unit = this.y+' times/day';
 				            if(this.series.name == 'Moderate Activity')
 				               unit = this.y+' mins/day';
-                                            if(this.series.name == 'Sticky notes')
-                                               unit = this.text;    
+                            if(this.series.name == 'Sticky notes')
+                               unit = this.text;    
 					    
 
-					     hs.htmlExpand(null, {
+					hs.htmlExpand(null, {
 						pageOrigin: {
 						   x: this.pageX, 
 						   y: this.pageY
@@ -400,10 +399,10 @@ function getGoalVisual(chart_div, myArray) {
 				    },
 				    marker: {
 				       lineWidth: 1
+				     }
 				    }
-				 }
 			      },
-                            rangeSelector:{
+                    rangeSelector:{
                                       enable: false
                             }, 
 			    series: [{
@@ -445,5 +444,144 @@ function getGoalVisual(chart_div, myArray) {
 			      var chart = new Highcharts.StockChart(options);
 
 }
+function getStepGoalLongTerm(chart_div, myArray) {
+
+	
+        var myContent = '<div id="my_content"><br/>Sticky Notes:<input type="text" id="sticky_notes" class="sticky"/><br/><input type="button" value="Save" id="save_comment" onclick="saveNotes(); return hs.close(this);"/></div>';
+        
+        var options = {
+    
+            chart: {
+                renderTo: chart_div[0]
+            },
+    
+            title: {
+                text: 'Step goal chart'
+            },
+    
+            subtitle: {
+                text: 'Source: Personis Server'
+            },
+    
+            xAxis: [{            
+				 type: 'datetime',
+				 tickInterval: 1 * 24 * 3600 * 1000, // one week
+				 tickWidth: 0,
+				 gridLineWidth: 1,
+				 startOfWeek: 1,
+				 labels: {
+				    align: 'left', 
+				    formatter: function() {
+				        return Highcharts.dateFormat('%a %e %b', this.value); 
+				    },                   
+				 },
+				//categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        			//min: 6
+                                 minrange: 3600000,                            
+	    }],
+    
+            yAxis: [{ // left y axis
+                title: {
+                    text: null
+                },
+                labels: {
+                    align: 'left',
+                    x: 3,
+                    y: 16,
+                    formatter: function() {
+                        return Highcharts.numberFormat(this.value, 0);
+                    }
+                },
+                showFirstLabel: false,
+                plotLines:[{
+			
+                    value : 10,
+                    color : 'red',                    
+                    width : 4,
+                    label : {
+                        text : 'Goal Step: 10K per day'
+                    }
+                
+		        }]
+            },{
+				labels: {
+				    formatter: function() {
+				        return this.title;
+				    },
+				    style: {
+				        color: '#AA4643'
+				    }
+				},
+
+			    }],
+   
+            legend: {
+                align: 'left',
+                verticalAlign: 'top',
+                y: 20,
+                floating: true,
+                borderWidth: 0
+            },
+    
+            tooltip: {
+                shared: true,
+                crosshairs: true
+            },
+    
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                unit = this.y+'k steps/day';
+                                hs.htmlExpand(null, {
+						pageOrigin: {
+						   x: this.pageX, 
+						   y: this.pageY
+						},
+						headingText: this.series.name,
+                        maincontentText:  Highcharts.dateFormat('%e %b %Y', this.x) +': '+ unit + '<div id="my_content"><br/>Sticky Notes:<input type="text" class="sticky" id="'+Highcharts.dateFormat('%e %b %Y', this.x)+'"/><br/><input type="button" value="Save" id="save_comment" onclick="saveNotes(); return hs.close(this);"/></div>',
+                        width: 200
+					     });
+                            }
+                        }
+                    },
+                    marker: {
+                        lineWidth: 1
+                    }
+                }
+            },
+    
+            series: [{
+                name: 'Goals per day',
+                lineWidth: 2,
+                marker: {
+                    radius: 2
+                }
+            },{
+				type: 'flags',
+				name: 'Sticky notes',
+				/*data: [{
+				    x: Date.UTC(2012,4,20),
+				    title: 'Sick',
+                                    text: 'Feeling very very unwell'
+				}],*/
+				onSeries: 'dataseries',
+				shape: 'squarepin'
+			    }]
+        };                         
+        options.series[0].data = myArray[0];
+        options.series[1].data = myArray[3];
+                              //options.series[1].data = myArray[3];
+
+                              /*//<![CDATA[
+                              for(i = 0; i < myArray.length;i++)
+  			        options.series[i].data = myArray[i];
+                              //]]>*/
+        var chart = new Highcharts.Chart(options);
+
+}
+
 $(document).ready(function() {initGoalOptions();});
 //]]>

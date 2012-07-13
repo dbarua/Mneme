@@ -1,0 +1,199 @@
+<!DOCTYPE HTML> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"> 
+     
+<head>
+   <!-- See http://developer.yahoo.com/yui/grids/ for info on the grid layout -->
+   <title>Visualisation of Browser Activity </title>
+   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+   <link rel="stylesheet" type="text/css" href="/static/style.css" media="screen" title="style (screen)"/>
+   <!-- See http://developer.yahoo.com/yui/ for info on the reset, font and base css -->
+
+   <!-- Load the Timeline library after reseting the fonts, etc -->
+   <script src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true" type="text/javascript"></script>
+ 
+   <!-- Since we don't have our own server, we do something tricky and load our data here as if it were a library file -->
+   <!--<script src="local_data.js" type="text/javascript"></script>-->
+
+   <script>        
+        var tl;
+        function onLoad() {
+            var tl_el = document.getElementById("myTimeline");
+            var eventSource1 = new Timeline.DefaultEventSource();
+            
+            var theme1 = Timeline.ClassicTheme.create();
+            theme1.autoWidth = true; // Set the Timeline's "width" automatically.
+                                     // Set autoWidth on the Timeline's first band's theme,
+                                     // will affect all bands.
+            theme1.timeline_start = new Date(Date.UTC(2012, 0, 1));
+            theme1.timeline_stop  = new Date(Date.UTC(2015, 0, 1));
+
+            theme1.event.instant.icon = "/static/images/icon_bullet.png";
+            theme1.event.instant.iconWidth = 20;  // These are for the default stand-alone icon
+            theme1.event.instant.iconHeight = 20;
+            
+            var d = Timeline.DateTime.parseIso8601DateTime("2012-06-10");
+            
+            var bandInfos = [
+                Timeline.createBandInfo({
+                    width:          "70%", 
+                    intervalUnit:   Timeline.DateTime.WEEK, 
+                    intervalPixels: 150,
+                    eventSource:    eventSource1,
+                    date:           d,
+                    theme:          theme1,
+                    layout:         'original'
+                    /*eventPainter:   Timeline.CompactEventPainter,
+                    eventPainterParams: {
+                        iconLabelGap:     5,
+                        labelRightMargin: 20,
+                        
+                        iconWidth:        80, // These are for per-event custom icons
+                        iconHeight:       80,
+                        
+                        stackConcurrentPreciseInstantEvents: {
+                            limit: 5,
+                            moreMessageTemplate:    "%0 More Events",
+                            icon:                   "static/images/no-image-80.png", // default icon in stacks
+                            iconWidth:              80,
+                            iconHeight:             80
+                        }
+                    }*/
+                }),
+                Timeline.createBandInfo({
+                    width:          "30%", 
+                    intervalUnit:   Timeline.DateTime.MONTH, 
+                    intervalPixels: 100,
+                    eventSource:    eventSource1,
+                    date:           d,
+                    theme:          theme1,
+                    layout:         'overview'  // original, overview, detailed
+                })
+            ];
+            bandInfos[1].syncWith = 0;
+            bandInfos[1].highlight = true;                         
+            // create the Timeline
+            tl = Timeline.create(tl_el, bandInfos, Timeline.HORIZONTAL);
+            
+            var url = '.'; // The base url for image, icon and background image
+                           // references in the data
+            var actionUrl = "/get_timeline_data/"
+            var timeline_data = [];
+            		        //Calls the JSON action method
+	    tl.loadJSON(actionUrl, function(json, url) {
+                    var obj = eval(json);
+                    console.log(obj);
+		    eventSource1.loadJSON(json, url);
+            });
+            tl.layout(); // display the Timeline
+        }
+        
+        var resizeTimerID = null;
+        function onResize() {
+            if (resizeTimerID == null) {
+                resizeTimerID = window.setTimeout(function() {
+                    resizeTimerID = null;
+                    tl.layout();
+                }, 500);
+            }
+        }
+   </script>
+</head>
+<!--<xi:include href="layout_template.html"/>-->
+<body onload="onLoad();" onresize="onResize();">
+<div id="main">
+   <div id="contentbg">
+     <div id="contenttxtblank">
+     <div id="menu">
+        <h1>Mneme Interface</h1>
+        <h2>Visualise and Control what's inside the lifelong user model</h2>
+        <ul id="nav">
+          <li><a href="/browse/" class="main_menu">Home</a>
+           <ul id="nav2">
+             <li><a href="/browse/">List View</a></li>
+             <li><a href="">Graphical View</a>
+               <ul>
+		     <li><a href="/show_health/">Health</a></li>
+		     <li><a href="/help_um/">Location</a></li>
+		     <li><a href="/help_um/">People</a></li>
+		     <li><a href="/show_timeline/">Timeline</a></li>
+	       </ul> 	
+             </li>
+           </ul>        
+          </li>
+          <li class="menusap"></li>
+          <li><a href="/./" class="main_menu">Log out</a></li>
+          <li class="menusap"></li>  
+          <li><a href="/apps_plugin/" class="main_menu">Applications</a>
+           <ul id="nav2">
+             <li><a href="/show_unreg_apps/">Unregistered Apps</a></li>
+             <li><a href="/show_reg_apps/">Registered Apss</a></li>
+           </ul> 
+          </li>
+          <li class="menusap"></li>
+          <li><a href="/help_um/" class="main_menu">Help</a></li>
+          <li class="menusap"></li>
+         </ul>
+      </div><!--end of menu-->
+
+      <div id="contentleft">
+         <div id="lefttxtblank">
+          <div id="leftredtxt">
+             User Activity in the Mneme User model Browser
+          </div>   
+
+          <div id="lefttxt">
+	     To move the Timeline: use the mouse scroll wheel, the arrow keys or grab and drag the Timeline.
+          </div>
+
+         </div>
+       <div id='myTimeline' style="height:100px;width:800px; border: 2px solid #008B8B;"></div>
+
+
+       <div id=lefttxt>
+	    <p>Thanks to the <a href=''>Simile Timeline project</a> Timeline version <span id='tl_ver'></span></p>
+	    <script>Timeline.writeVersion('tl_ver')</script> 
+       </div>
+
+      </div>
+
+    <div id="contentright">
+        <div id="clear_space"></div>
+         <div id="search">
+          <div id="searchblank">
+            <div id="searchinput">
+              <label>             
+                <input name="textfield" type="text" class="searchinput" id="textfield" value="   " size="35" />
+              </label>
+            <div id="searchbutton"><a href="#" class="search">Search</a></div>
+            </div>
+
+          </div>
+        </div>
+       <fieldset style="width:225px; color:#fff;">
+ 	<legend><font size="4em" face="century gothic">About this page</font></legend>
+	<p>What this page shows</p>
+       </fieldset> 
+
+       <div id="morelinksheading">
+          <h5>Recent activities</h5>
+       </div>
+       <div id="morelinks">
+         <ul><li>User's Actvity in this browser</li>
+         </ul>  
+       </div>  
+
+    </div>
+
+  </div>
+</div>
+ <div id="footerbg">
+    <div id="footerlinks"><a href="#" class="footerlinks">Home</a> | <a href="#" class="footerlinks">About Us</a> |<a href="#" class="footerlinks"> User Model Browser</a> | <a href="#" class="footerlinks">Application Plugin</a> | <a href="#" class="footerlinks">Help</a> |</div>
+    <div id="copyrights">© Copyright CHAI Group, School of Information Technologies, University of Sydney. All Rights Reserved.</div>
+  </div>
+</div>
+</body>
+
+</html>
+
+

@@ -17,17 +17,91 @@
 	<!-- Additional files for the Highslide popup effect -->
 	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
 	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
-        <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
+    <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
 		<script type="text/javascript">
  		  hs.graphicsDir = '/static/highslide/highslide/graphics/';
 		  hs.outlineType = 'rounded-white';
 		  hs.wrapperClassName = 'draggable-header';
 		</script>
+	<script type="text/javascript" src="/static/jquery-tooltips-plugin/js/jquery.hoverIntent.minified.js"></script>
+	<script type="text/javascript" src="/static/jquery-tooltips-plugin/js/jquery.dctooltip.1.0.js"></script>
 
-        <script type="text/javascript" src="/static/size_pie.js"></script>
-	<!--<script type="text/javascript" src="/static/intraday.js"></script>-->
+    <script type="text/javascript" src="/static/size_pie.js"></script>
 
+	<style>
+	#barchart{
+	     margin:5% 15% 10% 15%; 
+	     width:71%;  
+	}
+	#colorchart{
+	    width:100%;
+	    height:30px;
+	    border-bottom: solid 2px #000;
+	}
+	#colorchart .inactive{
+	  background-color:#00BFFF; 
+	  height:15px;
+	  padding-top:15px;
+	  width:1px;
+	}
+	#colorchart a{
+	   margin:0 auto;
+	   bottom: 25px;
+	}
+	#colorchart .active{
+	  background-color:#CD1076; 
+	  height:15px;
+	  padding-top:15px; 
+	  width:1px;
+	  z-index: 2;
+	}
+	#tool{
+	  margin-top:-100px;
+	  margin-left:-50px;
+	  z-index:1;
+	}
+	#timespan div{
+	  float:left;
+	  display:inline;
+	  
+	}
+	.time{
+	  width:60px; 
+	  float:left;
+	}
+	.hideable{
+	    display:none;
+	}
+	.showable{
+	   display:block;
+	}
+	.tooltip-2 {
+		width: 200px; 
+		position: absolute; 
+		bottom: 0; 
+		left:-3px;
+		top: -40px;
+		display: none;
+		font-weight: normal;
+		font-size: 1em; 
+		line-height: 1.5em; 
+		color: #fff;
+		z-index:5; 
+	}
+
+	.tooltip-2 {color: #000;}
+	.tooltip-2 .text {
+		padding: 5px 15px 30px 15px; 
+		text-align:center;
+		background: url('/static/images/tooltip_2.png') no-repeat 0 100%;
+	}
+	.tooltip-2 .top {
+		height: 10px; 
+		background: url('static/images/tooltip_2.png') no-repeat 0 0;
+	}
+	
+	</style>
 	<script type="text/javascript">
         //<![CDATA[
         (function(){
@@ -40,7 +114,7 @@
 		      if (el != 'layerX' && el != 'layerY') res.push(el);
 		    }
 		    $.event.props = res;
-	}()); 
+	    }()); 
         var chart_type2 = 'line';
         var chart_div2 = 'line_div';  
       	var action_url2 = '/show_graph_hc?data=';
@@ -50,33 +124,32 @@
                 var myDataArray = []; 
                 if(period == 'Intraday'){
 	                var myActive = [];
-                        myActive.push(['Sedentary',19]);
-                        myActive.push(['Lightly Active',parseFloat(3)]);
-                        myActive.push(['Moderately Active',1]);
-		        myActive.push(['Very Active',1]);
-		        //getIntradayStackChart(chart_div2, myActive);
-			getInactivityAnnual(chart_div2,myActive);
-		}
+                    myActive.push(['Sedentary',19]);
+                    myActive.push(['Lightly Active',parseFloat(3)]);
+                    myActive.push(['Moderately Active',1]);
+		            myActive.push(['Very Active',1]);
+		            getIntradayStackChart(chart_div2, myActive);
+			       //getInactivityAnnual(chart_div2,myActive);
+		        }
                 else{
-                        var mySteps = [], myActiveHours = [], myCalorie = [], myPulse = [];
-			jQuery.getJSON(action_url2+data,
-		             null, function (items) {
+                    var mySteps = [], myActiveHours = [], myCalorie = [], myPulse = [];
+			        jQuery.getJSON(action_url2+data, null, function (items) {
                                  //Plotting each data point from the response JSON object
                                   //console.log(items);
 	                          $.each(items, function (itemNo, item) { 
                                      //array, function(index, value)
                                      console.log(item);
-				     mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
-				     myActiveHours.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.active_time)]);
-				     myCalorie.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.calorie)]);
-				     //myPulse.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.pulse)]);
-                                  
-		                });
-                         myDataArray.push(mySteps);
-		         myDataArray.push(myActiveHours);
-                         myDataArray.push(myCalorie);
-                         //myDataArray.push(myPulse);
-		         getHighStockChart(chart_type2, chart_div2, myDataArray);
+								     mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
+								     myActiveHours.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.active_time)]);
+								     myCalorie.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.calorie)]);
+								     //myPulse.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.pulse)]);
+				                                  
+						                });
+                              myDataArray.push(mySteps);
+		                      myDataArray.push(myActiveHours);
+                              myDataArray.push(myCalorie);
+                              //myDataArray.push(myPulse);
+		                      getHighStockChart(chart_type2, chart_div2, myDataArray);
                        });
                }
 
@@ -87,38 +160,37 @@
 	        var now = new Date();
 	        var today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
 	    	$('#from_date').val(today);
-		Highcharts.setOptions({
+		    Highcharts.setOptions({
 		        colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE', '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92']
-			//colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+			   //colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
 	         });
     
 		$("#from_date").datepicker({
 					changeMonth: true,
-				        changeYear: true,
+				    changeYear: true,
 					dateFormat: 'dd/mm/yy',
 		});
-                var chart_type = 'pie';
-                var chart_div = 'container';
+        var chart_type = 'pie';
+        var chart_div = 'container';
 		var action_url1 = '/show_size';
 		var action_url2 = '/show_';
 
-                var myStorage = [], myUsage=[], data1 = [], data2 = [];
-		        //Calls the JSON action method
-		jQuery.getJSON(action_url1,
-		             null, function (items) {
-                                 //Plotting each data point from the response JSON object
-                                  //console.log(items);
-	                          $.each(items, function (itemNo, item) { 
-                                     //array, function(index, value)
-                                      console.log(item);
-                                      /*if(item.context == 'Free Space'){
-                                         myStorage.push({name: 'Free Space',y: 50, sliced: true,selected: true})
-                                      }
-				      else*/
-                                      myStorage.push([item.context, parseFloat(item.size)]);
+        var myStorage = [], myUsage=[], data1 = [], data2 = [];
+		//Calls the JSON action method
+		jQuery.getJSON(action_url1, null, function (items) {
+         //Plotting each data point from the response JSON object
+         //console.log(items);
+	      $.each(items, function (itemNo, item) { 
+                //array, function(index, value)
+               console.log(item);
+               /*if(item.context == 'Free Space'){
+                    myStorage.push({name: 'Free Space',y: 50, sliced: true,selected: true})
+                }
+		       else*/
+               myStorage.push([item.context, parseFloat(item.size)]);
                                   
-		                });
-                               getSizePieChart(chart_type, chart_div, myStorage);
+		  });
+               getSizePieChart(chart_type, chart_div, myStorage);
 
 
 		});
@@ -135,9 +207,9 @@
 		      console.log(data);
 		      getHealthChart(period);
 		   });  
-                }).trigger('change');                 		
+       }).trigger('change');                 		
+       getIntradayInactivity();
        
- 
 	});
         //]]>
 	</script>
@@ -177,6 +249,30 @@
 	 
 	   </div>
 	     <div id="line_div" class="charts" ></div>   
+	     <div id="inactivity_div" class="charts" >
+			<div style="margin-top:10px;" align="center" class="show_list"><h1> Intraday Inactivity Display </h1></div>
+			<div id="barchart">
+			 <p>
+			  <div id="colorchart">
+			  </div>
+			 </p>
+			 <div id="timespan">
+				<div id="1" class="time"> 8:00 </div>
+				<div id="2" class="time" style="white-space:pre-wrap;"> </div>
+				<div id="3" class="time"> 10:00 </div>
+				<div id="4" class="time" style="white-space:pre-wrap;">  </div>
+				<div id="5" class="time"> 12:00 </div>
+				<div id="6" class="time" style="white-space:pre-wrap;">  </div>
+				<div id="7" class="time"> 14:00 </div>
+				<div id="8" class="time" style="white-space:pre-wrap;">  </div>
+				<div id="9" class="time"> 16:00 </div>
+				<div id="10" class="time" style="white-space:pre-wrap;">  </div>				
+				<div id="11" style="float:left; width:1px;"> 18:00</div>
+			 </div>
+			
+			</div>	     	
+	     	
+	     </div>   
 
     </div>
 

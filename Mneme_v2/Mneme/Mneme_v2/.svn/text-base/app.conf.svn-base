@@ -1,0 +1,12 @@
+[/]
+tools.staticdir.root = "/home/chai/Mneme_v2/"
+
+[/static]
+tools.staticdir.on = True
+tools.staticdir.dir = "static"
+
+[/style.css]
+tools.staticfile.on = True
+tools.staticfile.filename = "/home/chai/Mneme_v2/static/"
+
+

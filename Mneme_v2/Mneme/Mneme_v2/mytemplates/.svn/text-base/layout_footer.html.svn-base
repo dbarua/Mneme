@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/">
+    
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" type="text/css" href="/static/style.css" media="screen" title="style (screen)"/>
+</head>
+
+<body>
+<div id="main">
+  <div id="footerbg">
+    <div id="footerlinks"><a href="#" class="footerlinks">Home</a> | <a href="#" class="footerlinks">About Us</a> |<a href="#" class="footerlinks"> User Model Browser</a> | <a href="#" class="footerlinks">Application Plugin</a> | <a href="#" class="footerlinks">Help</a> |</div>
+    <div id="copyrights">© Copyright CHAI Group, School of Information Technologies, University of Sydney. All Rights Reserved.</div>
+  </div>
+</div><!--end of main-->
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:py="http://genshi.edgewall.org/">
+ <xi:include href="layout_app.html"/>
+ <head>
+  <title>$title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="/static/style.css" type="text/css" charset="utf-8"/>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish.css"/> 
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish-vertical.css"/> 
+
+        <script type="text/javascript" src="/static/jquery-ui/jquery-1.7.2.js"></script>
+        <!-- jquery UI  -->
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="/static/jquery-ui/ui/jquery.ui.draggable.js"></script>
+	<!-- link to the JavaScript files (hoverIntent is optional) -->
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/hoverIntent.js"></script> 
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/superfish.js"></script> 
+
+	<script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+        <script src="/static/jquery.expander.js"></script>
+
+
+        <script>
+             $(document).ready(function(){ 
+                   log_events = [], index = 0;  
+                   //<![CDATA[
+                   $('.error').hide();    
+  	           $(document).ajaxSend(function(event, request, settings) {
+		   //$('#loading-indicator').show();
+			$('.myloading').show();
+		 });
+		 
+                   $(document).ajaxComplete(function(event, request, settings) {
+		   //$('#loading-indicator').hide();
+		       $('.myloading').hide();
+		 });
+		   $('#app_list a').click(function() {
+                      appname = $(this).attr('id');
+                      
+		      description = $(this).attr('data-div-id');
+                      var comment = "notice_Unreg apps Page: "+appname+" icon clicked";
+                      console.log(comment);  
+                      log_events[index++] = comment; 
+                      $('#pass_span').attr('title',"This password is necessary for updating this application plugin for "+appname+". This might not be the same as your Mneme password or "+appname+" password.");  
+                      $('#box h1').text("Please fill the form to link your "+appname+" to Mneme"); 
+                      $('#appname').val(appname); 
+	              $('#description').val(description);
+                      $('#password').val(''); 
+                      $('#test_app').text(appname+'? ');                                                     
+	              $('#overlay2').fadeIn('fast',function(){
+		                   $('#box').animate({'top':'20px'},500);
+	                           $('#box').draggable(); 
+	                           $('#box').height('600px');
+				   $('#box').width('450px');
+		              });
+		
+                }); //end of app_list a.click
+                $('#appboxclose').click(function(){
+                     var comment = "notice_Unreg apps Page: application input boxclose icon clicked";
+                     log_events[index++] = comment; 
+
+                     $('#box').animate({'top':'-800px'},500,function(){
+                       $('#overlay2').fadeOut('fast');
+                       $('#appname').val(appname); 
+  	               $('#description').val(description);
+                       $('#password').val('');                                                      
+
+                    });
+                });
+
+                $('#register_now').click(function(){ 
+                      var comment = "notice_Unreg apps Page: Apps Register button clicked";
+                      log_events[index++] = comment; 
+                 
+			$('.error').hide();
+			var name1 = $("#appname").val();
+		  	if (name1 == "") {
+				$("#app_error").show();
+				$("#appname").focus();
+				return false;
+ 	                 }
+
+			var pass = $("#password").val();
+		  	if (pass == "") {
+				$("#pass_error").show();
+				$("#password").focus();
+				return false;
+ 	                 }
+                        $('#box').animate({'top':'-800px'},500,function(){
+                             //$('#overlay3').fadeIn('fast');
+                        });
+
+	                 register_app();
+
+
+
+                   }); //end of #register_now.click
+
+            });
+            //]]>
+        </script>
+ </head>
+ <body>
+
+           
+	        <div id="app_list" class="show_list left_class">
+ 	         <ul class="no_list_style">
+  	          <py:for each="i in range(len(app_list))">
+                   <table>
+		    <tr>
+                       <li class="border" style="width:150px;">
+                       <!--<input class="radiobutton" name="app_group" id="$i" value="${app_list[i].appname}" type="radio" data-div-id="${app_list[i].description}"/> -->
+                       <td><a id="${app_list[i].appname}" data-div-id="${app_list[i].description}"> 
+                        <img src="${app_list[i].image}" alt="example" width="150" height="${app_list[i].imageheight}" title="${app_list[i].description}"/> 
+                        </a></td>
+                       <td> <a id="${app_list[i].appname}" data-div-id="${app_list[i].description}"> 
+                            <label id="$i" for="${app_list[i].appname}" style="margin-left:40px;font-size:18px;" >${app_list[i].appname} </label> 
+                       </a></td>                       
+	               </li>
+                      </tr>
+                    </table>
+                    </py:for> 
+                   </ul> 
+               </div>
+
+        <!-- The overlay and the box -->
+        <div class="ui-widget-overlay" id="overlay2" style="display:none;"></div>
+        <div class="myBox" id="box">
+            <a class="boxclose" id="appboxclose"></a>
+            <h1></h1>
+              <div id="app_form" class="border" style="margin:15px; padding:10px;">
+                <!--<form name="frm_unreg_list" id="frm_unreg_list" action="" method="post">-->
+                       <div id="appname_div" class="border" style="margin:10px; padding:5px;">
+				<label for="appname" class="lefttxt02 border" style="width:150px;">Application Name:*</label>
+				<input id="appname" name="appname" type="text" size="35"/> 
+				<label class="error" for="appname" id="app_error">This field is required.</label>               
+                        </div>
+                        <div id="desc_div" class="border" style="margin:10px; padding:5px;"> 
+				  <label for="description" class="lefttxt02 border" style="width:100px;" >Description:</label> 
+				  <textarea id="description" name="description" value="" rows="5" cols="35"></textarea> 
+                        </div> 
+		     <!--<label for="notes">Notes:
+				    <span title="Any personal comment about this app that you want to keep in the model  " class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></label>
+                        	    <textarea class="textarea" id="notes" name="notes"></textarea> -->           
+                   
+                           <div id="pass_div" class="border" style="margin:5px; padding:5px;">
+       		              <table> 
+                                <tr>
+                                    <td><label for="password" class="lefttxt02 border" style="width:100px;">Password:*</label></td>       
+                                    <td><span id="pass_span" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+                                </tr>
+                              </table> 
+			            <input id="password" name="password" type="password"/>
+				    <label class="error" for="password" id="pass_error">This field is required.</label>               
+                         </div>                
+                         <div id="goal_check_div" class="border" style="margin:5px; padding:5px;">
+                            <table>
+                               <tr><td><label class="lefttxt02 border" style="width:180px;">Apps data management : </label></td>
+                                   <td><span title="This allows you to have some options to effeciently manage your personal information added to the model by this app." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+                                </tr>
+                            </table>
+
+                               <label for="operation_checkbox">
+                               <label>How would you like to manage the data from 
+                                   <div id="test_app"></div>
+                             </label>
+                           </label>
+
+		            <label for="no_opt">
+                                <table>
+                                 <tr>
+                                  <td> <input type="radio" name="opt_group" id="no_opt" value="default"/>Use default manager </td>
+				  <td>    <span title="Advised for novice users. By default, all data will be archived at the end of each year. You will receive e-mail notification before the default operation." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+                                 </tr>
+                                </table>
+                            </label>
+		            <label for="advance_opt">
+                               <table>
+                                 <tr>
+                                  <td> <input type="radio" name="opt_group" id="advance_opt" value="advanced"/>Use advanced manager </td>
+				  <td> <span title="Advised for expert users. A number of advanced operations such as deletion, compaction, and archival with different parameters needed to be set by the user such as importance, priorities and user-defined deadlines for managing personal data." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span> </td> </tr></table>
+			   </label>                                                       
+                         </div> 
+  		           <div id="buttonapp">* fields must be filled
+                            <input class="button" type="button" id="register_now" value="Register" style="color:#000; font-family:sans-serif;"/> 
+                           </div>
+              </div >
+                <!--</form>    -->
+        </div>
+      	<div class="myloading"></div>
+        <div id="dialog-message" title="Apps Plugin"> </div>
+ </body>
+ <xi:include href="layout_footer.html"/>
+</html>

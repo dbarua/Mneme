@@ -1,0 +1,128 @@
+<html>
+  <head>
+<html>
+  <head>
+   <title>Visualisation of people's intercation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="/static/style.css" type="text/css" charset="utf-8"/>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+        .demo {background-color:#008B8B;}
+        #mydiv {width:450px; height:450px;background-color:#4E4E4E;}    
+        </style> 
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+
+      
+	    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	    <script type="text/javascript" src="http://word-cumulus-goog-vis.googlecode.com/svn/trunk/wordcumulus.js"></script>
+	    <script type="text/javascript" src="http://word-cumulus-goog-vis.googlecode.com/svn/trunk/swfobject.js"></script>
+	    <script type="text/javascript">
+	      google.load("visualization", "1");
+	      // Set callback to run when API is loaded
+	      google.setOnLoadCallback(drawVisualization);
+
+	      // Called when the Visualization API is loaded.
+
+		    function drawVisualization() {
+		    %(jscode)s     
+			// Create and populate a data table.
+			//var data = new google.visualization.DataTable();
+			// Instantiate our table object.
+			var vis = new gviz_word_cumulus.WordCumulus(document.getElementById('mydiv'));
+
+			// Draw our table with the data we created locally.
+			vis.draw(jscode_data, {text_color: '#00ffff', speed: 50, width:600, height:600});
+
+		     }
+
+	   </script>
+
+  </head>
+
+  <body>
+<div id="main">
+ <div id="contentbg">
+  <div id="contenttxtblank">
+      <div id="menu">
+        <h1>Mneme Interface</h1>
+        <h2>Visualise and Control what's inside the lifelong user model</h2>
+        <ul id="nav">
+          <li><a href="/./" class="main_menu">Home</a></li>
+          <li class="menusap"></li>
+          <li><a href="/./" class="main_menu">Log out</a></li>
+          <li class="menusap"></li>  
+          <li><a href="/browse/" class="main_menu">User Model Browser </a>
+           <ul id="nav2">
+             <li><a href="/browse/">List View</a></li>
+             <li><a href="">Graphical View</a>
+               <ul>
+		     <li><a href="/show_health/">Health</a></li>
+		     <li><a href="/show_location">Location</a></li>
+		     <li><a href="/show_people/">People</a></li>
+		     <li><a href="/show_timeline/">Timeline</a></li>
+	       </ul> 	
+             </li>
+           </ul>        
+	  </li>
+          <li class="menusap"></li>
+          <li><a href="/apps_plugin/" class="main_menu">Application Plugin</a>
+           <ul id="nav2">
+             <li><a href="/show_unreg_apps/">Unregistered Apps</a></li>
+             <li><a href="/show_reg_apps/">Registered Apss</a></li>
+           </ul> 
+          </li>
+          <li class="menusap"></li>
+          <li><a href="#" class="main_menu">Help</a></li>
+          <li class="menusap"></li>
+         </ul>
+      </div><!--end of menu-->
+
+	    <div id="contentleft">
+		<div id="leftheading"> 
+		  <h2>People modeled:</h2>
+	       </div>
+		<div id="clear_large_space" style="height:150px;"></div>
+		<div id="mydiv"></div>
+	   </div>
+	   <div id="contentright">
+
+		<div id="clear_space"></div>
+		 <div id="search">
+		  <div id="searchblank">
+		    <div id="searchinput">
+		      <label>             
+		        <input name="textfield" type="text" class="searchinput" id="textfield" value="   " size="35" />
+		      </label>
+		    <div id="searchbutton"><a href="#" class="search">Search</a></div>
+		    </div>
+
+		  </div>
+	       </div>
+
+	       <fieldset style="width:225px; color:#fff;">
+	 	<legend><font size="4em" face="century gothic">About this page</font></legend>
+		<p>What this page shows</p>
+	       </fieldset> 
+
+	       <div id="morelinksheading">
+		  <h5>Recent activities</h5>
+	       </div>
+	       <div id="morelinks">
+		 <ul><li>User's Actvity in this browser</li>
+		 </ul>  
+	       </div>  
+
+	    </div>
+    </div>
+  </div>       
+
+  <div id="footerbg">
+    <div id="footerlinks"><a href="#" class="footerlinks">Home</a> | <a href="#" class="footerlinks">About Us</a> |<a href="#" class="footerlinks"> User Model Browser</a> | <a href="#" class="footerlinks">Application Plugin</a> | <a href="#" class="footerlinks">Help</a> |</div>
+    <div id="copyrights">© Copyright CHAI Group, School of Information Technologies, University of Sydney. All Rights Reserved.</div>
+  </div>
+</div>
+
+</body>
+</html>

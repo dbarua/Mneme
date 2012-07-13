@@ -30,16 +30,16 @@
         var uniqueId = 0;
         
         function saveNotes(){
-                   var myInput = document.getElementsByClassName('sticky');
-                   //for(i = 0; i<myInput.length;i++)
-                   //   console.log(i+"_"+myInput[i].value);
-                   var last = myInput.length - 1; 
+           var myInput = document.getElementsByClassName('sticky');
+           //for(i = 0; i<myInput.length;i++)
+           //   console.log(i+"_"+myInput[i].value);
+           var last = myInput.length - 1; 
 		   if (myInput[last].tagName == 'INPUT' && myInput[last].type == 'text') {
 			    var com = myInput[last].value;
 			    com = com+'_'+myInput[last].id;
-                            console.log('add '+com);
-                            //addNotes(com);
-		            getGoalRecords(com);
+                console.log('add '+com);
+                //addNotes(com);
+		        getGoalRecords(com);
 
 		  }
                  
@@ -48,10 +48,12 @@
              console.log('hello'); 
              $.ajax({  
 			    type: "POST",  
-			    url: "/add_notes?note="+notes,  
+			    url: "/add_notes_to_activity?note="+notes,  
 			    data: "",  
-                            processdata:true,
+                processdata:true,
 			    success: function(data){
+                                
+                                    //reload the graph
                                 }
                         });
 	}
@@ -59,13 +61,16 @@
         </script>
         <script>
           $(function(){                         
-		getGoalRecords('None');		         
+		      getGoalRecords('None');		         
         });
         </script> 
   </head>
   <body >
    <div id="goal_display" class="show_list"><h1> My Goal Visualisations</h1></div>
-   <div id="container" class="charts"></div>
+   <div id="container1" class="charts"></div>
+   <div id="container2" class="charts"></div>
+   <div id="container3" class="charts"></div>
+   
   </body>
    <xi:include href="layout_footer.html"/>
 </html>
