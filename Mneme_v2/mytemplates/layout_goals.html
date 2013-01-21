@@ -75,33 +75,31 @@
         <ul id="nav">
           <li><a href="/browse/" class="main_menu" id="Home">Home</a></li>
           <li class="menusap"></li>
-          <li><a href="/browse_goals/" class="highlighted main_menu" id="Goals">Goals</a>
-           <!--<ul id="nav2">
+          <!--<li><a href="/browse_goals/" class="highlighted main_menu" id="Goals" style="background-color:#336699">Goals</a>
+           <ul id="nav2">
              <li><a href="/show_unreg_apps/">Set goals</a></li>
              <li><a href="/show_reg_apps/">Manage goals</a></li>
-           </ul>--> 
+           </ul> 
           </li>
           <li class="menusap"></li>
           <li><a href="/show_unreg_apps/" class="main_menu">Applications</a>
-           <!--<ul id="nav2">
+           <ul id="nav2">
              <li><a href="/show_unreg_apps/">Install Apps</a></li>
              <li><a href="/show_reg_apps/">Manage Apps</a></li>
-           </ul>--> 
-          </li>
+           </ul> 
+          </li>-->
           <li class="menusap"></li>
           <li><a href="/./" class="main_menu">Log out</a></li>
           <li class="menusap"></li>  
-          <li><a href="/help_um/" class="main_menu">Help</a></li>
-          <li class="menusap"></li>
+          <!--<li><a href="/help_um/" class="main_menu">Help</a></li>
+          <li class="menusap"></li>-->
          </ul>
       </div><!--end of menu-->
 
       <div id="contentleft">
         <div id="topbuttonsblank">
-          <!--<div id="register"><a href="/submit_um/" class="register">Registration</a></div>-->
-          <!--<div id="bookmark"><a href="#" class="bookmark">Bookmark</a></div>-->
-	    <div class="leftboldtext">Logged in as <a class="lefttxt02">$who</a> <br/> You are now in <a class="lefttxt02">$where</a>
-            </div>
+          <div class="leftboldtext">You are logged in as <a class="lefttxt02">$who</a> and now in <a class="lefttxt02">$where</a>
+         </div>
         </div> 
             
             <div id="contentleft_left">                               
@@ -126,12 +124,12 @@
   		       <li class="expando" id="${context[i].name}" data-div-id="$i">
                         <div py:choose="">
                          <span py:when="context[i].visited == 1">
-                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2 visited" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2 visited" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it." style="font-size:1.1em">${context[i].name}
                            <span class="sf-sub-indicator"> &#187;</span>                                
             	          </a> 
                         </span>
                          <span py:when="context[i].visited == 0">
-                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+                          <a href="Javascript:void(0);" name="context" class="sf-with-ul cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it." style="font-size:1.1em">${context[i].name}
                           <span class="sf-sub-indicator"> &#187;</span>                                
            	        </a> 
                         </span>
@@ -143,11 +141,11 @@
 		      <li class="normal" id="${context[i].name}" data-div-id="$i">
                         <div py:choose="">
                          <span py:when="context[i].visited == 1">
-		           <a href="Javascript:void(0);" name="context" class="cmenu2 visited " data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it.">${context[i].name}
+		           <a href="Javascript:void(0);" name="context" class="cmenu2 visited " data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it." style="font-size:1.1em">${context[i].name}
            	        </a> 
                         </span>
                          <span py:when="context[i].visited == 0">
-		           <a href="Javascript:void(0);" name="context" class="cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts.">${context[i].name}
+		           <a href="Javascript:void(0);" name="context" class="cmenu2" data-div-id="${context[i].name}" title="Click the name to see list of associated components and sub-contexts." style="font-size:1.1em">${context[i].name}
            	        </a> 
                         </span>
                        </div>
@@ -163,10 +161,9 @@
             </div> <!--End of contentleft left-->
         <div id="contentleft_right">
            ${select('*|text()')}
-        </div>
-     </div>
+        </div> <!--End of contentleft right-->
      <div id="contentright">
-         <div id="user_feedback" class="show_list">
+         <div id="user_feedback" class="show_list darkbackcolor">
            <form id="feedback_form" method="" action="">    
              <label>This system is running under a research <br/>study.<br/> Please note down any comment </label>
              <textarea id="comment" name="comment" cols="28" rows="5"></textarea>
@@ -174,7 +171,7 @@
            </form>    
          </div>  
    
-       <div id="about" class="expander show_list">
+       <div id="about" class="expander show_list darkbackcolor">
             <a class="boxclose" id="aboutboxclose"></a>
 	 	<label class="about_header">About this page</label>
 		<p>$about</p>
@@ -198,7 +195,8 @@
               </ul>
 	    </div>  
             <div id="clear_space"></div>          
-     </div>
+      </div>
+    </div> 
    </div>
   </div> <!--end of contentbg-->
   </div><!--end of main-->

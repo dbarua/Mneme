@@ -65,19 +65,21 @@ ul.sf-menu li li li.sfHover ul {
 }
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
 	color:			#13a;
+	
 }
 .sf-menu li {
-	background:		#282828;
+	background:		#4f5250;
 }
 .sf-menu li li {
-	background:		#282828;
+	background:		#4f5250;
 }
 .sf-menu li li li {
-	background:		#282828;
+	background:		#4f5250;
 }
 .sf-menu li:hover, .sf-menu li.sfHover,
 .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-	background:		#4E4E4E;
+	background:		#3399CC;
+    color:			#000;
 	outline:		0;
 }
 

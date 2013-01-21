@@ -1,11 +1,14 @@
-/* CSS Document */
-body
+html,body
 	{
-		margin:0px;
-		padding:0px;
-		background-image: url(images/leafbgNew.jpg);
-		background-repeat:repeat-x top right;
-		background-color:#FFF;
+        width:100%;        
+        max-width:100%;
+	margin:0 auto;
+	padding:0px;
+	/*background-image: url(images/leafbgNew.jpg);
+	background-repeat:repeat-x top right;*/
+	background-color:#F1F1F1;
+        /*overflow:auto;
+        overflow-y:scroll;*/
 	}
 h1,h2,h3,h4,h5,h6,span
 	{
@@ -17,39 +20,46 @@ h1,h2,h3,h4,h5,h6,span
 #main
 	{
 		width:100%;
+		float:none;
+		min-width:840px;
+		max-width:1440px;
 		margin:0 auto;
-		padding:0;                
-		color: #000;
-
+		padding:0px;
+		position:relative;
 	}
 
 #contentbg
 	{
-		width:100%;
+		width:98%;
+		max-width:1430px;
+		min-width:830px;
 		float: left;
-		margin:0px;
-		padding:0px;
+		margin: 0 auto;
+ 		padding: 0px;
 	}
 #contenttxtblank
 	{
-		width:1166px;
+		width:100%;
 		float: left;
-		margin:0px;
-		padding:0 0 40px 20px;
+		max-width:1430px;
+		min-width:830px;		
+		margin:0 auto;
+		padding:0px ;
 		/*background-image:url(images/contentbg.jpg);
 		background-repeat:no-repeat;*/
-		background-color: #008B8B;
+		background-color: #F1F1F1;
+		
 	}
 /*-------------------Menu navgiation-----------------------*/
 #menu
 	{
-		width:1125px;
+		width:98%;
 		height:150px;
 		float: left;
-		margin:0px;
+		margin:0 2% 0 2%;
 		padding:0px;
 		background: url('images/bodybg.jpg') repeat-x top left, url('images/header_new.png') no-repeat;
-
+        z-index:-1;
 	}
 #side_menu
 	{
@@ -63,17 +73,17 @@ h1,h2,h3,h4,h5,h6,span
 	}
 #menu h1
     {
-                padding:5px 11px 0 11px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:35px;
+        padding:5px 11px 0 50px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:30px;
 		font-weight:bold;
-		color:#00CDCD;		
+		color:#F1F1F1;		
     }	
 #menu h2
     {
-                padding:5px 11px 0 11px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:20px;
+        padding:5px 11px 0 50px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:25px;
 		font-weight:bold;
 		color:#FFF;		
     }	
@@ -111,11 +121,11 @@ h1,h2,h3,h4,h5,h6,span
 		float: left;
 		margin:0px;
 		padding:5px 11px 0 11px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:16px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
 		font-weight:bold;
 		color:#fff;
-                background-color:#008B8B
+        background-color:#3399CC;
 		text-align:center;
 		text-decoration:none;
 		text-transform:uppercase;
@@ -126,14 +136,14 @@ h1,h2,h3,h4,h5,h6,span
 		float: left;
 		margin:0px;
 		padding:5px 11px 0 11px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:16px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
 		font-weight:bold;
 		color:#FFF;
 		text-align:center;
 		text-decoration:none;
 		text-transform:uppercase;
-                background-color:#008B8B;
+        background-color:#39628B;
 		background-image: url(images/menuover.jpg);
 		background-repeat:no-repeat;
 		background-position:center bottom;
@@ -149,7 +159,7 @@ h1,h2,h3,h4,h5,h6,span
 		position:absolute;
 		width:225px;
 		z-index:200;
-		/*top:1em;*/
+		/*top:12px;*/
 		/*left:0;*/
 		}
 #menu ul#nav li:hover ul#nav2{
@@ -163,21 +173,21 @@ h1,h2,h3,h4,h5,h6,span
 		margin:0px;
 		padding:0px;
 		width:225px;
-                color:#FFF; 
-                text-align:center;
-                text-transform:uppercase;  
+        color:#F1F1F1; 
+        text-align:center;
+        text-transform:uppercase;  
 		}
 #menu li:hover li a{
 		background:none;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";		
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;	
 		}
 #menu ul#nav li ul#nav2 a{
 		display:block;
 		height:22px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:16px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-style:normal;
-                color:#FFF;
+        color:#F1F1F1;
 		margin:0px;
 		padding:0px 10px 0px 15px;
 		text-align:left;
@@ -186,8 +196,8 @@ h1,h2,h3,h4,h5,h6,span
 #menu li ul#nav2 a:hover, #menu li ul#nav2 li:hover a{
 			background:#008B8B url('images/hover_sub.gif') center left no-repeat;
 			border:0px;
-			color:#fff;
- 		        font-family: "Georgia Times New Roman Times Trebuchet MS";
+			color:#F1F1F1;
+ 		    font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 			text-decoration:none;
 			}
 
@@ -209,8 +219,8 @@ h1,h2,h3,h4,h5,h6,span
 		position:absolute;
 		width:225px;
 		z-index:200;
-                display:block; 
-                position:absolute;  
+        display:block; 
+        position:absolute;  
 		top:30px;
 		background-color:#333333 ;
 
@@ -240,154 +250,223 @@ h1,h2,h3,h4,h5,h6,span
 		clear:left;
 		}	
 .highlighted{
-      background:#008B8B;
+      background:#336699;
 }
 /*------------------------------------------------------MENU---------------------------------------------END--------------------------------------------------------------------------------*/	
 #contentleft
 	{
-		width:830px;
-		margin: 0 ;
-		padding:0px;
-                float:left;  
+		width:98%;
+		margin-left:2%;
+		margin-right:2%;
+		padding:0;
+        float:left;
+        position:relative; 
+        min-width: 840px;
+        
 	}
-#contentleft_home{
-		width:650px;
+#contentleft #contentleft_left,#contentleft_right,#contentright{
 		float:left;
-                margin: 50px 0 50px 50px;
-                padding:30px 0 30px 100px;
-
+		/*position:absolute;*/
+}
+#contentleft_home{
+		width:50%;
+		float:left;
+        margin:25% 2% 10% 3%;
+        padding:2%; 
 }
 
 #contentleft_left{
-                /*height:250px;*/
-		width:235px;      
-                float:left;                          
-		margin:30px 0 0 0;
-		padding:20px 5px 5px 0px;  
-  	        border:2px solid #33333;
-		-moz-border-radius: 20px;
+               
+		width:13%;	
+		height:auto;	
+		margin-right:1%;
+		padding:1%;  
+  	    border:2px solid #333333;
+  	    border-radius: 20px;
+  	    box-shadow: 0 1px 5px #333;	
+		/*-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
-		-webkit-box-shadow: 0 1px 5px #333;	
+		-webkit-box-shadow: 0 1px 5px #333;	*/
 		cursor:pointer;
-                  
-                /*background-color:#282828;  */          
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		color: #4E4E4E;
+		/*position: absolute;*/
+                 
+        /*background-color:#282828;  */          
 }
-#menuleft{
-    margin:15px 10px 10px 10px;
-    float:left;
+#contentleft_left #menuleft{
+    margin:10px 10px 10px 4px;
+    padding:2%;
+    width:100%;
+    display:block;
 }
+
 #contentleft_left ul.menu, ul.menu ul {
 	    list-style-type:none;
-	    margin: 0 0 0 10px;
+	    margin: 0 0 0 5px;
 	    padding: 0;
-	    font-family:"Georgia Times New Roman Times Trebuchet MS";
-	    font-size:14px;
-	    width: 185px;
+        width:80%;	    
+	    font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }
 
 #contentleft_left ul.menu a {
-  display: block;
-  text-decoration: underline;
-  text-align:left;
-  width: 185px;	
+	  display: block;
+	  text-decoration: underline;
+	  text-align:left;
+	  width:100%;
 }
 #contentleft_left ul.menu li.normal{
-  margin-top: 1px;
-  text-align:left;
-  width:185px;
-  height:35px;
-  background: #333;
+	  margin-top: 1px;
+	  text-align:left;
+      width:100%;
+	  height:35px;
+	  background: #336699;
 }
 
 #contentleft_left ul.menu li.expando {
-  margin-top: 1px;
-  text-align:left;
-  width:210px;
-  height:35px;
-  background: #333 url(images/expand.png) no-repeat 2% 50%;
+	  margin-top: 1px;
+	  text-align:left;
+      width:100%;	  
+	  height:35px;
+	  background: #336699 url(images/expand.png) no-repeat 2% 50%;
+	  
 }
 
 #contentleft_left ul.menu li.collapse{
-  margin-top: 1px;
-  text-align:left;
-  width:210px;
-  height:35px;
-  background: #333 url(images/collapse.png) no-repeat 2% 50%;;
+	  margin-top: 1px;
+	  text-align:left;
+      width:100%;	  
+	  height:35px;
+	  background: #336699 url(images/collapse.png) no-repeat 2% 50%;
 }
 
 #contentleft_left ul.menu li a{
-  color: #fff;	
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:140px;
-  height:25px;
-  background: #333;
-  border: 1px solid #008B8B;
+	  color: #fff;	
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:100%;	  
+	  height:25px;
+	  font-size:14px;
+	  background: #4f5250;
+	  color: #F1F1F1;
+	  border: 1px solid #F1F1F1;
 }
+
 #contentleft_left ul.menu li a.visited{
-  color: #fff;	
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:140px;
-  height:25px;
-  background: #004F4D;
-  font-style: bold;
-  border: 1px solid #fff;
+	  color: #fff;	
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:100%;	  
+	  height:25px;
+	  background: #336699;
+	  font-weight: bold;
+	  font-size:14px;
+	  border: 1px solid #F1F1F1;
 }
 
 #contentleft_left ul.menu li a:hover {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:140px;
-  height:25px;
-  background: #4E4E4E;
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:100%;	  
+	  height:25px;
+	  font-size:14px;	  
+	  background: #3399CC;
+	  color: #000;
 }
 #contentleft_left ul.menu li ul{
-  position:relative;
-  display:none;
+	  position:relative;
+	  display:none;
+	  width:80%;
 }
 #contentleft_left ul.menu li ul li a {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:135px;
-  height: 25px;
-  background:#4E4E4E;
- 
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height: 25px;
+	  background:#4E4E4E;
+	  font-size:14px;
+	  
 }
 
 #contentleft_left ul.menu li ul li a:hover {
-  padding: 10px 0 0 20px; 
-  text-align:left;
-  width:135px;
-  height: 25px;
-  background:#747474;
-  color: #000;
-  
+	  padding: 10px 0 0 20px; 
+	  text-align:left;
+      width:80%;	  
+	  height: 25px;
+	  background:#3399CC;
+	  color: #F1F1F1;
+	  font-size:14px;
+	  
 }
 #contentleft_right{
-		width:70%;
-		float:right;
-		margin:30px 0 20px 0;
-		padding:10px 0 30px 0;
-                background-color: 
-  	        border:2px solid #33333;
-		-moz-border-radius: 20px;
+		width:59%;
+		float:left;
+		margin:0 auto;
+		padding:1%;
+        background-color:#f1f1f1; 
+  	    border: 2px solid #333333;
+  	    border-radius: 20px;
+  	    box-shadow: 0 1px 5px #333;	
+		/*-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
-		-webkit-box-shadow: 0 1px 5px #333;
-                z-index:2; 
-		cursor:pointer;
+		-webkit-box-shadow: 0 1px 5px #333;	*/
+		/*cursor:pointer;
+        position: absolute;*/
+}
+#contentleft_rightlong{
+		width:75%;
+		float:left;
+		margin:0 auto;
+		padding:1%;
+        background-color:#f1f1f1; 
+  	    border: 2px solid #333333;
+  	    border-radius: 20px;
+  	    box-shadow: 0 1px 5px #333;	
+		/*-moz-border-radius: 20px;
+		-webkit-border-radius:20px;
+		-khtml-border-radius:20px;
+		-moz-box-shadow: 0 1px 5px #333;
+		-webkit-box-shadow: 0 1px 5px #333;	*/
+		/*cursor:pointer;
+        position: absolute;*/
+}
 
+#contentright
+	{
+		width:19.5%;
+        margin:0 auto;
+        padding:1%;
+		float:right;
+        border:2px solid #333333;
+  	    border-radius: 20px;
+  	    box-shadow: 0 1px 5px #333;	
+		/*-moz-border-radius: 20px;
+		-webkit-border-radius:20px;
+		-khtml-border-radius:20px;
+		-moz-box-shadow: 0 1px 5px #333;
+		-webkit-box-shadow: 0 1px 5px #333;	*/
+         min-width: 70px;
+                
+	}
+
+.charts{
+		width:56.5%;
+		height:400px;
+		/*max-width:1440px;*/
+		/*min-width:400px;*/
+		
 }
 
 .border{
-  	        border:2px solid #333;
-		-moz-border-radius: 20px;
+  	     border:2px solid #333;
+  	     border-radius: 30px;
+		/*-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
-		-khtml-border-radius:20px;
+		-khtml-border-radius:20px;*/
 		-moz-box-shadow: 0 1px 5px #333;
 		-webkit-box-shadow: 0 1px 5px #333;
 
@@ -400,16 +479,15 @@ h1,h2,h3,h4,h5,h6,span
 
 #topbuttonsblank
 	{
-		width:597px;
+		width:100%;
 		height:29px;
 		float:left;
-		margin:7px 0 0 0;
-		padding:0px;
-                font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
-                color: #FFF;
-               
-	}
+		margin:1% 1% 1% 2.5%;
+		padding:1%;
+        font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
+        color: #5E5E5E;
+        }
 
 #app_list{
       width: 450px;
@@ -419,199 +497,69 @@ h1,h2,h3,h4,h5,h6,span
 .table {
   width:400px;
 }
-/*#register
-	{
-		width:135px;
-		height:29px;
-		float:left;
-		margin:0px;
-		padding:5px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-	}
-.register
-	{
-		width:120px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-decoration:none;
-		text-transform:uppercase;		
-		background-repeat:no-repeat;
-	}
-.register:hover
-	{
-		width:120px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-		background-image: url(images/registerover.jpg);
-		background-repeat:no-repeat;
-	}*/
-#bookmark
-	{
-		width:130px;
-		height:29px;
-		float:left;
-		margin:0 0 0 4px;
-		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-	}
-.bookmark
-	{
-		width:117px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 13px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-decoration:none;
-		text-transform:uppercase;
-		background-image: url(images/bookmark.jpg);
-		background-repeat:no-repeat;
-	}
-.bookmark:hover
-	{
-		width:117px;
-		height:23px;
-		float:left;
-		margin:0px;
-		padding:6px 0 0 13px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
-		font-weight:bold;
-		color:#464646;
-		text-align:center;
-		text-decoration:none;
-		text-transform:uppercase;
-		background-image: url(images/bookmarkover.jpg);
-		background-repeat :no-repeat;
-	}
-#callus
-	{
-		width:264px;
-		height:25px;
-		float:left;
-		margin:229px 0 0 0;
-		padding:20px 0 0 0;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:20px;
-		color:#393939;
-		background-image:url(images/callus.jpg);
-		background-repeat:no-repeat;
-	}
-#callus h3
-	{
-		width:264px;
-		height:25px;
-		float:left;
-		margin:0px;
-		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:20px;
-		color:#393939;
-	}
-.callus
-	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:24px;
-		color:#c6891e;
-		padding:0 0 0 34px;
-	}
+
+
 #leftheading
 	{
-		width:445px;
-		height:30px;
+		width:93%;
+		height:3%;
 		float:left;
-		margin:30px 0 0 0;
-		padding:4px 0 20px 5px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:36px;
-		color:#00CDCD;
-		/*background: url('images/h1_bullet.jpg') no-repeat left;
-		background-image: url(images/leftheading.jpg);
-		background-repeat:no-repeat;*/
+		margin:2%;
+		padding:1%;
 		background-color:#474747;
 	}
 #leftheading h2
 	{
-		width:420px;
-		margin:0px;
-		padding-left:30px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:20px;
+		width:100%;
+		margin:1%;
+		padding:1%;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:16px;
 		font-weight:normal;
-		color:#00CDCD;
+		color:#00CDCD; 
 	}
 #lefttxtblank
 	{
-		width:450px;
+		width:100%;
 		float:left;
-		margin:0px;
-		padding:27px 0 0 0px;
+		margin:0 auto;
+		padding:0;
 	}
 #leftredtxt
 	{
-		width:509px;
+		width:100%;
 		float:left;
 		margin:0px;
 		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:20px;
-		color:#fff;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
+		color:#F1F1F1;
 	}
 #lefttxt
 	{
-		width:450px;
+		width:100%;
 		float:right;
-		margin:0px;
-		padding:10px 0 0 0;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
-		color:#fff;
+		margin:0;
+		padding:0;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
+		color:#545454;
 		line-height:20px;
 	}
 
 #lefttxt a, #applist li a{
-           color:#fff;
-           font-size:18px;
+           color:#5E5E5E;
+           font-size:14px;
            width: 25px;
            text-align:center;  
 }
 #applist li{
-           font-size:18px;
-           color:#fff;
+           font-size:14px;
+           color:#5E5E5E;
 }
 #contentleft li a{
-           color:#fff;
-           font-size:18px;
+           color:#F1F1F1;
+           font-size:14px;
            /*width: 125px;
            text-align:center; */
  
@@ -627,25 +575,26 @@ h1,h2,h3,h4,h5,h6,span
 
 .leftboldtxt
 	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
 		font-weight:bold;
-		color:#171717;
+		color:#5E5E5E;
 	}
 .lefttxt
 	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
-		color:#FFF;
-		background-color:#171717;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
+		color:#5E5E5E;
+		background-color:#5E5E5E;
 	}
 .lefttxt02
 	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
-		color:#FFF;
-		background-color:#4E4E4E;
-		padding:0 27px 0 10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
+		color:#F1F1F1;
+		background-color:#336699;
+		padding:5px 27px 5px 10px;
+		margin:5px 0 5px 0;
                  
 	}
 #buttonbg
@@ -683,35 +632,39 @@ h1,h2,h3,h4,h5,h6,span
             color:#FFF;
             padding:20px;
             border:2px solid #ccc;
-            -moz-border-radius: 20px;
+            border-radius: 30px;
+            box-shadow: 0 1px 5px #333;
+            /*-moz-border-radius: 20px;
             -webkit-border-radius:20px;
             -khtml-border-radius:20px;
             -moz-box-shadow: 0 1px 5px #333;
-            -webkit-box-shadow: 0 1px 5px #333;
-            z-index:101;
+            -webkit-box-shadow: 0 1px 5px #333;*/
+   
         }
 .box #login{
          color: #FFF;
          font-style:italic;
 }
-.box h1, .myBox h1, .myScrollBox h1{
+.box h1, .myBox h1,.myBox h3, .myScrollBox h1{
             border-bottom: 1px dashed #7F7F7F;
             margin:-20px -20px 0px -20px;
             padding:10px;
-            background-color:#008B8B;
+            background-color:#336699;
             color:#FFF;
-            -moz-border-radius:20px 20px 0px 0px;
+            font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+            border-radius:30px 30px 0px 0px;
+            /*-moz-border-radius:20px 20px 0px 0px;
             -webkit-border-top-left-radius: 20px;
             -webkit-border-top-right-radius: 20px;
             -khtml-border-top-left-radius: 20px;
-            -khtml-border-top-right-radius: 20px;
+            -khtml-border-top-right-radius: 20px;*/
         }
 a.boxclose{
             float:right;
             width:26px;
             height:26px;
             background:transparent url(images/cancel.png) repeat top left;
-            font: sans-serif;
+            font-family: sans-serif;
             margin-top:-30px;
             margin-right:-30px;
             cursor:pointer;
@@ -719,19 +672,22 @@ a.boxclose{
 
 .myBox{
             position:fixed;
-            top:-800px;
+            top:-850px;
             left:30%;
             right:30%;
             height: 590px;
-	    width:400px; 
+	        width:800px; 
             padding:20px;
-	    background-color:#282828;
+	        background-color:#282828;
             color:#FFF;
-            -moz-border-radius: 20px;
+            font-size:14px;
+            border-radius: 30px;
+            box-shadow: 0 1px 5px #333;
+            /*-moz-border-radius: 20px;
             -webkit-border-radius:20px;
             -khtml-border-radius:20px;
             -moz-box-shadow: 0 1px 5px #333;
-            -webkit-box-shadow: 0 1px 5px #333;
+            -webkit-box-shadow: 0 1px 5px #333;*/
             z-index:101;
 }
 a.scrollboxclose{
@@ -749,17 +705,19 @@ a.scrollboxclose{
             left:25%;
             right:30%;
             height: 350px;
-	    width:700px; 
+	        width:700px; 
             padding:20px;
-            overflow:scroll;
-            scroll: auto; 
-	    background-color:#282828;
+            /*overflow:scroll;
+            scroll: auto;*/ 
+	        background-color:#282828;
             color:#FFF;
-            -moz-border-radius: 20px;
+            border-radius: 20px;
+            box-shadow: 0 1px 5px #333;
+            /*-moz-border-radius: 20px;
             -webkit-border-radius:20px;
             -khtml-border-radius:20px;
             -moz-box-shadow: 0 1px 5px #333;
-            -webkit-box-shadow: 0 1px 5px #333;
+            -webkit-box-shadow: 0 1px 5px #333;*/
             z-index:101;
 }
 
@@ -806,7 +764,7 @@ fieldset.app3
 }
 #choose_file{
            color:#FFF;
-           font-family:'Georgia Times New Roman Times Trebuchet MS';
+           font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }
 
 fieldset.app legend{margin-left:auto;margin-right:auto;text-align:center; font-size:16px;}
@@ -822,8 +780,8 @@ label.error{
            background: transparent url('images/cancel_new.png') no-repeat scroll left; 
 }
 
-#message					        { width:180px;margin:60px 0 0 100px; }
-#message h2						{ font-size:150%;color:white; }
+#message					    { width:180px;margin:60px 0 0 100px; }
+#message h2						{ font-size:16px;color:white; }
 #message p						{ color:white;font-weight:bold;margin:6px 0px; }
 #checkmark						{ position:relative;top:-46px;left:-60px; }
 
@@ -833,7 +791,7 @@ label.error{
              float:left;
              cursor:pointer;
              color:#fff;
-             font-family: "Georgia Times New Roman Times Trebuchet MS";
+             font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 	     padding-left:400px; 
              
  
@@ -841,7 +799,7 @@ label.error{
 
 #button_app button{
 	     color:#000; 
-	     font-family: "Georgia Times New Roman Times Trebuchet MS";
+	     font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }
 
 #button_reg{
@@ -861,14 +819,17 @@ label.error{
 }
 .myloading {
     position:fixed;
-    top: 300px;      
-    left: 50%;
+    top: 40%;      
+    left: 40%;
     right: 50%;
-    background:#fff url('images/ajax-loader-new.gif') no-repeat 1px; 
-    border: solid 2px;
-    height:50px; 
-    width:50px; 
+    background:#fff url('images/ajax-loader-big2.gif') no-repeat 1px; 
+    /*border: solid 2px;*/
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    height:120px; 
+    width:100px; 
     display:none;
+    z-index: 1;
 }
 .done {
     background:url(iconIdea.gif) no-repeat 2px; 
@@ -882,7 +843,17 @@ label.error{
 #loading-indicator {
     position: absolute;
  }
-
+.goal_col{
+	padding-left:75%;
+}
+.stepgoal_col{
+	padding-left:75%;
+}
+.goalboxlink{
+	color:#fff;
+	text-decoration:underline;
+    cursor:pointer;	
+}
 --------------------------
 .more
 	{
@@ -891,8 +862,8 @@ label.error{
 		float: right;
 		margin:0px;
 		padding:5px 0 0 0;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-align:center;
@@ -908,8 +879,8 @@ label.error{
 		float: right;
 		margin:0px;
 		padding:5px 0 0 0;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-align:center;
@@ -920,12 +891,11 @@ label.error{
 	}	
 #contentleft fieldset
   {
-                margin: 0px;
-                padding-top:50px;
-                height:250px;
-                width: 400px;
-   		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:16px;
+        margin: 0px;
+        padding-top:50px;
+        height:250px;
+        width: 400px;
+   		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-weight:bold;
 		color:#fff;
 		text-align:left;
@@ -935,7 +905,7 @@ label.error{
 #contentleft input
 {
    margin:0px;
-   font-size:14px;
+   font-size:12px;
    
 }
 
@@ -950,11 +920,11 @@ label.error{
 label { 
    display: inline-block; 
    width: 20em; 
-   font-family: "Georgia Times New Roman Times Trebuchet MS"; 
-   font-size:16px;
+   font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+   font-size:12px;
 }
 
-#clear_space
+.clear_space
   {
      margin:0px;
      padding:0px;
@@ -973,48 +943,22 @@ label {
      width: 150px;
 }
 
-#glassBox_contentBoxBg {
-	filter: alpha(opacity=50);
-	-moz-opacity:.50;
-	opacity:.50;
-}
-#glassBox_content,
-#glassBox_2_content {
-  padding: 20px; 
-}
-#glassBox h3,
-#glassBox_2 h3 {
-  font-size: 17px;
-  margin: 0px; 
-  text-align: center
-}
 
 textarea .textarea{
   height: 300px;
-  width: 200px;
-  font-size: 14px;
-  font-family: "Georgia Times New Roman Times Trebuchet MS";
+  width: 20%;
+  font-size: 12px;
+  font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }
-.show_list{
-           
-            background-color:#282828;
-            color:#FFF;
-            padding:10px;            
-            border:2px solid #ccc;
-            -moz-border-radius: 20px;
-            -webkit-border-radius:20px;
-            -khtml-border-radius:20px;
-            -moz-box-shadow: 0 1px 5px #333;
-            -webkit-box-shadow: 0 1px 5px #333;
-            z-index:101;
-        }
 #contextnav, #compnav{
             background-color:#282828;
             color:#FFF;
             height: 100px;
+            margin:20px;
+            padding:10px;
         }
 #context a{
-       font-size: 17px;
+       font-size: 16px;
        color: #FFF;        
        text-decoration: underline;
        cursor:pointer;
@@ -1022,20 +966,21 @@ textarea .textarea{
 }
 
 /*-----------------------------------------------------CONTENTLEFT-------------------------------------------------------------------------------------------------------------END----------*/	
-#contentright
+#contentright_home
 	{
-		width:300px;
+		width:30%;
 		float:right;
-		margin:65px 20px 0px 0px;
-		padding:20px 10px 20px 0;
-  	        border:2px solid #33333;
-		-moz-border-radius: 20px;
+        margin:10% 2% 10% 2%;
+        padding:2%;
+  	    border:2px solid #333333;
+  	    border-radius: 30px;
+  	    box-shadow: 0 1px 5px #333;
+		/*-moz-border-radius: 20px;
 		-webkit-border-radius:20px;
 		-khtml-border-radius:20px;
 		-moz-box-shadow: 0 1px 5px #333;
-		-webkit-box-shadow: 0 1px 5px #333;
-		z-index:101;
-                
+		-webkit-box-shadow: 0 1px 5px #333;*/
+               
 	}
 #search
 	{
@@ -1044,9 +989,9 @@ textarea .textarea{
 		float:left;
 		margin:0 0 0 15px;
 		padding-right:20px;
-                background-color: #4E4E4E; 
+        background-color: #4E4E4E; 
 		/*background-image:url(images/searchbar.png);
-                background-repeat:no-repeat;*/
+        background-repeat:no-repeat;*/
 	}
 #searchblank
 	{
@@ -1063,7 +1008,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:0px;
-                font-size: 14px;
+        font-size: 14px;
 	}
 .searchinput
 	{
@@ -1072,7 +1017,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:4px 0 0 6px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#070808;
 		background-image:url(images/search_icon.jpg);
@@ -1094,7 +1039,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:3px 0px 0 0;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#070808;
 		text-align:center;
@@ -1109,7 +1054,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:3px 0 0 0;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#070808;
 		text-align:center;
@@ -1117,52 +1062,21 @@ textarea .textarea{
 		background-image:url(images/searchbutton.jpg);
 		background-repeat:no-repeat;
 	}
-#advancesearch
-	{
-		width:103px;
-		height:22px;
-		float:left;
-		margin:0px;
-		padding:0px;
-	}
-.advancesearch
-	{
-		width:97px;
-		height:18px;
-		float:left;
-		margin:0px;
-		padding:4px 0 0 6px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:11px;
-		font-weight:bold;
-		color:#ce932b;
-		text-decoration:none;
-	}
-.advancesearch:hover
-	{
-		width:97px;
-		height:18px;
-		float:left;
-		margin:0px;
-		padding:4px 0 0 6px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:11px;
-		font-weight:bold;
-		color:#ce932b;
-		text-decoration:underline;
-	}
+
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/	
 /*-------------About-----------*/
 #about{
-       width:260px;
+       width:90%;
        color:#fff;
-       margin: 20px 0 0 15px;
-       font-style: "Georgia";
+       margin:10px;
+       padding:5px;
+       font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+       font-size:14px;
        
 }
 #about a{
        color:#fff;
-       font-style: "Georgia";
+       font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }
 #about a.boxclose{
        margin:0;
@@ -1170,35 +1084,51 @@ textarea .textarea{
        
 }
 .about_header{
-     font-size: 22px;
-     font-style:"Gerogia";
+     font-size: 14px;
+     font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
      /*text-decoration: underline;
      padding-left:50px;*/
 }
 #user_feedback{
-     margin:20px;
-     padding:10px;
-     width:250px;
+     width:95%;
+     margin:1%;
+     padding:1%;
+     font-size: 14px;
+
+}
+#user_feedback label{
+     width:90%;
+     margin:2%;
+     padding:1%;  
+     font-size: 14px;
+}
+
+#user_feedback textarea{
+    width:100%;
+    font-size:14px;
+}
+.boxsizingBorder {
+box-sizing: border-box;
+-webkit-box-sizing:border-box;
+-moz-box-sizing: border-box;
+-ms-box-sizing: border-box;
 }
 /*-----------------------------*/
 
 #rightnav, #contextnav, #compnav
 	{
 		height:54px;
-		float:left;
-		margin:11px 0 0 0;
+		float:right;
+		margin-left:250px;
 		padding:0px;
 	}
-.contextnav, .rightnav{
-               width:200;
+.contextnav, .rightnav, .compnav{
+               width:200px;
 }
-.compnav{
-               width:280;
 
-}
-#rightnav ul
+#rightnav ul, #evdbox ul
 	{
-		width:330px;
+		width:268px;
 		height:54px;
 		float:left;
 		margin:0px;
@@ -1206,17 +1136,67 @@ textarea .textarea{
 		display:block;
                 
 	}
-#rightnav ul li
+#rightnav ul li, #evdbox ul li
 	{
-		width:54px;
+		width:60px;
 		height:54px;
 		float:left;
 		margin:0 1px 0 0;
 		padding:0px;
 		display:block;		
-                text-align:center;
+        text-align:center;
 	}
-#rightnav ul li a.delete
+#rightnav ul li.name, #evdbox ul li.name
+	{
+		width:2px;
+		height:20px;
+		float: left;
+		margin:45px 0 0 0;
+		padding:2px;
+		text-align:center;
+		white-space: nowrap;
+	}	
+#rightnav ul li a.add_evidence, #evdbox ul li a.add_evidence
+	{
+		width:45px;
+		height:54px;
+		float:left;
+		margin:0px;
+		padding:0px;
+		background-image: url(images/add.png);
+		background-repeat:no-repeat;
+	}
+#rightnav ul li a.add_evidence:hover, #evdbox ul li a.add_evidence:hover
+	{
+		width:45px;
+		height:54px;
+		float:left;
+		margin:0px;
+		padding:0px;
+		background-image: url(images/add.png);
+		background-repeat:no-repeat;
+	}
+#rightnav ul li a.edit_evidence, #evdbox ul li a.edit_evidence
+	{
+		width:45px;
+		height:54px;
+		float:left;
+		margin:0px;
+		padding:0px;
+		background-image: url(images/Edit-icon.png);
+		background-repeat:no-repeat;
+	}
+#rightnav ul li a.edit_evidence:hover, #evdbox ul li a.edit_evidence:hover
+	{
+		width:45px;
+		height:54px;
+		float:left;
+		margin:0px;
+		padding:0px;
+		background-image: url(images/Edit-icon.png);
+		background-repeat:no-repeat;
+	}
+#rightnav ul li a.delete, #evdbox ul li a.delete
 	{
 		width:45px;
 		height:54px;
@@ -1226,7 +1206,7 @@ textarea .textarea{
 		background-image:url(images/delete_mini.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.delete:hover
+#rightnav ul li a.delete:hover, #evdbox ul li a.delete:hover
 	{
 		width:45px;
 		height:54px;
@@ -1236,7 +1216,7 @@ textarea .textarea{
 		background-image:url(images/delete_mini.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.archive
+#rightnav ul li a.archive, #evdbox ul li a.archive
 	{
 		width:54px;
 		height:54px;
@@ -1246,7 +1226,7 @@ textarea .textarea{
 		background-image: url(images/archive.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.archive:hover
+#rightnav ul li a.archive:hover, #evdbox ul li a.archive:hover
 	{
 		width:54px;
 		height:54px;
@@ -1256,28 +1236,28 @@ textarea .textarea{
 		background-image: url(images/archive.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.block_data
+#rightnav ul li a.block_data, #evdbox ul li a.block_data
 	{
 		width:60px;
 		height:54px;
 		float:left;
 		margin:0px;
 		padding:0px;
-		background-image: url(images/block.png);
+		background-image: url(images/folder_block.png);
 		background-repeat:no-repeat;
              
 	}
-#rightnav ul li a.block_data:hover
+#rightnav ul li a.block_data:hover, #evdbox ul li a.block_data:hover
 	{
 		width:60px;
 		height:54px;
 		float:left;
 		margin:0px;
 		padding:0px;
-		background-image: url(images/block.png);
+		background-image: url(images/folder_block.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.compact_data
+#rightnav ul li a.compact_data, #evdbox ul li a.compact_data
 	{
 		width:54px;
 		height:54px;
@@ -1287,7 +1267,7 @@ textarea .textarea{
 		background-image: url(images/compact_mini.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.compact_data:hover
+#rightnav ul li a.compact_data:hover, #evdbox ul li a.compact_data:hover
 	{
 		width:54px;
 		height:54px;
@@ -1297,51 +1277,12 @@ textarea .textarea{
 		background-image: url(images/compact_mini.png);
 		background-repeat:no-repeat;
 	}
-#rightnav ul li a.add_evidence
-	{
-		width:45px;
-		height:54px;
-		float:left;
-		margin:0px;
-		padding:0px;
-		background-image: url(images/add.png);
-		background-repeat:no-repeat;
-	}
-#rightnav ul li a.add_evidence:hover
-	{
-		width:45px;
-		height:54px;
-		float:left;
-		margin:0px;
-		padding:0px;
-		background-image: url(images/add.png);
-		background-repeat:no-repeat;
-	}
-#rightnav ul li a.edit_evidence
-	{
-		width:45px;
-		height:54px;
-		float:left;
-		margin:0px;
-		padding:0px;
-		background-image: url(images/Edit-icon.png);
-		background-repeat:no-repeat;
-	}
-#rightnav ul li a.edit_evidence:hover
-	{
-		width:45px;
-		height:54px;
-		float:left;
-		margin:0px;
-		padding:0px;
-		background-image: url(images/Edit-icon.png);
-		background-repeat:no-repeat;
-	}
+
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/		
 #morelinksheading
 	{
-		width:290px;
+		width:90%;
 		height:41px;
 		float:left;
 		margin:25px 0 0 10px;
@@ -1350,27 +1291,27 @@ textarea .textarea{
 	}
 #morelinksheading h5
 	{
-		width:270px;
+		width:85%;
 		height:31px;
 		float:left;
 		margin:0px;
 		padding:10px 0 0 0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:18px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:14px;
 		font-weight:normal;
-                text-align: center; 
+        text-align: center; 
 		color:#CDCDCD;
 	}
 #morelinks
 	{
-		width:270px;
+		width:85%;
 		float:left;
 		margin:0 0 0 15px;
 		padding:23px 0 30px 5px;
 		background-color:#003333;
-                color:#FFF; 
-                font-size:14px;
-	}
+        color:#FFF; 
+        font-size:14px
+       }
 #morelinks fieldset{
                 width:200px;
                 position:relative;
@@ -1382,8 +1323,8 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:2px 0 0 17px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:14px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#FFF;
 		background-image:url(images/datebg.jpg);
@@ -1396,7 +1337,7 @@ textarea .textarea{
 		float:left;
 		margin:8px 0 12px 0;
 		padding:0 0 0 11px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		background-image: url(images/arrow.jpg);
@@ -1410,7 +1351,7 @@ textarea .textarea{
 		float:left;
 		margin:11px 0 8px 0;
 		padding:0 0 0 11px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		background-image: url(images/arrow.jpg);
@@ -1424,7 +1365,7 @@ textarea .textarea{
 		float:left;
 		margin:0 0 8px 0;
 		padding:0 0 0 11px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		background-image: url(images/arrow.jpg);
@@ -1438,7 +1379,7 @@ textarea .textarea{
 		float:left;
 		margin:0 0 14px 0;
 		padding:0 0 0 11px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		background-image: url(images/arrow.jpg);
@@ -1452,7 +1393,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		text-decoration: underline;
@@ -1464,7 +1405,7 @@ textarea .textarea{
 		float:left;
 		margin:0px;
 		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:14px;
 		color:#FFF;
 		text-decoration: none;
@@ -1483,22 +1424,21 @@ textarea .textarea{
 /*------------------------------------------------------------------CONTENTPART-------------------------------------------------------------------------------------END---------------------*/	
 #footerbg
 	{
-		width:1186px;
-		height:135px;
+		width:100%;
+		height:136px;
 		float: left;
-		margin:0px;
-		padding:0px;
-		background-image:url(images/footbg.jpg);
+		margin:0 auto;
+		padding-left:0;
+		background-image:url(images/footbgNew.jpg);
 		background-repeat:repeat-x top left;
 	}
 #footerlinks
 	{
-		width:1166px;
-		height:13px;
-		float: left;
-		margin:19px 0 0 0;
-		padding:0px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		width:76.5%;
+		height:14px;
+		margin:2% 0 0 0;
+		padding-left:5%;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
 		color:#FFF;
 		text-align:center;
@@ -1507,34 +1447,33 @@ textarea .textarea{
 	}
 .footerlinks
 	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
 		color:#FFF;
 		text-align:center;
 		text-decoration:none;
 		text-transform:uppercase;
-		padding:0 5px 0 5px;
+		padding:0 1% 0 1%;
 	}
 .footerlinks:hover
 	{
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
 		color:#FFF;
 		text-align:center;
 		text-decoration: underline;
 		text-transform:uppercase;
-		padding:0 5px 0 5px;
+		padding:0 1% 0 1%;
 	}
 #copyrights
 	{
-		width:1166px;
-		height:13px;
-		float: left;
-		margin:5px 0 0 0;
-		padding:0px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		width:76.5%;
+		height:14px;
+		margin:2% 0 0 0;
+		padding-left:5%;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
-		color:#2d2d2d;
+		color:#fff;
 		text-align:center;
 	}
 #validation
@@ -1551,8 +1490,8 @@ textarea .textarea{
 		float: left;
 		margin:0px;
 		padding:5px 0 0 12px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-decoration:none;
@@ -1567,8 +1506,8 @@ textarea .textarea{
 		float: left;
 		margin:0px;
 		padding:5px 0 0 12px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-decoration:none;
@@ -1583,8 +1522,8 @@ textarea .textarea{
 		float: left;
 		margin:0 0 0 3px;
 		padding:5px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-decoration:none;
@@ -1599,8 +1538,8 @@ textarea .textarea{
 		float: left;
 		margin:0 0 0 3px;
 		padding:5px 0 0 20px;
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
-		font-size:10px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:12px;
 		font-weight:bold;
 		color:#414141;
 		text-decoration:none;
@@ -1615,15 +1554,15 @@ textarea .textarea{
 		float: left;
 		margin:5px 0 0 0;
 		padding:0px;
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
-		font-size:12px;
+		font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:1.12px;
 		font-weight:bold;
 		color:#9b5b01;
 		text-align:center;
 	}
 .designedby
 	{
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
 		font-weight:bold;
 		color:#faf56d;
@@ -1632,7 +1571,7 @@ textarea .textarea{
 	}
 .designedby:hover
 	{
-		font-family: "Georgia Times New Roman Times Trebuchet MS";
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:12px;
 		font-weight:bold;
 		color:#faf56d;
@@ -1640,26 +1579,13 @@ textarea .textarea{
 		text-decoration:none;
 	}
 /* Button*/	
-.button {
-	display: inline-block;
-	line-height: 1;
-	padding: 7px 10px;
-	text-decoration: none;
-	font-weight: bold; 
-        font-size:14px;       
-	color: #fff;
-	background-color: #171717;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	border-radius: 5px;
-}
-input.button{
+
+/*input.button{
 	border: 0px none;
-}
-input.button:hover{
-	background-color: #828282;
-        color: #000;
+}*/
+
+input.date{
+	font-size:12px;
 }
 .buttonwrap {
 	display: inline-block;
@@ -1684,20 +1610,43 @@ input.button:hover{
 	padding: 7px 10px;
 	text-decoration: none;
 	font-weight: bold; 
-	font-family: "Georgia Times New Roman Times Trebuchet MS";
-	color: #000;
-	background-color: #00EEEE;
+	font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+	font-size:12px;
+	color: #F1F1F1;
+	background-color: #336699;	
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	border-radius: 5px;
+	cursor: pointer;
 }
-.backbutton{
-        width: 100px;
+.pressedbutton {
+	display: inline-block;
+	line-height: 1;
+	padding: 7px 10px;
+	text-decoration: none;
 	font-weight: bold; 
-	font-family: "Georgia Times New Roman Times Trebuchet MS";
+	font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+	font-size:12px;
+	color: #F1F1F1;
+	background-color: #3399CC;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+input.button:hover{
+	background-color: #4E4E4E;
+    color: #000;
+}
+
+.backbutton{
+    width: 100px;
+	font-weight: bold; 
+	font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 	color: #FFF;
-	background-color: #333333;
+	background-color: #336699;
 }
 
 #readmore
@@ -1744,16 +1693,16 @@ input.button:hover{
 
 #login, #register
 {
-                top:50%;
-                bottom:20%;                
-		font-family:"Georgia Times New Roman Times Trebuchet MS";
+        top:50%;
+        bottom:20%;                
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 		font-size:18px;
 		color:#FFF;
 		background-color:#171717;
 		padding:0 27px 0 3px;
-                text-align: center; 
-                text-decoration:underline;
-                cursor: pointer;
+        text-align: center; 
+        text-decoration:underline;
+        cursor: pointer;
 
 }
 #registerform{
@@ -1786,13 +1735,13 @@ input.button:hover{
 .home_tools{
                 width:100px; 
                 height:30px; 
-                font-size:18px; 
+                font-size:12px; 
                 text-align:center;
                 color: #fff;
 }
 ul#activities li a{
                 color:#fff;
-                font-size:10px; 
+                font-size:12px; 
 }
 .carousel,
 .carousel .carousel-wrap{margin:0;border:0;zoom:1;}
@@ -1819,5 +1768,164 @@ ul#activities li a{
   position:relative;
 }
 .visited{
-  background: #004F4D;
+  background: #336699;
+  width:80%;
+}
+#barchart{
+	     margin:15% 15% 10% 15%; 
+	     width:71%;  
+	}
+#colorchart{
+	    width:100%;
+	    height:30px;
+	    border-bottom: solid 2px #000;
+	}
+#colorchart .inactive{
+	  background: #00BFFF;
+	  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#00BFFF), to(#336699));
+	  background: -moz-gradient(linear, 0% 0%, 0% 100%, from(#00BFFF), to(#336699));
+	  /*background-color:#00BFFF;*/ 
+	  height:15px;
+	  padding-top:15px;
+	  width:1px;
+	}
+#colorchart a{
+	   margin:0 auto;
+	   bottom: 25px;
+	}
+#colorchart .active{
+	  /*background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CD1076), to(#2A2A2A));*/
+	  background-color:#CD1076;
+	  height:15px;
+	  padding-top:15px; 
+	  width:1px;
+	  z-index: 2;
+	}
+#tool{
+	  margin-top:-100px;
+	  margin-left:-50px;
+	  z-index:1;
+	}
+#timespan div{
+	  float:left;
+	  display:inline;
+	  
+	}
+.time{
+	  width:60px; 
+	  float:left;
+	}
+.tooltip-2 {
+		width: 200px; 
+		position: absolute; 
+		bottom: 0; 
+		left:-3px;
+		top: -70px;
+		display: none;
+		font-weight: normal;
+		font-size: 12px; 
+		line-height: 14px; 
+		color: #fff;
+		z-index:5; 
+	}
+
+.tooltip-2 {color: #000;}
+.tooltip-2 .text {
+		padding: 5px 15px 30px 15px; 
+		text-align:center;
+		background: url('images/tooltip_2.png') no-repeat 0 100%;
+	}
+.tooltip-2 .top {
+		height: 10px; 
+		background: url('images/tooltip_2.png') no-repeat 0 0;
+}
+.roundcorner{
+      -moz-border-radius: 5px;
+	  -webkit-border-radius:5px;
+	  -khtml-border-radius:5px;
+  	  border-radius:5px;
+	  behavior: url('ie-css3.htc'); 
+}
+.toproundcorner{
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	-khtml-border-radius: 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
+	behavior: url('ie-css3.htc'); 
+}
+.bottomroundcorner{
+	-moz-border-radius: 0 0 10px 10px ;
+	-webkit-border-radius: 0 0 10px 10px ;
+	-khtml-border-radius: 0 0 10px 10px;
+	border-radius: 0 0 10px 10px;
+	behavior: url('ie-css3.htc'); 
+}
+.lightbackcolor{
+	background-image: linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	background-image: -o-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	background-image: -moz-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	background-image: -webkit-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	background-image: -ms-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.13, rgb(232,230,235)),
+		color-stop(0.57, rgb(209,209,209)),
+		color-stop(0.71, rgb(214,214,214))
+   );
+   color: #4E4E4E;
+}
+.darkbackcolor{
+	background-image: linear-gradient(top, rgb(87,87,87) 13%, rgb(107,105,107) 57%, rgb(92,90,92) 71%);
+	background-image: -o-linear-gradient(top, rgb(87,87,87) 13%, rgb(107,105,107) 57%, rgb(92,90,92) 71%);
+	background-image: -moz-linear-gradient(top, rgb(87,87,87) 13%, rgb(107,105,107) 57%, rgb(92,90,92) 71%);
+	background-image: -webkit-linear-gradient(top, rgb(87,87,87) 13%, rgb(107,105,107) 57%, rgb(92,90,92) 71%);
+	background-image: -ms-linear-gradient(top, rgb(87,87,87) 13%, rgb(107,105,107) 57%, rgb(92,90,92) 71%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.13, rgb(87,87,87)),
+		color-stop(0.57, rgb(107,105,107)),
+		color-stop(0.71, rgb(92,90,92))
+	);
+	color:#FFF;
+}
+.show_list{                       
+            margin:1%;
+            padding:2%;            
+            border:2px solid #ccc;
+            border-radius: 20px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius:20px;
+            -khtml-border-radius:20px;
+            box-shadow: 0 1px 5px #333;
+            -moz-box-shadow: 0 1px 5px #333;
+            -webkit-box-shadow: 0 1px 5px #333;
+            z-index:101;
+            font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+            font-size:14px;
+        }
+.myFont{
+	font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+        font-size:1em;
+	color:#fff;
+}
+.app_goal_form{
+        margin:10px;
+	padding:5px;
+}
+.read_button{
+	background-color:#B22222;
+}
+/****/
+
+textarea .goaltextarea{
+  height: 300px;
+  width: 100%;
+  font-size: 1em;
+  font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
 }

@@ -6,21 +6,11 @@
 import os, sys
 
 #Personis
-import Personis
-import Personis_base, Personis_a
-from Personis_util import printcomplist
+#import Personis
+#import Personis_base, Personis_a
+#from Personis_util import printcomplist
+from personis import client
 
-# Personis Configuration
-#cfg = ConfigParser.ConfigParser()
-#cfg.read(os.path.expanduser("~/.personis.conf"))
-#personispath = cfg.get('paths', 'personis')
-#print "Path:", personispath
-#sys.path.insert(0, personispath)
-
-#model_dir = '/home/dbarua/Desktop/llum/Personis/models'
-
-#_curdir = os.path.join(os.getcwd(), os.path.dirname(__file__))
-#model_dir = '/home/chai/llum/llum/Personis/models'
 
 #Apps model
 from AppList import *
@@ -39,7 +29,7 @@ class Personis_App_Manager(object):
         else:
             print "Error creating Apps"
 
-
+    
     # Get list of Apps
 
     def build_list_apps(self):
@@ -111,10 +101,23 @@ class Personis_App_Manager(object):
 
 
             app_info = data.split("_")
-            print app_info
-            appdetails = self.personis_um.um.registerapp(app=app_info[0], desc=app_info[1], password=app_info[2])
-            print "Registered ok: ", appdetails
-            print "List the registered apps (should be one):"
+            print "App infos: Name %s, description %s, password %s"%(app_info[0],app_info[1],app_info[2])
+            
+            #---Storage preferences
+            sum_data = app_info[1]
+            old_sum_data = app_info[2]
+            detailed_data = app_info[3]
+            
+            appdetails = ""
+            try:
+                appdetails = self.personis_um.um.registerapp(app_info[0], "", "fitbit_pass")
+                print "Registered ok: ", appdetails
+            except Exception,e:
+                import traceback
+                print "Error:"+ str(e)
+                traceback.extract_stack()
+            
+            print "List the registered apps:"
 
             apps = self.um_applist
             for key in apps.keys():
@@ -145,8 +148,9 @@ class Personis_App_Manager(object):
                 #argument = "python "+filename[2]+" "+self.personis_um.modelname+" "+self.personis_um.username+" "+self.personis_um.password+" "+model_dir+" "+" > out_address_list"
                 #print argument
                 #os.system(argument)
-                self.personis_um.add_evidence(context=['Admin'], component='browseractivity', value=app_info[0]+" Plugin is installed", comment="")
+                #self.personis_um.add_evidence(context=['Admin'], component='browseractivity', value=app_info[0]+" Plugin is installed", comment="")
                 if app_info[0]=="Fitbit":
+                    self.manage_store_preferences(app_info[0], sum_data, old_sum_data, detailed_data)
                     url = self.create_app_plugin(app_info[0],"Activity")
                 else:
                     url = "Work in Progress...."
@@ -165,7 +169,49 @@ class Personis_App_Manager(object):
        print appname,description,notes,password,permission,resolvers,filename
        return "Success"
     register_app.exposed=True
-   """
+    """
+    def manage_app_data(self,data):
+
+        app_info = data.split("_")
+        print "App infos: Name %s, description %s, password %s"%(app_info[0],app_info[1],app_info[2])
+            
+        #---Storage preferences
+        sum_data = app_info[1]
+        old_sum_data = app_info[2]
+        detailed_data = app_info[3]
+        self.manage_store_preferences(app_info[0], sum_data, old_sum_data, detailed_data)
+        
+    def manage_store_preferences(self, app, sum_data, old_sum_data, detailed_data):
+        #--------------Creating Memory preferences for Fitbit Plugin---------------------
+        store_pref_context = ["Mneme","StoragePreference"] 
+        if type(self.personis_um.get_context("Mneme")) != 'dict':
+            try:
+              self.personis_um.make_new_context("Mneme","",[])
+              self.personis_um.make_new_context("StoragePreference","",["Mneme"])
+              print "Creating Mneme context "                               
+            except Exception,e:
+              write_log('error','Mneme Context Creation Failed; Error:'+str(e))
+              return "Error: "+str(e)
+                       
+                       
+        self.personis_um.make_new_component('active','attribute', 'string',None,'None',store_pref_context)
+        self.personis_um.make_new_component('longterm','attribute', 'string',None,'None',store_pref_context)
+        self.personis_um.make_new_component('archive','attribute', 'string',None,'None',store_pref_context)
+        self.personis_um.make_new_component('trash','attribute', 'string',None,'None',store_pref_context)
+                        
+        store_list = ['active','archive','longterm','trash']
+        for store in store_list:
+            if sum_data.find(store) != -1:
+               self.personis_um.add_evidence(context=store_pref_context, component=store, value=sum_data)
+                           
+        for store in store_list:
+            if old_sum_data.find(store) != -1:
+                self.personis_um.add_evidence(context=store_pref_context, component=store, value=old_sum_data)
+                              
+        for store in store_list:
+            if detailed_data.find(store) != -1:
+               self.personis_um.add_evidence(context=store_pref_context, component=store, value=detailed_data)
+         
     def activate_apps(self):
         if self.__current_app == "Gmail-Sensors":
             self.activate_gmail_sensor()
@@ -241,7 +287,7 @@ class Personis_App_Manager(object):
         print appname, cname
         try:
             """
-            ctx_obj = Personis_base.Context(Identifier=appname,
+            ctx_obj = client.Context(Identifier=appname,
                                             Description="Applications available for use",
                                             perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},                                                                                           resolver=None, objectType="Context")
             context = ['Apps']
@@ -289,7 +335,7 @@ class Personis_App_Manager(object):
         print jdata
 
     def get_calorie_data(self):
-        import fitbit_plugin
+        import fitbit_plugin        
         fitbit_plugin.track_minute_calories(self.personis_um)
 
     def get_minute_steps(self, start, end):

@@ -1,8 +1,31 @@
+function getjsonSizeData(){
+       var chart_type = 'pie';
+       var chart_div = 'container';
+       var action_url1 = '/show_size';
+	
+       var myStorage = [], myUsage=[], data1 = [], data2 = [];
+		//Calls the JSON action method
+		jQuery.getJSON(action_url1, null, function (items) {
+         //Plotting each data point from the response JSON object
+         //console.log(items);
+	      $.each(items, function (itemNo, item) { 
+                //array, function(index, value)
+               console.log(item);
+               if(item.context == 'Free Space'){
+                    myStorage.push({name: 'Free Space',y: 50, sliced: true,selected: true})
+                }
+		       else
+               myStorage.push([item.context, parseFloat(item.size)]);
+                                  
+		  });
+		  getSizePieChart(chart_type, chart_div, myStorage);
+  });
+}
 function getSizePieChart(chart_type, chart_div, myDataPie) {
                
                 var type = chart_type;
                 var container = chart_div
-		var options ={            
+		        var options ={            
                    chart: {
 	                renderTo: container,
 	                plotBackgroundColor: null,
@@ -10,7 +33,7 @@ function getSizePieChart(chart_type, chart_div, myDataPie) {
 	                plotShadow: false
 	            },
 	            title: {
-	                text: 'Mneme Storage Analytics'
+	                text: 'Personis User Model Storage Analytics'
 	            },
   	            subtitle: {
 				 text: 'Source: Personis Server'
@@ -37,19 +60,19 @@ function getSizePieChart(chart_type, chart_div, myDataPie) {
 	            series: [{
 	                type: type,
 	                name: 'Mneme Storage Pie Distribution',
-			center: [80, 80],
-			size: '50%',
+					center: [80, 80],
+					size: '50%',
 	                data: []
 	            },{
 			//data: [129.3, 131.5, 138.9, 148.3, 158.5, 168, 173.9, 172.3, 174.7, 176.1, 180.9, 184.8], 
-			data: [129.3, 131.5, 138.9, 148.3, 158.5,200.5],
+			data: [0, 0, 0, 0,0,0,0,0],
 			type: 'line', 
 			name: 'Monthly Growth of Mneme Storage Usage'
 		    }],
 		   xAxis: [
 			{
 			//categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 
-                        categories: ["Jan", "Feb", "Mar", "Apr", "May","Jun"],
+            categories: ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul", "Aug"],
 			title: {
 				text: 'Month'
 				}
@@ -59,8 +82,9 @@ function getSizePieChart(chart_type, chart_div, myDataPie) {
 			{
 			title:{
 				text: "KB Used"
-			}
-                   }]
+			   },
+			min:0
+           }]
           	};
 
               
@@ -72,45 +96,45 @@ function getSizePieChart(chart_type, chart_div, myDataPie) {
 function getHighStockChart(chart_type, chart_div, myArray) {
                 var type = chart_type;
                 var container = chart_div
-		var options = {
+		        var options = {
 			      chart: {
-				 renderTo: container,
+				     renderTo: container,
 			         defaultSeriesType: type
 			      },
 			      
 			      title: {
-				 text: 'Daily Activity and Health Records'
+				    text: 'Daily Activity and Health Records'
 			      },
 			      
 			      subtitle: {
-				 text: 'Source: Personis Server'
+				     text: 'Source: Personis Server'
 			      },
 			      
 			      xAxis: {
-				 type: 'datetime',
-				 tickInterval: 14 * 24 * 3600 * 1000, // one week
-				 tickWidth: 0,
-				 gridLineWidth: 1,
-				 labels: {
-				    align: 'left',
-				    x: 3,
-				    y: -3 
+				     type: 'datetime',
+				     tickInterval: 14 * 24 * 3600 * 1000, // one week
+				     tickWidth: 0,
+				     gridLineWidth: 1,
+				     labels: {
+				        align: 'left',
+				        x: 3,
+				        y: -3 
 				 }
 			      },
 			      
 			      yAxis: [{ // left y axis
-				 title: {
+				    title: {
 				    text: null
-				 },
-				 labels: {
+				    },
+				    labels: {
 				    align: 'left',
 				    x: 3,
 				    y: 16,
 				    formatter: function() {
 				       return Highcharts.numberFormat(this.value, 0);
-				    }
-				 },
-				 showFirstLabel: false
+				      }
+				    },
+				    showFirstLabel: false
 			      }, { // right y axis
 				 linkedTo: 0,
 				 gridLineWidth: 0,
@@ -129,7 +153,7 @@ function getHighStockChart(chart_type, chart_div, myArray) {
 				 showFirstLabel: false
 			      }],
 			      
-			      legend: {
+			     legend: {
 				 align: 'left',
 				 verticalAlign: 'top',
 				 y: 20,
@@ -205,19 +229,17 @@ function randomData(len) {
 			return arr;
 		}
 
-function getIntradayStackChart(chart_div, myActive){
+function getIntradayStackChart(chart_div, myActive,myTitle){
 	//Highcharts.setOptions({colors: ['#747474', 'rgba(0, 0, 0, 0)']});
+        console.log(chart_div);
         var options = {
 
 	    chart: {
-		renderTo: chart_div,
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
+		renderTo: chart_div                
 		
 	    },
-            title: {
-		 text: 'Intraday Active Hours'
+         title: {
+		 text: myTitle
 		},
 			      
 	    subtitle: {
@@ -299,7 +321,7 @@ function getIntradayStackChart(chart_div, myActive){
 		data: [0, 0, 0, 0, 0, 20, 20, 30, 30, 20, 12, 20, 30, 0, 0],
                 stack: 'Active' 
             },{
-                name:"Pie",  
+        name:"Pie",  
 		type: 'pie',
 		data: myActive,
 		size: '50%',
@@ -310,41 +332,41 @@ function getIntradayStackChart(chart_div, myActive){
         //chart.render();
 }
 function getInactivityAnnual(chart_div, myActive){
-        var data = [{
-                    y: 30.45,
+        var data1 = [{
+                    y: 5.45,
                     color: '#24CBE5',
                 }, {
-                    y: 21.35,
+                    y: 6.35,
                     color: '#24CBE5',
                 }, {
-                    y: 21.80,
+                    y: 6.80,
                     color: '#24CBE5',	
                 }, {
-                    y: 20.78,
+                    y: 5.78,
                     color: '#24CBE5',
                 }, {
-                    y: 22.56,
+                    y: 7.56,
                     color: '#24CBE5',
                 },{
-                    y: 24.56,
+                    y: 6.56,
                     color: '#24CBE5',
                 },{
-                    y: 22.67,
+                    y: 7.67,
                     color: '#24CBE5',
                 },{
-                    y: 24.23,
+                    y: 4.23,
                     color: '#24CBE5',
                 },{
-                    y: 27.45,
+                    y: 7.45,
                     color: '#24CBE5',
                 },{
-                    y: 28.56,
+                    y: 8.56,
                     color: '#24CBE5',
                 },{
-                    y: 26.56,
+                    y: 6.56,
                     color: '#24CBE5',
                 },{
-                    y: 25.45,
+                    y: 5.45,
                     color: '#24CBE5',
                 },];
         var series = [{
@@ -409,8 +431,65 @@ function getInactivityAnnual(chart_div, myActive){
                 }
             },
             legend:{
-	       enabled:false
+	            enabled:false
             },
            series: series
         });
 }
+function getIntradayInactivity(){
+       var break_list = [];
+       $.ajax({  
+			    type: "POST",  
+			    url: "/get_break_records",  
+			    data: "",  
+                processdata:true,
+			    success: function(data){
+					   	   					   			
+                break_list = eval(data);
+                console.log(break_list);
+				var i = 0;
+		        d1 = new Date("20 Aug 2000 08:00");  
+		        console.log('Starting time');
+		        console.log(d1);        
+		        for(var i = 0; i < break_list.length; i++){
+		        	console.log(break_list[i].breakTime);
+			        var d2 = new Date('20 Aug 2000 '+break_list[i].breakTime);
+		            console.log(d2);
+		            for(var j = 0; j < 60; j++){		 
+				       if(d2.getTime() == d1.getTime()){
+		                   console.log('Break!!!');
+		                   var break_minutes = break_list[i].breakDuration.split(':');
+				           var break_length = parseInt(break_minutes[0]); 
+		                   for(var k=0; k < break_length; k++){
+				               $('#colorchart').append('<a title="You have taken a break at '+break_list[i].breakTime+' hours for '+break_length+' minutes" ><div class="active" style="float:left"></div></a>');		    	
+		                       d1.setMinutes(d1.getMinutes() + 1);    	
+				           }
+		                   break;
+				       }
+				       else{                    
+				           $('#colorchart').append('<div class="inactive" style="float:left"></div>');
+		                   d1.setMinutes(d1.getMinutes() + 1);    
+				        }
+				     }  
+				}
+		   	     var dEnd = new Date("20 Aug 2000 18:00");
+			     var difference = dEnd.getTime() - d1.getTime();
+			     console.log(difference); 
+			     var minutesDifference = parseInt((difference / 60)/1000);
+			     console.log(minutesDifference);
+			     for(var i = 0; i< minutesDifference+4; i++){
+			         $('#colorchart').append('<div class="inactive" style="float:left"></div>');           
+			     }
+				  $('#colorchart a').dcTooltip({
+			        classWrapper: 'tooltip-2',
+				    distance: 10
+			     });		
+   
+					   
+			   }
+			});
+
+	   
+
+}
+	

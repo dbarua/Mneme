@@ -10,14 +10,82 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/static/jquery-ui-1.9m1/ui/jquery.ui.tooltip.js"></script>
+    
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  
-  <style>
+    
+    		<!--Custom Javascript files with necessary functionalities-->    
+	    <script type="text/javascript" src="/static/mneme.js" ></script>
+	    <script type="text/javascript" src="/static/goals.js"></script>
+	    <script type="text/javascript" src="/static/size_pie.js"></script>
+
+    	
+    <style>
+	/*Inline styles for custom tooltip design inherited from Jquery UI samples*/
+	.ui-tooltip, .arrow:after {
+		background-image: linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -o-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -moz-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -webkit-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -ms-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	
+		background-image: -webkit-gradient(
+			linear,
+			left bottom,
+			left top,
+			color-stop(0.13, rgb(232,230,235)),
+			color-stop(0.57, rgb(209,209,209)),
+			color-stop(0.71, rgb(214,214,214))
+	       );
+		  color: #4E4E4E;
+		  border: 2px solid white;
+	    }
+	.ui-tooltip {
+		padding: 10px 20px;
+		color: #4E4E4E;
+		border-radius: 20px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:0.9em;
+		box-shadow: 0 0 7px black;
+		text-align:justify;
+	    }
+	.arrow {
+		width: 70px;
+		height: 16px;
+		overflow: hidden;
+		position: absolute;
+		left: 50%;
+		margin-left: -35px;
+		bottom: -16px;
+	    }
+	.arrow.top {
+		top: -16px;
+		bottom: auto;
+	    }
+	.arrow.left {
+		left: 20%;
+	    }
+	.arrow:after {
+		content: "";
+		position: absolute;
+		left: 20px;
+		top: -20px;
+		width: 25px;
+		height: 25px;
+		box-shadow: 6px 5px 9px -9px black;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		tranform: rotate(45deg);
+	    }
+	.arrow.top:after {
+		bottom: -20px;
+		top: auto;
+	    }
 		.ui-icon { display: inline-block; }
 		fieldset div {
 			margin-bottom: 2em;
 		}
-		.ui-tooltip { width: 210px; }
 		.ui-dialog .ui-dialog-content { 
 			background-color: #4E4E4E; 
 			font-size:14px;
@@ -54,9 +122,9 @@
 	                
    	    }
 	   #login_reg_div{
-			width:120px;
-			margin:5px;
-			padding:5px;
+			width:50%;
+			margin:2%;
+			padding:2%;
 		}
 	  .link{
 		    margin:5px;
@@ -71,18 +139,21 @@
 	        font-size:14px;       
 			color: #fff;
 			background-color: #171717;
-			-moz-border-radius: 5px;
+			border-radius: 30px;
+			/*-moz-border-radius: 5px;
 			-webkit-border-radius: 5px;
-			-khtml-border-radius: 5px;
-			border-radius: 5px;
+			-khtml-border-radius: 5px;*/
+			
    	  }
      .border{
   	        border:2px solid #333;
-			-moz-border-radius: 20px;
+  	        border-radius:30px;
+  	        box-shadow: 0 1px 5px #333;
+			/*-moz-border-radius: 20px;
 			-webkit-border-radius:20px;
 			-khtml-border-radius:20px;
 			-moz-box-shadow: 0 1px 5px #333;
-			-webkit-box-shadow: 0 1px 5px #333;
+			-webkit-box-shadow: 0 1px 5px #333;*/
        }
 
      .show_list{
@@ -92,11 +163,13 @@
             margin:1%;
             padding:2%;            
             border:2px solid #ccc;
-            -moz-border-radius: 20px;
+            border-radius: 30px;
+            box-shadow: 0 1px 5px #333;
+            /*-moz-border-radius: 20px;
             -webkit-border-radius:20px;
             -khtml-border-radius:20px;
             -moz-box-shadow: 0 1px 5px #333;
-            -webkit-box-shadow: 0 1px 5px #333;
+            -webkit-box-shadow: 0 1px 5px #333;*/
             z-index:101;
     }
     .clear_space{
@@ -109,7 +182,6 @@
     table { font-size: 10pt; }    
        
  </style>
-  
 </head>
 <body>
    <!--<div id="header">      
@@ -137,7 +209,8 @@
 	
 	  <div id="lefttxtblank">
 	      <div id="intro"> 
-	        This site takes after the Greek goddess of memory, and <i>remembers</i> information you want kept. You can make Mneme collect information via sensors and applications. You can see it, explore it, and see trends.You control the information you decide what applications can use it and even when you want it to <i>forget</i>.
+	      <!--  This site takes after the Greek goddess of memory, and <i>remembers</i> information you want kept. You can make Mneme collect information via sensors and applications. You can see it, explore it, and see trends.You control the information you decide what applications can use it and even when you want it to <i>forget</i>.-->
+	      This site takes its name from the Greek goddess of memory. Mneme <i>remembers</i> information you want kept. You can make Mneme collect information via sensors and applications. You can see that information and explore it to see long term trends. You control the information and you decide what applications can use it. You can even direct Mneme to <i>forget</i>. 
 	      </div>
 	      <div class="clear_space"></div>
 			<table style="width:100%">
@@ -147,10 +220,13 @@
 			      <div id="tour_div" class="show_list home_tools" style="width: 150px;"> <a href="" id="quick_tour"><font color="#ffffff">Have a quick tour</font></a> </div>
 			      </td>-->
 			      <td style="width:32.5%"></td>
-			      <td>
-			      <div id="login_reg_div" class="show_list home_tools"> <a href="/do_login" id="log_reg" class="link"> <font color="#ffffff">Login with Gmail</font></a>
+			      <td style="width:60.0%">
+			      <div id="login_reg_div" class="show_list home_tools"> 
+			      	<a href="/do_login" id="log_reg" class="link"> <font color="#ffffff">Login with Gmail</font></a>
+			      	 <span title="Your Google ID is used for authentication purposes only." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>                        
 			      </div>
 			      </td>
+			      <td style="width:7.5%"></td>
 			    </tr>
 			  </tbody>
 			</table>

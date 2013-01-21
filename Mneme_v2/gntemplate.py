@@ -22,24 +22,37 @@ class LoadGenshiTemplate(object):
         return stream.render('xhtml')
 
 
-    def browse_template(self, access_type, context_list, username):
-        self.who = username
-        for b in self.browser_activity:
-            print b.value, b.time
-
-        text = " This page will help you to monitor the personal data captured in the user model. In this page, you can see a list of directories that hold information about different aspects of your life. Personal, for example, holds information related to your personal details and Health. Hove over the question mark to see what the corresponding directory means. Hover over the link to read some direction. Click a name to monitor the internal content of each directory. Check the boxes if you want to use some additional operations. "
-
-        if access_type == 'Base': tmpl = loader.load('browse_context.html')
-        else: #tmpl = loader.load('browse_context_server_new.html')
-            tmpl = loader.load('um_views.html')
-        stream = tmpl.generate(session=self.__curSession, title="Home",headline="List of contexts in the user model", context=context_list, about=text, who=self.who, where="Home", browser_activity=self.browser_activity)
-        return stream.render('xhtml')
-
+    def browse_template(self, access_type, context_list, username, email_id, plugin_list, uninstalled_list):
+        try:
+            self.who = username
+            #for b in self.browser_activity:
+            #    print b.value, b.time
+    
+            text = "In this page, you can set and monitor your personal goals based on the data from the devices and apps already installed in your model."
+            text = text + " You can find a list of plugins to extract your personal data from external systems. Fitbit plugin, for example, will help you get a copy of your own steps, calories, activity records from the Fitbit."
+            text = text + " Once you install the app you can see a list goals that you can monitor using the Fitbit data. The charts in this page will show your progress towards current goal."
+            for cont in context_list:
+                print cont.name
+                
+            print plugin_list
+            
+            try:
+              tmpl = loader.load('um_views.html')
+              stream = tmpl.generate(title="Dashboard",context=context_list, about=text, who=self.who,where="Dashboard",email_id=email_id,plugin_list=plugin_list, uninstalled_plugin_list = uninstalled_list)
+              return stream.render('xhtml')
+            except Exception,e:
+              print "Stream error",e  
+            
+        except Exception, e:
+            print "Browse loading error",e
 
     def browse_sub_elements(self,cur_context,cur_comp,contexts,components,context_list):
-        text = "This page will help you to monitor the personal data captured in the user model. In this page, you can see that list of sub-contexts asscoiated to you. Hover over the 'question' sign beside each of these contexts to find out what this means. Click an element to visualise the internal content. Use 'Back' button to browse back to previous page."
+        text = "In this page, you can monitor the personal data captured in your model. You will find a list of sub-contexts and components that are relevant to this context. We call each of them 'element'."
+        text = text + " Hover over the 'question' sign beside an element to find out what this means."
+        text = text + " Click an element to browse the internal content."
+        text = text + " Check the boxes if you want to delete or archive the selected elements. Use 'Back' button to browse back to previous page."
         tmpl = loader.load('um_browse.html')
-        stream = tmpl.generate(session=self.__curSession, title=cur_context, headline="List of subdirectories and components in the user model", subdirs=contexts, components=components, content="", action="Browse", about=text, context=context_list, who=self.who, where="Home/"+cur_context, browser_activity=self.browser_activity)
+        stream = tmpl.generate(session=self.__curSession, title=cur_context, headline="List of subdirectories and components in the user model", subdirs=contexts, components=components, content="", action="Browse", about=text, context=context_list, who=self.who, where="Model Browser/"+cur_context, browser_activity=self.browser_activity)
         return stream.render('xhtml')
 
 

@@ -1,35 +1,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:py="http://genshi.edgewall.org/">
-   <xi:include href="layout_home.html"/>
+    <xi:include href="layout_home_109.html"/>
+   <!--<xi:include href="starter-template-new.html"/-->
    <head>
         <title>$title</title>
 
-        <script src="/static/jquery-ui/ui/jquery.ui.datepicker.js"></script>	   
         <script type="text/javascript" src="/static/Highcharts/js/highcharts.js"></script>
         <script type="text/javascript" src="/static/Highcharts/js/highstock.js"></script>
         <script type="text/javascript" src="/static/Highcharts/js/themes/gray.js"></script>
-	<script type="text/javascript" src="/static/Highcharts/js/modules/exporting.js"></script>	
+	    <script type="text/javascript" src="/static/Highcharts/js/modules/exporting.js"></script>	
 		<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="/highslide/highslide-ie6.css" />
 		<![endif]-->
 		<!-- End Highslide code -->
-	<!-- Additional files for the Highslide popup effect -->
-	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
-	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
-        <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
-	<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
+		<!-- Additional files for the Highslide popup effect -->
+		<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+		<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="/static/highslide/highslide/highslide-with-html.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
 		<script type="text/javascript">
  		  hs.graphicsDir = '/static/highslide/highslide/graphics/';
 		  hs.outlineType = 'rounded-white';
 		  hs.wrapperClassName = 'draggable-header';
 		</script>
 
-        <script type="text/javascript" src="/static/size_pie.js"></script>
-	<!--<script type="text/javascript" src="/static/intraday.js"></script>-->
+
 
 	<script type="text/javascript">
-        //<![CDATA[
+    //<![CDATA[
         (function(){
 		    // remove layerX and layerY
 		    var all = $.event.props,
@@ -40,146 +39,644 @@
 		      if (el != 'layerX' && el != 'layerY') res.push(el);
 		    }
 		    $.event.props = res;
-	}()); 
-        var chart_type2 = 'line';
-        var chart_div2 = 'line_div';  
-      	var action_url2 = '/show_graph_hc?data=';
-        var data = "", period="";
-        function getHealthChart(period){
-                console.log("I am here"+period);
-                var myDataArray = []; 
-                if(period == 'Intraday'){
-	                var myActive = [];
-                        myActive.push(['Sedentary',19]);
-                        myActive.push(['Lightly Active',parseFloat(3)]);
-                        myActive.push(['Moderately Active',1]);
-		        myActive.push(['Very Active',1]);
-		        //getIntradayStackChart(chart_div2, myActive);
-			getInactivityAnnual(chart_div2,myActive);
-		}
-                else{
-                        var mySteps = [], myActiveHours = [], myCalorie = [], myPulse = [];
-			jQuery.getJSON(action_url2+data,
-		             null, function (items) {
-                                 //Plotting each data point from the response JSON object
-                                  //console.log(items);
-	                          $.each(items, function (itemNo, item) { 
-                                     //array, function(index, value)
-                                     console.log(item);
-				     mySteps.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.steps)]);
-				     myActiveHours.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.active_time)]);
-				     myCalorie.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.calorie)]);
-				     //myPulse.push([Date.UTC(item.year,item.month - 1,item.day),parseFloat(item.pulse)]);
-                                  
-		                });
-                         myDataArray.push(mySteps);
-		         myDataArray.push(myActiveHours);
-                         myDataArray.push(myCalorie);
-                         //myDataArray.push(myPulse);
-		         getHighStockChart(chart_type2, chart_div2, myDataArray);
-                       });
-               }
+	    }()); 
+	    
+     var chart_window_width = 56.5;
+     //manageCurrentGoalPanel();
 
-	}
-	$(function() {
-	        //Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
-	        //var highchartsOptions = Highcharts.getOptions(); 
+	 $(document).ready(function() {
+	        handle_app_install();
 	        var now = new Date();
 	        var today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
-	    	$('#from_date').val(today);
-		Highcharts.setOptions({
+
+		    Highcharts.setOptions({
 		        colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE', '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92']
-			//colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+			   //colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
 	         });
     
-		$("#from_date").datepicker({
-					changeMonth: true,
-				        changeYear: true,
-					dateFormat: 'dd/mm/yy',
-		});
-                var chart_type = 'pie';
-                var chart_div = 'container';
-		var action_url1 = '/show_size';
-		var action_url2 = '/show_';
-
-                var myStorage = [], myUsage=[], data1 = [], data2 = [];
-		        //Calls the JSON action method
-		jQuery.getJSON(action_url1,
-		             null, function (items) {
-                                 //Plotting each data point from the response JSON object
-                                  //console.log(items);
-	                          $.each(items, function (itemNo, item) { 
-                                     //array, function(index, value)
-                                      console.log(item);
-                                      /*if(item.context == 'Free Space'){
-                                         myStorage.push({name: 'Free Space',y: 50, sliced: true,selected: true})
-                                      }
-				      else*/
-                                      myStorage.push([item.context, parseFloat(item.size)]);
-                                  
-		                });
-                               getSizePieChart(chart_type, chart_div, myStorage);
-
-
-		});
-
-                //getHealthChart(period);
-                //define the options
-  	                   
-		$("#week select").change(function () {
-                   $("#week select option:selected").each(function () {
-		      var from = $('#from_date').val();       
-  	              data = from+'_';	
-                      period = $(this).text();
-                      data += period;
-		      console.log(data);
-		      getHealthChart(period);
-		   });  
-                }).trigger('change');                 		
-       
- 
-	});
-        //]]>
+	        var all_goals = ["CurrentLevelGoal","StepGoal","InactivityGoal","ModerateActivityGoal","IntenseActivityGoal"];
+	        for(var i = 0;i<all_goals.length;i++){
+	        	$('#'+all_goals[i]+'Chart').hide();
+	          }
+	        
+            getPluginsGoals();
+            
+            $(window).resize(function(){
+		 	   var width = $(window).width();
+		 	   console.log("Resized width = "+width);
+		 	   width = (chart_window_width * width)/100;	
+		 	   console.log("Converted width = "+width);	
+		  	   $("#CurrentLevelGoalChart div:visible").each( function() {
+   			   	     var div_id = $(this).attr('data-div-id');
+			         var chart = $(this).attr('data-chart');
+			         var type = $(this).attr('title');
+			         console.log("button pressed:"+type+"chart type"+chart+"showing on div"+div_id); 				         
+			         show_current_goal_chart(type,chart,div_id,width);
+			  });
+	       });
+	     $("#contentleft_left a").click(function(){		     	
+		     	/*var count = $('#contentleft_left a').length;
+		     	console.log(count);
+		     	$('#contentleft_left a').each(function(i) {
+		     		console.log($(this).attr('data-div-id'));
+				    $(this).css('background-color',"#4E4E4E")
+				    var all_apps = $(this).attr('data-div-id');
+				    $("."+all_apps).hide('slow');
+				});*/
+			    var appname = $(this).attr('data-div-id');
+			    /*$("."+app).show('slow');
+			    if(app == 'activity_monitor')
+			       $("."+app+" div").show();
+		     	$(this).css('background-color',"#3399CC")*/
+		     	  var comment = "Dashboard: "+appname+" has been clicked";
+                  console.log(comment);                    
+                  window.log_events[index++] = comment;                     
+                  $('#box h3').text("Manage your "+appname+" data.");
+                  $('#register_now').val('Update store preferences'); 
+                  $('#overlay2').fadeIn('fast',function(){
+			          $('#box').animate({'top':'50px','left':'20%','right':'40%'},500);
+		              	  $('#box').draggable(); 
+		                  $('#box').height('600px');
+				  		  $('#box').width('750px');
+		        });
+	     });
+	     $( ".slider" ).slider({
+        		range: "min",
+	            value:0,
+	            min: 0,
+	            max: 100,
+	            step: 20,
+	            slide: function( event, ui ) {
+	            	var div = $(this).attr('data-div-id');
+	            	console.log(ui.value);
+	            	var value = (ui.value).toString();
+	            	var index = parseInt(value.split('')[0]);
+	            	if(index == 1) 
+	            	   index = 10;
+	                $( "#"+div ).text(goal_attr_values[index]);
+	                var comment = "Dashboard: Advanced setting slider changed "+div+" to value "+goal_attr_values[index]+".";
+		    		log_events[log_index++] = comment; 
+	            }
+        });
+  }); //end of document.ready       
+     //]]>
 	</script>
   </head>
   <body>
    <div id="main_page">
-	   <div class="show_list">
-	     <h1 style="text-indent:35%">Hall of Mneme</h1> 
-	   </div>
-	    <div id="clear_space"></div>
-	    <div id="container" class="charts">
-	    </div>
-	   <div id="clear_space"></div>
-	   <div class="show_list">  
-	   <table class="table">
-	     <tr>
-	      <td><div id="week" style="float:left; margin-left:130px;">
-		      <select name="week_list" id="week_list">
-		                  <option value="day">Intraday</option>
-				  <option value="week">Week</option>
-				  <option value="forthnight">Fortnight</option>
-				  <option value="month">Month</option>
-				  <option value="month">Year</option>
-	   	      </select>
-	      </div></td>
-	      <td></td>  
-	      <td style="width:20px">
-		       <div id="from">
-		        <label for="from_date" style="color:#fff">Date: 
-			  <input type="date" id="from_date" name="from_date" value="Today:"/>
-		        </label>
-	      </div>
-	      </td>
-	      <!--<td><input type="button" class="button" value="Go!"/></td>-->
-	     </tr>
-	     </table> 
-	 
-	   </div>
-	     <div id="line_div" class="charts" ></div>   
+     <div class="fitbit">   	     
+   	    <div id="GoalHeader" class="show_list darkbackcolor"><h2><center> Wellness goals </center></h2></div>
+   	    <!--This is the chart for showing data that help the user get started with Fitbit-->
+   	    <!--This is for some introductory comments-->
+   	    <div id="CurrentLevelGoalmonitor" class="show_list lightbackcolor hideable "></div>           
+		<!--Here is the actual chart-->
+		<div id="CurrentLevelGoalChart">
+        <table>
+        	<tr>
+        		<!--Three buttons for showing three different aspects. One for step, one for calorie and one for active minutes-->
+        		<td><input type="button" class="button revisegoals" id="Fitbit" data-div-id="CurrentLevelGoal" value="Revise this goal" style="background-color:#8B0000;"/></td>
+        		<td><input type="button" class="pressedbutton curgoal" value="Steps" id="steps_button" data-chart="column" data-form="steps" data-div-id="current_step_div" title="Click this button to see how many steps you walk every day." /></td>        		
+        		<td><input type="button" class="button curgoal" value="Calories Burned" id="calories_button" data-chart="column" data-form="calories" data-div-id="current_calories_div" title="Click this button to see how much calories you burn every day." /></td>
+        		<td><input type="button" class="button curgoal" value="Time Active" id="active_button" data-chart="pie" data-form="active_mins" data-div-id="current_activemins_div" title="Click this button to view a chart find out how much active your day is. " /></td>
+                <!--<td><input type="button" class="button historicbutton" data-div-id="CurrentLevelGoal" value="Go to historic chart"/></td>-->        	  
+        	  
+        	</tr>
+        		
+        </table> 	
+            <!--Three divs for showing three charts-->
+            <div id="current_calories_div"  class="charts" style="display:none;"></div>
+            <div id="current_step_div"  class="charts"></div>
+			<div id="current_activemins_div" class="charts" style="display:none"></div>						
+		</div>
 
-    </div>
+   	    <!--This is the chart for monitoring step goal with Fitbit -->
+	   	<!--This is for some introductory comments-->   	    
+	   	 <div id="StepGoalmonitor" class="show_list lightbackcolor hideable "></div>
+	   	 <!--Here is the actual chart-->
+   	     <div id="StepGoalButtons" class="hideable">
+   	      <table>
+        	<tr>
+        	  <!--Button to revise goal-->
+        	  <td><input type="button" class="button revisegoals" data-div-id="StepGoal" id="Fitbit" value="Revise this goal" style="background-color:#8B0000;"/></td>
+        	  <!--Button to show the historic charts with the all the step goals and performance-->
+        	  <td><input type="button" class="button howto_buttons" value="How to read the chart" data-div-id="steps" id="howto_step" title="Click this button to find out how to read the chart"/></td>
+        	  <td><input type="button" class="button historicbutton" data-div-id="StepGoal" value="Go to historic chart"/></td>        	  
+        	  <!--Button to move time window 7 day back-->
+   	     	  <!--<td><input type="button" class="button stepButtons" value="Previous week" id="past" title="Click this button to see the previous week's chart"/></td>-->
+   	     	  <!--Button to move time window 7 day forward-->
+   	     	  <!--<td><input type="button" class="button stepButtons" value="Next week" id="next" title="Click this button to see the next week's chart"/></td>-->
+   	       </tr>
+   	       </table>
+   	     </div>
+   	     <div id="StepGoalChart" class="charts" style="max-height:500px"></div>        
+   	     <div class="hideable" style="height:140px;" id="goal_chart_space"></div>    	     	           	          	            
+   	     <div id="InactivityGoalmonitor" class="show_list darkbackcolor hideable "></div>		           		       	          
+   	     <div id="InactivityGoalChart" class="charts" style="width:800px; max-width:800px;min-width:300px;"></div>
+   	        	     
+   	     <div id="ModerateActivityGoalmonitor" class="show_list lightbackcolor hideable"></div>		 
+   	     <div id="ModerateActivityGoalButtons" class="hideable">
+   	      <table>
+        	<tr>
+        	  <!--Button to revise goal-->
+        	  <td><input type="button" class="button revisegoals" data-div-id="ModerateActivityGoal" id="Fitbit" value="Revise this goal" style="background-color:#8B0000;"/></td>
+        	  <td><input type="button" class="button howto_buttons" value="How to read the chart"  data-div-id="active minutes" id="howto_mod" title="Click this button to find out how to read the chart"/></td>        	          	 
+        	  <!--Button to show the historic charts with the all the step goals and performance-->
+        	  <td><input type="button" class="button historicbutton" data-div-id="ModerateActivityGoal" value="Go to historic chart"/></td>
+        	  <!--Button to move time window 7 day back-->
+   	     	  <!--<td><input type="button" class="button modButtons" value="Previous week" id="past_ModerateActivityGoal"/></td>-->
+   	     	  <!--Button to move time window 7 day forward-->
+   	     	  <!--<td><input type="button" class="button modButtons" value="Next week" id="next_ModerateActivity"/></td>-->
+   	       </tr>
+   	       </table>
+   	     </div>
+   	                		           	                  
+   	     <div id="ModerateActivityGoalChart" class="charts" style="width:800px; max-width:800px;min-width:300px;"></div>
+   	     <div class="hideable" style="height:140px;" id="mod_goal_chart_space"></div>
+         
+         <div id="IntenseActivityGoalmonitor" class="show_list lightbackcolor hideable"></div>		      	     
+   	     <div id="IntenseActivityGoalButtons" class="hideable">
+   	      <table>
+        	<tr>
+        	  <!--Button to revise goal-->
+        	  <td><input type="button" class="button revisegoals" data-div-id="IntenseActivityGoal" id="Fitbit" value="Revise this goal" style="background-color:#8B0000;"/></td>
+        	  <td><input type="button" class="button howto_buttons" value="How to read the chart"  data-div-id="active minutes" id="howto_int" title="Click this button to find out how to read the chart"/></td>
+        	  
+        	  <!--Button to show the historic charts with the all the step goals and performance-->
+        	  <td><input type="button" class="button historicbutton" data-div-id="IntenseActivityGoal" value="Go to historic chart"/></td>
+        	  <!--Button to move time window 7 day back-->
+   	     	  <!--<td><input type="button" class="button intButtons" value="Previous week" id="past_IntenseActivityGoal"/></td>-->
+   	     	  <!--Button to move time window 7 day forward-->
+   	     	  <!--<td><input type="button" class="button intButtons" value="Next week" id="next_IntenseActivityGoal"/></td>-->
+   	       </tr>
+   	       </table>
+   	     </div>
 
+   	     <div id="IntenseActivityGoalChart" class="charts" style="width:800px; max-width:800px;min-width:300px;"></div>
+		 <div class="hideable" style="height:140px;" id="intense_goal_chart_space"></div>
+        
+
+	     <div class="show_list" style="background-color:#4E4E4E;color:#fff;text-align:center;" id="goal_head_title">
+	     	<center><h4>Goal setting is very important for helping people achieve their goals. Below is a list of goals that you might set to achieve wellbeing.</h4></center>
+	     </div>
+	     <div id="CurrentLevelGoal" class="show_list lightbackcolor hideable">  
+	         <!--<a class="boxclose"></a>-->
+	         <h3>Getting started with Fitbit. </h3>
+	         <div id="CurrentLevelGoalintro">  
+	         	It is good to start with a one week goal to get to know how active you are.<br/>
+	           <div id="current_details" class="hideable description">
+	           	 
+	           </div>
+	           <input type="button" class="button details" data-div-id="CurrentLevelGoal" value="More about this goal" title="Click this button to know more about this goal"/> 
+	           <input type="button" class="button goals" data-div-id="CurrentLevelGoal" value="Set the goal" style="background-color:#8B0000;" title="Click this button to set this goal"/>	           
+	         </div>
+	     </div>	   	   	               	    
+	    
+ 	     <div class="clear_space"></div>
+	     <div id="StepGoal" class="show_list lightbackcolor hideable">  
+	      <!--<a class="boxclose"></a>-->   
+	      <h3>Step goal</h3>
+	      <div id="StepGoalintro"> 
+	          You can set a goal for walking any number of steps/day that suits you.<br/>
+  	           <div id="step_details" class="hideable description">
+	           	
+	           </div>
+	         <input type="button" class="button details" data-div-id="StepGoal" value="More about this goal" title="Click this button to know more about this goal"/> 
+	         <input type="button" class="button goals" data-div-id="StepGoal" value="Set the goal" style="background-color:#8B0000;" title="Click this button to set this goal"/>	
+	         <input type="button" class="button historicbutton" data-div-id="StepGoal" value="Go to historic chart" title="Click this button if you want to see your how you did in all the step goals you set so far." /> 
+	      </div>	      
+         </div>	
+                                    	         
+	     <div class="clear_space"></div>
+	     <div id="ModerateActivityGoal" class="show_list lightbackcolor hideable">  
+	        	<!--<a class="boxclose"></a>-->
+		         <h3> Moderate activity goal </h3>
+		          <div id="ModerateActivityGoalintro">
+		            You can set a goal to increase your moderate activity every week <br/>
+		            <div id="moderate_details" class="hideable description"></div>
+                      <input type="button" class="button details" data-div-id="ModerateActivityGoal" value="More about this goal" title="Click this button to know more about this goal"/> 
+		              <input type="button" class="button goals" data-div-id="ModerateActivityGoal" value="Set the goal" style="background-color:#8B0000;" title="Click this button to set this goal"/>
+		              <input type="button" class="button historicbutton" data-div-id="ModerateInactivityGoal" value="Go to historic chart" title="Click this button if you want to see your how you did in all the step goals you set so far."/>  	
+		           </div>              		              
+		            
+	         </div>
+	          
+	       <div class="clear_space"></div>
+	        <div id="IntenseActivityGoal" class="show_list lightbackcolor hideable">  
+	        	<!--<a class="boxclose"></a>-->
+		         <h3> Intense activity goal </h3>
+		         <div id="IntenseActivityGoalintro">
+		            You can set a goal to increase your intense activity every week <br/>
+		           <div id="intense_details" class="hideable description"></div>	           			           
+		             <input type="button" class="button details" data-div-id="IntenseActivityGoal" value="More about this goal" title="Click this button to know more about this goal" /> 
+		             <input type="button" class="button goals" data-div-id="IntenseActivityGoal" value="Set the goal" style="background-color:#8B0000;" title="Click this button to set this goal"/>
+		             <input type="button" class="button historicbutton" data-div-id="IntenseInactivityGoal" value="Go to historic chart" title="Click this button if you want to see your how you did in all the step goals you set so far."/>
+		         </div>
+		           
+		     </div>  
+          </div>
+          <div class="clear_space"></div>
+ 	       <div id="AvoidInactivityGoal" class="show_list lightbackcolor hideable">  	        
+	          <h3>Inactivity goal </h3>
+	          <div id="AvoidInactivityGoalintro">
+	           You can track your daily inactive periods if you set a goal to avoid them.<br/>
+   	             <div id="inactive_details" class="hideable description"></div>	           	
+	           
+
+		         <input type="button" class="button details" data-div-id="AvoidInactivityGoal" value="About this goal" /> 
+		         <input type="button" class="button goals" data-div-id="AvoidInactivityGoal" value="Set the goal" style="background-color:#8B0000;"/>
+		         <input type="button" class="button historicbutton" data-div-id="AvoidInactivityGoal" value="Go to historic chart"/>
+		       </div>  		           
+	        </div> 	     	   
+
+          <!--Ending div for goals-->
+     </div>
+    
+        <!-- The overlay and the box for app installation-->
+        <div class="ui-widget-overlay" id="overlay2" style="display:none;"></div>
+        <div class="myBox" id="box">
+            <a class="boxclose" id="appboxclose"></a>
+            <h3></h3>
+               <!--<div class="lefttxt02">* fields must be filled in </div>-->  	
+	           <div id="app_form" class="app_goal_form border" style="float:left;width:505px;padding:10px">  
+      	          <div class="border" style="padding:10px">
+	      	          <label class="myFont" style="width:480px;color:#fff; text-align: justify">
+	      	          	<!--After you have installed this app, you will be able to extract 1 minute data for your step counts, calorie burned and activity level measured by Fitbit sensor. The current set up for storing this data is shown below. You may change it if you wish.-->
+	      	          		By installing Fitbit in Mneme, you ensure that all your Fitbit data will be copied into Mneme.
+							You can then connect it to your goals, such as walking 10,000 steps a day.
+							This window shows how Mneme manages your data its four storage levels (described at the right).
+							You can alter this at any time and may want to do this now.						
+	      	          	<!--<span style="display:inline-block;cursor: pointer" title="This allows you to review how you want to manage your stored Fitbit data." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>--> 
+	      	          </label>
+			          <input type="button" class="button easy_button" value="I understand this." id="app_intro_use"/>
+					  <input type="button" class="button not_easy_button" value="I don't understand this." id="app_intro_nouse"/>
+					  <span style="display:inline-block;cursor: pointer" title="These buttons will help us find out whether the text in this window was helpful for you to understand the tasks." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>
+				  </div>		        	
+                       <!--Starting the options for management-->
+                       <div id="active_div" style="float:left;display:inline-block;margin:15px 0 15px 0;padding:10px" class="show_list lightbackcolor">
+			               <label for="active" style="color:#4E4E4E;font-size:1em;width:480px" id="active_label">			                              
+	                        1. <select name="sum_data" id="sum_data" style="display:inline-block;">
+								  <option value="1" selected="selected">Active</option>
+								  <option value="2">Long term</option>
+								  <option value="3">Archive</option>
+								  <option value="4">Trash</option>
+							</select> 
+							<span style="display:inline-block;cursor:pointer;text-align:justify" title=" This store keeps daily summaries of Fitbit data for each goal. For example, if you set a goal for walking 10k steps/day, it will keep the total number of steps walked for that day. Similarly, if you set 30 minutes of moderate/intense activity in a day, it will keep total number of minutes of moderate/intense activity for that day. It is calculated from the 1 minute Fitbit data. These summaries stay in Active for 1 week. They will be available in the charts in Mneme Dashboard right after you login." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="active_help">?</span>
+							is the daily summaries of Fitbit 1 minute data for each goal. It keeps data for  
+			  		        	<select name="sum_time" id="sum_time" style="display:inline-block;">
+				  		          <option value="aweek" selected="selected">1 week</option>	
+								  <option value="2weeks">2 weeks</option>
+								  <option value="1month">1 month</option>
+								  <option value="6month">6 months</option>
+								  <option value="oneyear" >1 year</option>
+								  <option value="fiveyear">5 years</option>
+								  <!--<option value="forever">forever</option>-->
+				  		        </select>, after which it goes to Long term store.
+			  		       </label>
+                        </div><br/>
+                        <div class="clear_space"></div>
+                        <div style="float:left;display:inline-block;margin:15px 0 15px 0;padding:10px" class="show_list lightbackcolor">
+			               <label for="old_sum_data" style="color:#4E4E4E;font-size:1em;width:480px">			                              
+	                        2. <select name="old_sum_data" id="old_sum_data" style="display:inline-block;">
+								  <option value="1">Active</option>
+								  <option value="2" selected="selected">Long term</option>
+								  <option value="3">Archive</option>
+								  <option value="4">Trash</option>
+							</select> 
+							<span style="display:inline-block;cursor: pointer" title="This store keeps daily summaries of Fitbit data for each goal for each week except the running one. Suppose you have set a goal for walking 10k steps/day for 4 weeks. At the end of each week, your daily summary step counts for that week will be moved from Active to Long term. They will stay there forever unless you move them to Archive or Trash. They will be available in the Mneme Dashboard for reviewing weekly progress and long term trends. " class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="ltm_help">?</span>
+								is the daily summaries of Fitbit 1 minute data for each goal for each week. It keeps data
+				  		        <select name="old_sum_time" id="old_sum_time" style="display:inline-block;">
+								  <option value="forever" selected="selected">forever</option>
+								  <option value="tenyear">for 10 years</option>
+								  <option value="fiveyear">for 5 years</option>
+								  <option value="oneyear">for 1 year</option>
+								  <option value="6month">for 6 months</option>
+								  <option value="1month">for 1 month</option>
+				  		        </select>. 	<br/>	
+				  		        <span id="summary_forever_text" style="font-weight: bold; font-style: italic">You will receive a notification if the storage is low in space.</span>	  		       				  		       	
+			  		       </label>
+                       </div>
+                       <div class="clear_space"></div>
+                       <div style="float:left;display:inline-block;margin:15px 0 15px 0;padding:10px" class="show_list lightbackcolor">
+			             <label for="detailed_data" style="color:#4E4E4E;font-size:1em;width:480px">			                              
+		                     3. <select name="detailed_data" id="detailed_data" style="display:inline-block;">
+									  <option value="1">Active</option>
+									  <option value="2">Long term</option>
+									  <option value="3" selected="selected">Archive</option>
+									  <option value="4">Trash</option>
+								</select> 
+								<span style="display:inline-block;cursor: pointer" title="This store keeps 1 minute Fitbit data. This data will be available in Mneme Model Browser. Data is stored here forever unless you want to move it to the other storage. " class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="archive_help">?</span>
+								is the 1 minute Fitbit data about steps, calories and activity level. It keeps data
+				  		        <select name="detailed_time" id="detailed_time" style="display:inline-block;">
+								  <option value="forever" selected="selected">forever</option>
+								  <option value="tenyear">for 10 years</option>
+								  <option value="fiveyear">for 5 years</option>
+								  <option value="oneyear">for 1 year</option>
+								  <option value="6month">for 6 months</option>
+								  <option value="1month">for 1 month</option>
+				  		       </select> <br/>
+				  		       <span id="detailed_forever_text" style="font-weight: bold; font-style: italic">You will receive a notification if the storage is low in space.</span>
+			  		     </label>
+                       </div><br/>
+
+                       <div id="button_div">
+                       	    <input type="button" class="button easy_button" value="I understand this." id="appdata_store_info_use"/>
+					  		<input type="button" class="button not_easy_button" value="I don't this." id="appdata_store_info_nouse"/>                                                         
+                 	   </div>
+                  </div>
+                  <div style="float:right;padding:10px;margin-top:10px;width:170px;" class="border myFont">
+                  	<h2>About Storage</h2>
+                  	  <ul>
+                  	  	<li style="padding:5px">Active 
+                  	  		<span style="display:inline-block;cursor: pointer" title="This is just the data that is currently important because it is the recent data about your current goals, such as the daily summaries of 1 minute data from Fitbit, which is the score for the amount of activity recorded for each minute of the day. Mneme uses this for the summaries that it presents when you login. Data is kept here for 1 week. Then it is moved to Long term." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>		        	
+                   		</li>
+                  	  	<li style="padding:5px">Long term
+                  	  		<span style="display:inline-block;cursor: pointer" title="Although less current than Mneme's Active store, this data is useful for reflection about your weekly and long term progress on your goals, such as Fitbit's total daily step count. Mneme presents this in the charts for each goal. Data is kept here forever unless you want to move it." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>		        	
+                        </li>
+                  	  	<li style="padding:5px">Archive
+                  	  		<span style="display:inline-block;cursor: pointer" title="This is where Mneme keeps all raw data that is too detail to be in the Active or Long term stores. For example, your 1-minute data from Fitbit. This data will not be available in Mneme Dashboard. But you can still access it, via the Model Browser. Data is stored here forever unless you want to move it. " class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>		        	
+                   		</li>
+                  	  	<li style="padding:5px">Trash
+                  	  		<span style="display:inline-block;cursor: pointer" title="This is a temporary place where Mneme keeps data for 3 months after you have indicated that you do not want it. After 3 months, it will be removed forever unless you want to keep it." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="appdata_help">?</span>		        	
+                   		</li>
+                  	  </ul>
+                  	  <input type="button" class="button easy_button" value="I understand this." id="store_info_use"/>
+                  	  <p></p>
+					  <input type="button" class="button not_easy_button" value="I don't understand this." id="store_info_nouse"/>
+                  </div>
+                  <input class="button" type="button" id="register_now" value="Continue installation" style="background-color:#B22222;margin:30% 0 0 5%"/>
+                <!--</form>    -->
+        </div>
+        <!--Set goal box-->             
+          <div class="myBox" id="set_goal_box" style="display:inline-block">         
+            <a class="boxclose" id="goalboxclose"></a>
+              <h3 id="goal_header"></h3>
+               <div style="float:left;width:50%;height:78%" class="show_list"  id="goal_setting_div">
+		            <div class="show_list lefttxt02" style="width:150px">* fields must be filled in </div>  	
+		             <div class="show_list lightbackcolor" style="height:10%;display:inline-block" id="set_goal_intro">
+		            	<label style="float:left; width:100%; font-size:1em;display:inline-block">
+				     	  This section is based on the widely used <span class='lefttxt02'>SMART</span> goals. 				     	   				     	  
+				     	 <span id="span_intro" title="SMART is the acronym of Specificity, Measurability, Attainablity, Relevence, and Timed. This suggests that an effective goal should have a specific target which can be measured. 
+				     	  Such goal should be achievable and relevant.
+        	              This goal should also have a specific timetable and deadline." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer;display: inline-block">?</span>	
+				     	</label>
+				     	 
+		             </div>
+				    <form name="frm_set_goal" id="frm_set_goal" action="" method="post">  
+				       <div id="number" class="show_list">
+						  <table><tr>
+					          <td><label style="float:left; width:120px; color:#fff;font-size:0.9em;padding-left: 8px;" >My Goal: </label> </td>
+					          <td><div id="goal_title" style="color:#fff;font-size:0.9em"></div></td>	
+					          <td><span id="span_desc" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td>
+				          </tr></table>
+				        
+						  <div id="div_q">
+						     <table><tr>
+						     	    <td><label id="goal_quantity" for="quantity" style="float:left; width:120px; color:#fff;font-size:0.9em;padding-left: 8px;" > </label> </td>
+						             <td class="revise_goal hideable">
+						             	     <label id="my_quantity" style="float:left; width:150px; color:#fff; font-size:0.9em"></label>
+						             </td>
+							        <td> <input type="text" id="quantity" name="quantity" value="" size="4" style="color:#000;font-size:0.9em" /> </td>
+					   		        <td> <span id="span_q" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span> </td>                   
+							        <td> <div id="after_q" style="float:right; width:145px; color:#fff;font-size:0.9em"> </div> </td>
+		                     </tr></table>
+						  </div>
+						  <div style="height:20px;"></div> 
+						  <div id="div_t">
+						      <table><tr>
+				                     <td><label id="goal_time" for="time" style="float:left; width:120px; color:#fff;font-size:0.9em;padding-left: 8px;"> </label> </td>
+						             <td class="revise_goal hideable">
+						             	     <label id="my_time" style="float:left; width:150px; color:#fff; font-size:0.9em"></label>
+						             </td>		                      
+						       	     <td><input type="text" id="time" name="time" value="" size="4" style="color:#000;font-size:0.9em"/></td>
+							         <td><span id="span_t" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td>
+							         <td><div id="after_t" style="float:right; width:120px; color:#fff;font-size:0.9em"> </div> </td>
+		                      </tr></table>
+						  </div>
+						  <div style="height:10px;"></div> 
+					 </div><!--End of number-->				 
+					<div style="height:10px;"></div> 			  			  
+					
+				     <div class="show_list">		     	
+				     	<table class="revise_goal hideable" style="width:100%" id="td_my_start">
+				     		<tr><td>
+				               <label id="my_start" style="float:left; width:100%; color:#fff; font-size:0.9em"></label>
+				            </td></tr></table>	
+				        <table><tr>
+				             <td><label id="goal_duration" for="duration" style="float:left; width:120px; color:#fff;font-size:0.9em;padding-left: 8px;"> Duration*: </label></td>
+				             <td><input type="text" id="duration" name="duration" value="1 week" size="7" style="color:#000;font-size:0.9em"/></td>
+						     <td><span id="span_duration" title="" class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span> </td>				     
+						     
+		                 </tr></table>
+		                 <table><tr>
+				             <td><label id="goal_start" for="start" style="float:left; width:120px; color:#fff;font-size:0.9em;padding-left: 8px;"> Week starts on*: </label></td>		             
+							 <td><select name="weekday_list" id="weekday_list" style="color:#000;font-size:0.9em">
+							          <option value="monday" selected="selected">Monday</option>
+								      <option value="tuesday">Tuesday</option>
+								      <option value="wednesday">Wednesday</option>
+								      <option value="thursday">Thursday</option>
+								      <option value="friday">Friday</option>
+								      <option value="saturday">Saturday</option>
+								      <option value="sunday">Sunday</option>
+							        </select></td>
+						     <td><span id="span_start" title="Each week your goal will start on the day you select here." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span> </td>
+		                 </tr></table>
+				     </div>              	     	                 
+					  
+					 
+					 <div style="height:10px;"></div> 
+		   		     
+		   		          <div id="notify" class="show_list">
+		   		     	    <table><tr colspan="2">
+		   		     	    	<td><label style="width:250px; float:left; font-size:0.9em; color:#fff">
+		   		     	    		<input type="checkbox" id="email_check" value="email" checked="checked" data-div-id="email_input"  data-label="email_label"/>
+		   		     	    		  Email me the progress report
+		   		     	    	</label></td></tr>
+					            <tr class="hideable" id="email_label"><td style="display:inline">
+					               <label style="float:left; font-size:0.9em; color:#fff; width:100%;">
+					               	<label style="width:130px; font-size: 1em">Email id:</label> 
+					                  <input type="text" class="text" id="email_input" value="$email_id" size="30" style="color:#000;font-size:0.9em"/>	
+					               </label>
+					            </td>
+					            <!--<td class="revise_goal hideable">
+						           <label id="my_notify_email" style="float:left; width:180px; color:#fff; font-size:0.9em"></label>
+					            </td>
+							    <td><input type="text" class="text" id="email_input" value="$email_id" size="30" style="color:#000;font-size:0.9em"/> 					        
+							    </td>-->
+							    </tr>
+							    <tr><td>
+							    	<label style="width:250px; float:left; font-size:0.9em; color:#fff;display:inline">
+							    	  <input type="checkbox" id="tweet_check" value="tweet" data-div-id="twitter_input" data-label="tweet_label"/>
+		   		     	    		    Tweet me the progress report
+							    	</label>
+							     </td></tr>
+						         <tr class="hideable" id="tweet_label">
+						         	<td>
+					               	  <label style="float:left; font-size:0.9em; color:#fff; width:100%">
+					               	  	<label style="width:130px; font-size: 1em">Twitter id:</label> 
+						         		  <input type="text" class="text" id="twitter_input" placeholder="tweet" size="30" style="color:#000;font-size:0.9em"/>
+						         	  </label>
+						         	</td>
+						         	<!--<td class="revise_goal hideable">
+							              <label id="my_notify_twit" style="float:left; width:180px; color:#fff; font-size:0.9em"></label>
+						          </td>					    	
+							      <td><input type="text" class="text" id="twitter_input" placeholder="tweet" size="30" style="color:#000;font-size:0.9em"/>
+							    </td>--></tr>				
+								<tr><td><label style="color:#fff;font-size:0.9em; width:100%">
+									<label style="width:130px; font-size: 1em"> Send report every </label>
+									<select name="week_list" id="week_list" style="color:#000;font-size:0.9em">
+							          <option value="hour" selected="selected">Hour</option>
+								      <option value="day">Day</option>
+								      <option value="week">Week</option>
+								      <option value="forthnight">Fortnight</option>
+								      <option value="month">Month</option>
+							        </select>
+									</label></td>
+						            <!--<td class="revise_goal hideable">
+						             	<label id="my_notify_time" style="float:left; width:150px; color:#fff; font-size:0.9em"></label>
+						            </td>
+									<td><select name="week_list" id="week_list" style="color:#000;font-size:0.9em">
+							          <option value="hour" selected="selected">Hour</option>
+								      <option value="day">Day</option>
+								      <option value="week">Week</option>
+								      <option value="forthnight">Fortnight</option>
+								      <option value="month">Month</option>
+							     </select></td>-->
+						        </tr></table>
+						   		    
+					 </div>					 
+			</form>
+			<form class="hideable" id="frm_set_goal_advanced"> 
+   		  	 <!--<div id="advanced_header" class="show_list lightbackcolor hideable" style="padding:10px;margin:15px;width:85%;color:#3366CC">
+			 	You may want to note down few more things about this goal. 
+			 	<input type="button" class="button goalboxlink" value="Show more options"/> 
+ 			 </div>-->  			 			 				 	
+			 <div class="border" style="padding:10px;">
+			    <div id="goal_commit">
+			    	<table width="100%" style="margin: 10px;padding: 5px">  
+			 			<tr><td width="60%"><label style="color:#fff; font-size:0.9em;width:100%">How commited am I to improving my fitness by pursuing this goal?</label></td>
+				 		   <td width="30%"><span class="lefttxt02"  id="goal_commit_label">Not set</span></td>
+				 		   <td width="10%"><span id="span_commitment" title="This tracks your commitment in achieving your goal." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+				    	   
+			 		    <tr><td width="100%" colspan="3"><div  style="margin:5px;" class="slider" id="goal_commitment_silde" data-div-id="goal_commit_label"></div></td></tr>
+			 		</table>  
+			    </div>
+			    <div id="goal_efficacy">
+			      <table width="100%" style="margin: 10px;padding: 5px">  
+			 		<tr>
+			 		   <td width="60%"><label style="color:#fff; font-size:0.9em; width:100%">How confident am I to acheiving my wellness goal?</label></td>
+			 		   <td width="30%"><span class="lefttxt02" id="goal_efficacy_label">Not set</span></td>
+			 		   <td width="10%"><span id="span_confidence" title="This tracks your confidence in achieving your goal." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+			    	   
+			 		<tr><td width="100%" colspan="3"><div  style="margin:5px;" class="slider" id="goal_efficacy_slide" data-div-id="goal_efficacy_label"></div></td></tr>
+			 	  </table>
+			    </div>
+			    <div id="goal_difficulty" style="margin: 10px;padding: 5px">
+			 		<table width="100%">  
+			 			<tr><td width="60%"><label style="color:#fff;font-size:0.9em;width:100%" >How difficult this goal is for me?</label></td>
+   				 		    <td width="30%"><span class="lefttxt02" id="goal_difficulty_label">Not set</span></td>
+   				 		    <td width="10%"><span id="span_difficulty" title="This tracks how much difficult the target is for you." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+				    	    
+			 		    <tr><td width="100%" colspan="3"><div  style="margin:5px;" class="slider" id="goal_difficulty_slide" data-div-id="goal_difficulty_label"></div></td></tr>
+			 		 </table>
+			     </div>
+			     <div id="goal_priority" style="margin: 10px;padding: 5px">
+			 		<table width="100%">  
+			 			<tr><td width="60%"><label style="color:#fff;font-size:0.9em;width:100%" >How much important the goal is for me?</label></td>
+   				 		    <td width="30%"><span class="lefttxt02" id="goal_priority_label">Not set</span></td>
+   				 		    <td width="10%"><span id="span_priority" title="This tracks how much important the target is for you." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+			 		    <tr><td width="100%" colspan="3"><div style="margin:5px;" class="slider" id="goal_priority_slide" data-div-id="goal_priority_label"></div></td></tr>
+			 		 </table>
+			     </div>			    
+			    </div>
+			   <!-- <div class="border" style="padding:10px;">
+			    <div id="goal_barrier">
+			 		<table width="100%">  
+			 			<tr><td width="60%"><label style="color:#fff;font-size:0.9em;width:100%" >What barriers might keep me from reaching this goal?</label></td>
+   				 		    <td width="10%"><span id="span_barriers" title="This helps you recognise the barriers that might hinder your progress." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+				    	    
+			 		    <tr><td width="100%" colspan="3"><textarea class="goaltextarea" style="margin:2px;width: 363px;height:50px;"></textarea></td></tr>
+			 		 </table>
+			     </div>			    
+			    <div id="goal_solutions">
+			 		<table width="100%">  
+			 			<tr><td width="60%"><label style="color:#fff;font-size:0.9em;width:100%" >What strategies will I take for overcoming these barriers? </label></td>
+   				 		    <td width="10%"><span id="span_soln" title="This helps you handle the barriers that might hinder your progress." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+				    	    
+			 		    <tr><td width="100%" colspan="3"><textarea class="goaltextarea" style="margin:2px;width: 363px;height:50px;"></textarea></td></tr>
+			 		 </table>
+			     </div>			    
+			    <div id="goal_reward">
+			 		<table width="100%">  
+			 			<tr><td width="60%"><label style="color:#fff;font-size:0.9em;width:100%" >What rewards will I give myself if I succeed?</label></td>
+   				 		    <td width="10%"><span id="span_reward" title="This helps you motivate yourself towards your goal." class="ui-state-default ui-corner-all ui-icon ui-icon-help" style="cursor: pointer">?</span></td></tr>
+				    	    
+			 		    <tr><td width="100%" colspan="3"><textarea class="goaltextarea" style="margin:2px;width: 363px;height:50px;"></textarea></td></tr>
+			 		 </table>
+			     </div>			    
+			    	
+			    </div>-->
+     		  </form>    
+	   	  </div>
+		   	 <div style="float:right;width:37%;height:78%" class="show_list" id="goal_ques_div">
+		   	       <div class="show_list lefttxt02">Please indicate whether you find this interface easy and useful.</div>
+		   	    	
+		   	    	<div style="margin:15px 0 15px 0; font-size:1em; color:#fff" class="myFont">
+		   	    		1. This interface makes it easy to set my goal.<br/>
+		   	    		<!--<div class="slider" id="interface_easy_slide" data-div-id="interface_easy_label" style="margin:10px"></div>-->
+		   	    		<div class="show_list lightbackcolor" id="likert_1">
+			   	    		<input type="radio" name="option_one" value="stronglydisagree" id="stdg1"/><label for="stdg1" style="width:135px;font-size:1em">Strongly disagree</label>
+			   	    		<input type="radio" name="option_one" value="disagree" id="dg1"/><label for="dg1"  style="width:110px;font-size:1em">Disagree</label>
+			   	    		<input type="radio" name="option_one" value="neutral" id="nt1"/><label for="nt1"  style="width:65px;font-size:1em">Neutral</label>
+			   	    		<input type="radio" name="option_one" value="agree" id="ag1"/><label for="ag1" style="width:55px;font-size:1em">Agree</label>
+			   	    		<input type="radio" name="option_one" value="stronglyagree" id="stag1"/><label for="stag1" style="width:100px;font-size:1em">Strongly agree</label>
+			   	    		<label class="error" for="option_one" id="option1_error"  style="color:#008D8D">This field is required.</label> 
+			   	    		<!--<label style="margin:5px; font-size:1em;" class="myFont" >
+			   	    			Please feel free to explain you answer.
+			   	    		</label>-->
+			   	    		<textarea style="margin: 10px 0 10px 0;width: 272px;height: 100px;" id="comment_1" placeholder="Please feel free to explain you answer."></textarea>
+		   	    		</div>	
+		   	    	</div>
+		   	    	<div style="margin:5px 0 15px 0; font-size:1em; color:#fff" class="myFont">
+		   	    		2. This interface is useful in helping me to think about my goal.<br/>
+		   	    		<!--<div class="slider" id="interface_useful_slide" data-div-id="interface_useful_label" style="margin:10px"></div>-->
+		   	    		<div class="show_list lightbackcolor" id="likert_2">
+			   	    		<input type="radio" name="option_two" value="stronglydisagree" id="stdg2"/><label for="stdg2" style="width:135px;font-size:1em">Strongly disagree</label>
+			   	    		<input type="radio" name="option_two" value="disagree" id="dg2"/><label for="dg2"  style="width:110px;font-size:1em">Disagree</label>
+			   	    		<input type="radio" name="option_two" value="neutral" id="nt2"/><label for="nt2"  style="width:65px;font-size:1em">Neutral</label>
+			   	    		<input type="radio" name="option_two" value="agree" id="ag2"/><label for="ag2" style="width:55px;font-size:1em">Agree</label>
+			   	    		<input type="radio" name="option_two" value="stronglyagree" id="stag2"/><label for="stag2" style="width:100px;font-size:1em">Strongly agree</label>
+							<label class="error" for="option_two" id="option2_error" style="color:#008D8D">This field is required.</label> 
+			   	    		<!--<label style="margin:5px; font-size:1em;" class="myFont" >
+			   	    			Please feel free to explain you answer.
+			   	    		</label>-->
+			   	    		<textarea style="margin: 10px 0 15px 0;width: 272px;height: 100px;" id="comment_2" placeholder="Please feel free to explain you answer."></textarea>
+			   	    	</div>
+		   	    	</div>
+		   	    	
+		   	    </div>  
+		   	    <div id="button_div">
+					<input class="button" id="contgoal" type="button" value="Continue to next section" style="margin:20px 0 0 20px"/>
+					<input class="button hideable" id="backgoal" type="button" value="Back to previous section" style="margin:20px 0 0 20px"/>
+					<input class="button hideable" id="addgoal" type="button"  data-goal="new"  value="Set goal" style="background-color: #B22222;margin:20px 0 0 20px"/>
+										 				    			    
+				</div>
+						   		    
+            </div>
+        
+        <div class="myBox" id="confirm_goal_set">
+          <a class="boxclose" id="confirmboxclose"></a>
+          <h3> Goal set confirmation</h3>
+          <div class="show_list myFont"> </div>
+          <input class="button" type="button" value="OK" id="okbutton"/>
+        </div>
+        <div class="myBox" id="confirm_fitbit_install">
+         
+          <h3> Fitbit plugin installation in progress...</h3>
+          <div class="show_list myFont"> </div>
+          <input class="button" type="button" value="Continue installation" id="fitbitokbutton"/>
+          <input class="button" type="button" value="Cancel installation" id="fitbitcancelbutton"/>
+        </div>
+      	<div class="myloading hideable"></div>        
   </body>
    <xi:include href="layout_footer.html"/>
 </html>

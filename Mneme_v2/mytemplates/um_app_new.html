@@ -40,7 +40,7 @@
 		       $('.myloading').hide();
 		 });
 		   $('#app_list a').click(function() {
-                      appname = $(this).attr('id');
+              appname = $(this).attr('id');
                       
 		      description = $(this).attr('data-div-id');
                       var comment = "notice_Unreg apps Page: "+appname+" icon clicked";
@@ -112,7 +112,7 @@
  	         <ul class="no_list_style">
   	          <py:for each="i in range(len(app_list))">
                    <table>
-		    <tr>
+		             <tr>
                        <li class="border" style="width:150px;">
                        <!--<input class="radiobutton" name="app_group" id="$i" value="${app_list[i].appname}" type="radio" data-div-id="${app_list[i].description}"/> -->
                        <td><a id="${app_list[i].appname}" data-div-id="${app_list[i].description}"> 
