@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"> 
+      <xi:include href="layout_browse_new.html" />
+  <head>
+    <title>Model: $title</title>
+    <link rel="stylesheet" href="/static/style.css" type="text/css" charset="utf-8"/>
+	
+	<link rel="stylesheet" href="/static/jquery-ui/themes/base/jquery.ui.all.css"/>
+	<script src="/static/jquery-ui/external/jquery.bgiframe-2.1.2.js"></script>
+    <script src="/static/jquery-ui/ui/jquery.ui.core.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.widget.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.mouse.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.button.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.draggable.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.position.js"></script>
+	<script src="/static/jquery-ui/ui/jquery.ui.dialog.js"></script>
+    <script src="/static/jquery-ui/ui/jquery.ui.datepicker.js"></script>    
+    <link rel="stylesheet" href="/static/jquery-ui/demos.css"/>
+    <script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+    
+    <script type="text/javascript" src="/static/jquery.expander.js"></script>
+    <script type="text/javascript" src="/static/jquery.contextmenu.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/jquery.contextmenu.css" media="all"/>
+          
+	<style>
+		.ui-icon { display: inline-block; }
+		fieldset div {
+			margin-bottom: 2em;
+		}
+		.ui-tooltip { width: 210px; }
+		.ui-dialog .ui-dialog-content { 
+			background-color: #4E4E4E; 
+			font-size:14px;
+                        font-family:Trebuchet-MS;
+                }
+		.ui-dialog .ui-dialog-buttonpane{background-color: #4E4E4E;}
+
+        </style>
+	<style>
+	  .ui-jqgrid{
+		width: 700px;
+		}
+	  .ui-jqgrid-title{
+		   font-family: 'Trebuchet MS';
+		   font-size: 18px;
+		}
+	  .ui-jqgrid-hdiv, .ui-jqgrid-bdiv{
+		   font-family: 'Trebuchet MS';
+		   font-size: 16px;
+		}
+
+	</style>
+    <script src="/static/jquery.history.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/static/tooltip.jquery.js"></script>
+   
+	<script src="/static/grid.locale-en.js" type="text/javascript"></script>
+ 	<link rel="stylesheet" type="text/css" media="screen" href="/static/ui.jqgrid.css" />
+	<script src="/static/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+	<!-- link to the JavaScript files (hoverIntent is optional) -->
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/hoverIntent.js"></script> 
+	<script type="text/javascript" src="/static/superfish-1.4.8/js/superfish.js"></script>
+	
+	 
+    <script src="/static/mneme.js" type="text/javascript"></script>
+    <script src="/static/goals.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+	  	    $(document).ajaxSend(function(event, request, settings) {
+			   //$('#loading-indicator').show();
+				$('.myloading').show();
+			 });
+			 
+		    $(document).ajaxComplete(function(event, request, settings) {
+			   //$('#loading-indicator').hide();
+			       $('.myloading').hide();
+			 });
+
+             $(function(){
+             	        
+                        var checked1, checked2 = false;
+                        var prev_context="", new_context="";
+                        var add_val;
+                        var log_events = [];
+                        var index = 0;
+		                $('.tooltip2').tooltip();
+                        $('.error').hide();   	
+                        var page_track = 1; 
+                        $('div.expander').expander();
+			            var createEvidenceGrid = function(){
+				        $('#evidence').jqGrid({
+								url:'/users_json',
+								datatype: "json",
+								colNames:['ID','Value','Flags','Source','Type','Time(added to model)', 'Time(event occurred)', 'Expiry Date','Owner','Comment'],
+								colModel:[
+								    {name: 'ID', key: true, width: 80, align: "center", hidden: true },
+								    {name:'value',index:'value',width:200},
+								    {name:'flags',index:'flags',width:300},
+								    {name:'source',index:'source',width:210},
+								    {name:'evidence_type',index:'evidence_type',width:220},
+								    {name:'creation_time', index:'creation_time', width:450},
+								    {name:'time',index:'time', width:450},
+								    {name:'useby',index:'useby', width:450},
+								    {name:'owner',index:'owner', width:210},
+								    {name:'comment',index:'comment',width:480}
+								],
+								rowNum:10,
+								rowList:[10,20,30],
+								multiselect: true,
+								width: 1000,
+								height: "100%",
+								pager: '#pevd',
+								sortname: 'creation_time',
+								viewrecords: true,
+				                altRows:true,
+								sortorder: "desc",
+								caption: "Evidence List"
+					    });
+				};
+
+                createEvidenceGrid();
+			    //$('#evidence').jqGrid().navGrid("#pusers",{edit:true,add:true,del:false},{},{width:350},{});
+		        $('#evd_boxclose').click(function(){
+                              var comment = "notice_Browse subdir Page: Evidence boxclose icon clicked";
+		                      log_events[index++] = comment; 
+
+
+					            $('#evidence_box').animate({'top':'-600px'},500,function(){
+					               $('#overlay').fadeOut('fast');
+			                               $("#main").css({ opacity: 1 }); 
+					            });
+		        });
+
+		        $('#add_boxclose').click(function(){
+                      var comment = "notice_Browse subdir Page: Add evidence boxclose icon clicked";
+		              log_events[index++] = comment; 
+
+		              $('#add_edit_box').animate({'top':'-800px'},500,function(){
+		                   $("#evidence_box").css({ opacity: 1 });
+                               
+		            });
+		        });
+
+                        //<![CDATA[ 
+                $('#back_button').click(function(){
+                       var comment = "notice_Browse subdir Page: Back button clicked";
+ 		               log_events[index++] = comment; 
+                               //send_comments(log_events);
+				       $.ajax({  
+						    type: "POST",  
+						    url: "/get_prev_context",  
+						    data: "",  
+		                    processdata:true,
+						    success: function(data){
+        		               if((data.indexOf('Error')==-1) && (data != 'Main')){
+						            console.log("Previous context"+data);           
+						            document.location.href = "/show_sub_context?context="+data; 
+		                            return true;
+                               }
+                               else if(data == 'Main'){
+                                    console.log("Last context"+data); 
+			 				        document.location.href = "/browse/";
+                                             return true;	
+                                          }
+ 
+				                 }                     
+			              }); 
+                       return false;  
+                  });
+                //]]>
+             function send_componentid(component){
+			     $.ajax({  
+				     type: "POST",  
+				     url: "/get_component?componentid="+component,  
+				     data: "",  
+				     success: function(data){
+                              if(data.indexOf('Success')!=-1){
+								     createEvidenceGrid(); 
+						             $('#evidence').jqGrid().trigger('reloadGrid');
+                              }
+ 
+						},                        
+			    	});   
+              }
+              $("#Compact_evidence_list,#Add_evd, #Edit_evd, #Archive_evidence, #Block_evidence").live('click',function(e){
+              	  alert("Work in progress.....");              	
+              });
+		      $('#form_context a').live('click', function(e){
+	              var context = $(this).attr('id');
+	              var title = $(this).attr('data-div-id');            
+	              var new_context = title+"/"+context;
+	              var comment = "notice_Browse subdir Page: Context "+context+" clicked";
+	              log_events[index++] = comment; 
+	              //send_comments(log_events);
+				  console.log('New context:'+new_context);
+				  document.location.href = "/show_sub_context?context="+new_context;  
+             });
+             $('#form_context').live('click',function(e){
+             	var check = -1;
+             	$('#form_context input').each(function(){
+				    //console.log('get val')
+				    if($(this).attr('checked')){
+				            check = 0;
+				    }
+				 });
+				 if(check == 0){
+				 	$('#contextnav').show('slow');
+				 }
+				 else{
+				 	$('#contextnav').hide('slow');
+				 }
+             	  
+             });
+             $('#form_component').live('click',function(e){
+             	var check = -1;
+             	$('#form_component input').each(function(){
+				    //console.log('get val')
+				    if($(this).attr('checked')){
+				            check = 0;
+				    }
+				 });
+				 if(check == 0){
+				 	$('#compnav').show('slow');
+				 }
+				 else{
+				 	$('#compnav').hide('slow');
+				 }
+             	  
+             });
+             var component;
+			 $('a.component').live('click', function(e){ 
+			    component = $(this).attr('data-div-id');
+                var grid;
+			    console.log(component);			              
+                send_componentid(component);
+                var comment = "notice_Browse subdir Page: Component "+component+" clicked";
+                log_events[index++] = comment; 
+
+			    $('#evidence').jqGrid().trigger('reloadGrid');
+  			    createEvidenceGrid(); 
+			    $('#overlay').fadeIn('fast',function(){
+                      $('#evidence_box h1').text("Evidence list:"+component); 
+                      $('#evidence_box').css({left:'200px',top:'50px'}); 
+                      $('#evidence_box').height('500px');
+	 				  $('#evidence_box').width('1000px');
+				      $('#evidence_box').animate({'top':'100px'},500);
+
+                      //$('#evidence_box').draggable({'scroll':false}); 
+				     /*var ccm = $("#evidence").getGridParam();
+				      ccm.datatype = 'jsonstring';
+				      $("#evidence").jqGrid("GridUnload");
+				      $("#evidence").jqGrid(ccm);
+                      $('#evidence').jqGrid().setGridWidth('700px',true) ;
+                      $('#evidence_box').draggable(); */
+				     //console.log($('#evidence').jqGrid('getGridParam','selarrrow'));
+                  });
+			    /*  $('#Add_evd').click(function(){
+
+                      var comment = "notice_Browse subdir Page: Add Evidence icon clicked";
+		              log_events[index++] = comment; 
+		                            			      
+				      $('#value').val('');              
+ 		              $('#flags').val('');
+					  $('#comment').val('');   
+					  $('#useby').val('');
+					  $('#time').val('');
+			          $("#evidence_box").css({ opacity: 0.5 });		 
+			    
+                      $('#add_edit_box h1').text('Add new evidence'); 
+                      $('#add_edit_box').css({right:'10px',left:'500px'}); 
+				      $('#add_edit_box').width('420px');                                                
+				      $('#add_edit_box').height('520px');                                    
+                      $('#add_to_model').val('Add Evidence');
+				      $('#add_edit_box').show();
+				      $('#add_edit_box').animate({'top':'50px'},500);
+                      $('#add_edit_box').draggable();
+
+
+		           });*/
+                   $('#next, #prev').click(function(){
+                            page_track = page_track + 1;
+                            console.log(component+":"+page_track);
+				            send_componentid(component);
+                            $("#evidence").trigger("reloadGrid", [{page:page_track}]);
+                            //if (page_track%2 != 0){
+                                //  console.log("odd");
+                            //}
+                   });
+
+                   //<![CDATA[
+                  /* $('#Edit_evd').click(function(){
+                             var comment = "notice_Browse subdir Page: Edit Evidence icon clicked";
+		                     log_events[index++] = comment; 
+                                    
+				             var ids = jQuery('#evidence').getGridParam('selarrrow');
+                             console.log(ids.length);
+				             if(ids.length == 1){ 
+                                  $("#evidence_box").css({ opacity: 0.5 });
+					              console.log('edit box show'); 
+		                          $('#add_edit_box h1').text('Edit evidence');
+		                          $('#add_edit_box').css({right:'10px',left:'500px'}); 
+					              $('#add_edit_box').width('420px');                                                
+					              $('#add_edit_box').height('520px');
+                                  $('#add_edit_box').draggable();
+                                  var colModel = $("#evidence").getGridParam('colModel'); 
+                                            for(var i = 0; i < colModel.length; i++){
+                                                if(colModel[i].name != 'cb'){
+                                                   var _data = jQuery('#evidence').getCell(ids, colModel[i].name);
+						                           console.log(colModel[i].name+':'+_data);
+                                                   if($('#'+colModel[i].name).length > 0){ 
+                                                     if(_data.length > 0){                                                      
+                                                       $('#'+colModel[i].name).val(_data);                                                        
+                                                     }    
+                                                     else 
+                                                       $('#'+colModel[i].name).val('');
+						                          }
+                                               }
+                                            }
+                                   $('#add_edit_box').show();        
+                                   $('#add_to_model').val('Edit Evidence');
+					               $('#add_edit_box').animate({'top':'150px'},500);
+ 				                   $("#evidence_box").css({ opacity: 0.5 });		
+                           } 
+                           else{
+                                          alert('Please select one evidence to edit');
+                                    } 
+                                    //jQuery('#evidence').resetSelection();
+
+                });*///]]>
+                
+   		       });
+			  $("#useby").datepicker({
+					changeMonth: true,
+				        changeYear: true,
+					dateFormat: 'dd/mm/yy',
+			       });
+			  $("#time").datepicker({
+					changeMonth: true,
+				    changeYear: true,
+					dateFormat: 'dd/mm/yy',
+			       });
+
+			 $('#default_useby').click(function(){
+				console.log("default");
+				if($('#default_useby').is(':checked'))
+				     $('#useby').val('01/01/2012');
+				else
+				     $('#useby').val('');
+			 });
+            //<![CDATA[
+            $('#Delete_evidence').live('click',function(e){
+               //var component = $(this).attr('data-div-id');
+               var ids = jQuery('#evidence').getGridParam('selarrrow');
+               //alert(ids.length);
+               if( ids != null ){
+      		     if(ids.length == 1){ 
+                 var colModel = $("#evidence").getGridParam('colModel');
+                 //jQuery("#evidence").jqGrid('delGridRow',ids,{reloadAfterSubmit:false}); 
+                 for(var i = 0; i < colModel.length; i++){
+                 	var tobedeleted = component+",";
+                    if(colModel[i].name != 'cb'){
+                      var _data = jQuery('#evidence').getCell(ids, colModel[i].name);
+				      console.log(colModel[i].name+':'+_data);
+                      if($('#'+colModel[i].name).length > 0){ 
+                       if(_data.length > 0){                                                      
+                         $('#'+colModel[i].name).val(_data);
+                         tobedeleted += _data+",";                                                                                 
+                        }    
+                      else 
+                        $('#'+colModel[i].name).val('');
+                        tobedeleted += "None,";
+					 }
+				    
+                   }
+                 }
+                 $.ajax({  
+					     type: "POST",  
+					     url: "/delete_evidence?data="+tobedeleted,  
+					     data: "",  
+					     success: function(data){
+	                              if(data.indexOf('Success')!=-1){
+	                              	     alert("Successfully deleted");
+									     createEvidenceGrid(); 
+							             $('#evidence').jqGrid().trigger('reloadGrid');
+	                              }
+	 
+							},                        
+			    	});   
+			  }
+		      else{
+                    alert('Please select one evidence to edit');
+               } 
+              }
+  			  else
+              alert("Please Select Row to delete!");
+	
+				             		
+            });  
+            //]]> 
+			$('#add_to_model').click(function(){
+                  var comment = "notice_Browse subdir Page: Evidence Add to model button clicked";
+		          log_events[index++] = comment; 
+
+			      var index = 0;
+                              
+			      var cid = $('#evidence_box h1').text().split(':');
+			      console.log($('#evidence_box h1').text());
+			      var component = cid[1].split('.')
+			      console.log(component[0]);                               
+			          
+			      var value = $('#value').val();              
+                  if(value == ""){
+						$('#value_error').show();
+						$('#value').focus();
+			      }
+                  else{
+                                index = 1;
+                  } 
+                          
+			      console.log(value);
+                  var flags = $('#flags').val();
+                  if(!flags.length) flags = 'None' 
+			      console.log(flags);			      
+			      var comment = $('#comment').val();   
+                  if(!comment.length) comment = 'None' 
+			      console.log(comment);  
+			      var useby_date = $('#useby').val();
+                  if(!useby_date.length) useby_date = 'None' 
+			      console.log(useby_date);
+			      var time = $('#time').val();
+                  if(!time.length) time = 'None' 
+			      console.log(time);
+			      			      
+			      var data = component[0]+"_"+value+"_"+flags+"_"+comment+"_"+time+"_"+useby_date;
+
+			      //var array_act = ['Activity', 'Sleep', 'Device', 'People', 'Food'];
+			      var show_text = "New value "+value+" added to comoponent "+component[0]
+				  $('#add_edit_box').animate({'top':'-600px'},500,function(){
+                         $("#evidence_box").css({ opacity: 1 });
+                                    
+			      });
+                  if(index == 1){
+				      $.ajax({  
+						    type: "POST",  
+						    url: "/add_new_evidence?data="+data,  
+						    data: "",  
+						    processdata:true,
+						    success: function(data){
+		                            if(data.indexOf('Success') != -1)
+								      $("#dialog-message").text(data + show_text);
+		                            else
+		                              $("#dialog-message").text(data);
+								    send_componentid(component[0]);
+		                            
+								    $("#dialog-message").dialog({
+ 									    height: 200,
+										modal: true,   
+                                        position:'center',                          
+										buttons: {
+											Ok: function() {
+												$(this).dialog('close');
+                                                                                                
+											}
+										}
+								});
+                                     $( "#dialog-message" ).dialog( "option", "position", "center" );
+						                //  $('#'+component[0]).append("Last value "+ value); 
+				
+							},
+						    //dataType="text";
+					       });
+                                    
+				   }                               
+				       return false;
+			    });
+
+ 
+	      });
+ 
+
+
+	$(function() {
+             var new_context = "",type;
+	         $(".scroll").jScroll();
+             $("a").mousedown(function(event){                 
+                  value = $(this).attr('id');
+                  type = $(this).attr('name');
+                  prev = $(this).attr('data-div-id');
+                  new_context = prev+'/'+value
+                  console.log(type+":"+new_context);
+              });  
+	     /*var menu3 = [
+		  {'Open link in new tab':{
+		      onclick:function(menuItem,menu) {// alert("You clicked me!");
+                                //browse(context);  
+                                 if(type=="context")window.open("/show_sub_context?context="+new_context,"_newtab");
+                             },
+			 // className:'menu3-custom-item',
+			 // hoverClassName:'menu3-custom-item-hover',
+			  //title:'This is the hover title'
+			}
+		  },
+		  {'Open link in new window':{
+			  //hoverItem:function(c) { $(this).addClass(c).find('div').html('You just hovered over me!'); },
+			  //hoverItemOut:function(c) { $(this).removeClass(c).find('div').html('Sorry to see you go!'); }
+  		        onclick:function(menuItem,menu) {// alert("You clicked me!");
+                                //browse(context);  
+                                 window.open("/show_sub_context?context="+context,"_blank");
+                             },
+ 		        //className:'menu3-custom-item',
+			//hoverClassName:'menu3-custom-item-hover',
+
+                        }
+		  },
+                  {"Add element":{disabled:true} },
+				  {"Edit element":{disabled:true} },
+				  {'Delete directory':{
+				      onclick:function(menuItem,menu) { if(confirm('Are you sure?')){$(this).remove();} },
+					  icon:'delete_icon.gif',
+					  disabled:true
+				}			
+		  },
+		  
+		];*/
+            // $('.cmenu2').contextMenu(menu3,{theme:'gloss'});
+             $("#DeleteContext, #DeleteComponent").live('click',function(e){
+             	 var names = "", data;             	               	 
+             	 data = $(this).attr('id')+","; 
+             	 //data += $(this).attr('data-div-id')+","; 
+             	 if(data.indexOf("Context") != -1){
+             	 	names = "form_context";
+             	 }
+             	 else{
+             	    names = "form_component";
+             	 }
+   		         $('#'+names+' input:checked').each(function(){
+   		             data  += $(this).val()+",";
+   		         });
+   		        //alert(data);
+   		        $( "#dialog:ui-dialog" ).dialog( "destroy" );	
+				$( "#dialog-confirm" ).dialog({
+					resizable: false,
+					height:140,
+					modal: true,
+					buttons: {
+						"Delete": function() {
+							$( this ).dialog( "close" );
+							$.ajax({  
+						    type: "POST",  
+						    url: "/delete?data="+data,  
+						    data: "",  
+						    processdata:true,
+						    success: function(data){
+						    	alert("Data successfully deleted");
+						    	var addr = data.split(':');						    	
+						    	if(addr[0]=="Success")
+						    	   document.location.href = "/show_sub_context?context="+addr[1];
+						    	
+						    }
+						 });
+						},
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+		         });
+   		      
+   		                 return false;
+   		     }); 	
+
+             $("#from_date,#to_date").datepicker({
+					changeMonth: true,
+				    changeYear: true,
+					dateFormat: 'dd/mm/yy',
+		    });
+         });
+
+  	</script>
+ 
+
+  </head>
+  <body>
+	<div id="dialog-message"> </div>
+         <div id="button_div" class="show_list" style="padding:5% 2% 5% 5%;" ><input type="button" id="back_button" class="button backbutton" value="Back" size="20"/> </div>
+         <div id="leftheading" class="border" align="center"><h2>Collections in ${title}</h2></div>
+         <div id="contextnav" class="contextnav show_list hideable" style="margin:20px;padding:10px">
+		 <div id="rightnav"> 
+		  <ul class="no_list_style">
+		    <li><a href="" class="archive tooltip2" id="ArchiveContext"></a></li>     
+		    <li><a href="" class="compact_data tooltip2" id="CompactContext"></a></li>
+		    <li><a href="" class="block_data tooltip2" id="BlockContext"></a></li>     
+		    <li><a href="" class="delete tooltip2" id="DeleteContext"></a></li>
+		  </ul>
+		</div>
+        </div>
+         <div id="lefttxtblank">
+           <div id="lefttxt">  
+              <div py:choose="">
+                <ul id="context_ul" class="no_list_style">  				    	
+                  <span py:when="len(subdirs)!=0">
+                   <div id="form_context" class="show_list" style="margin:1%;padding:5%;width:83%"> 
+                    <py:for each="i in range(len(subdirs))">                                
+	 		 	     <li>
+				      <input type="checkbox" value="${subdirs[i]}"/><a href="#" class="internal cmenu2" data-div-id="${title}" name="context" id="${subdirs[i]}" title="Click the name to see list of associated components and sub-contexts and select the checkbox to apply forgetting on it." style="color: #4E4E4E;font-size:1.1em">${subdirs[i]}</a>
+                        <span title="This is a directory." class="ui-state-default ui-corner-all ui-icon ui-icon-folder-collapsed"></span>
+						<span title="Information about ${subdirs[i]}" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        <div id="clear_space"></div>
+				     </li>                 
+				   </py:for>                 
+                  </div>
+                 </span>
+                 </ul>                  
+                 <span py:when="len(subdirs)==0">
+                  <div style="text-align:center" id="no_context">No available collections</div>
+                </span>                
+               </div>
+		     </div>
+            </div>
+         
+          <div id="leftheading" class="border" align="center"><h2>Records in ${title}</h2>         
+          </div>
+          <div id="compnav" class="compnav show_list hideable" style="margin:20px;padding:10px">
+		   <div id="rightnav"> 
+		    <ul class="no_list_style">
+		     <li><a href="" class="archive tooltip2" id="ArchiveComponent"></a></li>     
+		     <li><a href="" class="compact_data tooltip2" id="CompactComponent"></a></li>
+		     <li><a href="" class="block_data tooltip2" id="BlockComponent"></a></li>     
+		     <li><a href="" class="delete tooltip2" id="DeleteComponent"></a></li>
+		   </ul>
+		  </div>
+         </div>
+
+            <div id="lefttxtblank"> 
+             <div id="lefttxt">  
+              <div py:choose="">
+              <ul class="no_list_style">                          		        	
+               <span py:when="len(components)!=0">           
+                <div id="form_component" class="show_list" style="margin:1%;padding:5%;width:83%"> 
+  	             <py:for each="cobj in components">               
+		          <li>
+				    <table>
+	                   <tr>
+				         <td><input type="checkbox" value="${cobj.Identifier}" data-div-id="$where"/></td>
+				         <td><a href="#" class="internal cmenu2 component" data-div-id="${cobj.Identifier}" name="component" title="Click the name to see list of associated evidence list and select the checkbox to apply forgetting on it." style="color: #4E4E4E;font-size:1.1em">${cobj.Identifier}</a></td>
+	                     <td><span title="This is a data file." class="ui-state-default ui-corner-all ui-icon ui-icon-document"></span></td>
+				         <td><span title="Information about ${cobj.Identifier}" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+	                   </tr>
+	                </table>  
+	                <div id="last_evidence">
+					  <ol py:if="cobj.evidencelist">
+						     Last evidence: ${cobj.evidencelist[-1].value} provided by ${cobj.evidencelist[-1].source} on 
+						     <?python import datetime                                      
+			                    ?>${datetime.datetime.fromtimestamp(int(cobj.evidencelist[-1].creation_time)).strftime('%d/%m/%Y')}
+	                   </ol>
+	                 </div>
+	                 <div id="clear_space"></div>
+		         </li>   
+		        </py:for>
+               </div>     
+             </span>
+             <span py:when="len(components)==0">
+                 <div style="text-align:center" class="show_list">No available records</div>
+             </span>
+            </ul>
+           </div>  
+	     </div>
+       </div>
+
+		  <div class="ui-widget-overlay hideable" id="overlay"></div>
+		   <div class="myBox" id="evidence_box">
+		    <a class="boxclose" id="evd_boxclose"></a>
+		     <h1></h1>
+		     <table width="100%">
+		      <tr><td width="70%">
+  		      <div class="contextnav show_list" style="width:530px">  
+		       <table width="80%">
+		        <tr>
+		          <td width="30%"><div id="week">
+			       <select name="week_list" id="week_list">
+			          <option value="day">Intraday</option>
+					  <option value="week">Week</option>
+					  <option value="forthnight">Fortnight</option>
+					  <option value="month">Month</option>
+					  <option value="month">Year</option>
+		   	       </select>
+		       </div></td>
+		       <td>|</td>  
+		       <td width="25%">
+			     <div id="from">
+			       <label for="from_date" style="color:#fff">From</label> 
+				       <input type="text" id="from_date" name="from_date" value="Today:" style="font-size: 0.8em;"/>
+			        
+		          </div>
+		      </td>
+		      <td>|</td>
+		      <td width="25%">
+			     <div id="to">
+			       <label for="to_date" style="color:#fff">To  </label>
+				       <input type="text" id="to_date" name="to_date" value="Today:" style="font-size: 0.8em;"/>			      
+		          </div>
+		      </td>
+		      <!--<td><input type="button" class="button" value="Go!"/></td>-->
+		        </tr>
+		       </table> 
+		 
+		   </div>
+	      </td>
+	      <td width="30%">
+	        <div id="contextnav" class="contextnav show_list" style="width:350px;">
+			 <div id="rightnav"> 
+			  <ul class="no_list_style">
+			    <li><a href="#" class="add_evidence tooltip2 internal" id="Add_evd"></a></li>     
+			    <li><a href="#" class="edit_evidence tooltip2 internal" id="Edit_evd"></a></li>     
+			    <li><a href="#" class="archive tooltip2" id="Archive_evidence"></a></li>     
+			    <li><a href="#" class="compact_data tooltip2" id="Compact_evidence_list"></a></li>
+			    <li><a href="#" class="block_data tooltip2" id="Block_evidence"></a></li>     
+			    <li><a href="#" class="delete tooltip2" id="Delete_evidence"></a></li>
+			  </ul>
+			</div>
+		   </div>
+		  </td></tr>
+		  </table> 
+                     <div id="clear_space"></div>  
+                     <div id="clear_space"></div>  
+  		     <div id="data"  style="position:relative;" >
+			  <table id="evidence" class="scroll" cellpadding="0" cellspacing="0"><tr><td></td></tr></table>
+			  <div id="pevd"></div>
+			</div>
+  		    </div>
+
+		   <div class="myBox hideable" id="add_edit_box">
+		    <a class="boxclose" id="add_boxclose"></a>
+		     <h1></h1>
+  		     <form id="add_edit_frm" name="add_edit_frm" action="" method="post" class="show_list" style="margin:10px;padding:10px;">
+                        <div id="value_div" class="border" style="margin:10px;padding:10px;">
+		                 <label for="value">Value:* (e.g. Weight:60kg)</label>
+                         <input type="text" id="value" name="value" value=""/>
+			             <span title="The value you want add." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                         <label class="error" for="value" id="value_error">Please insert a value</label> 
+                        </div>
+
+                        <div id="flags_div" class="border" style="margin:10px;padding:10px;">
+		                 <label for="flags">Flag: (e.g. "Goal" if this your goal weight)</label>
+                          <input type="text" id="flags" name="flags" value=""/>
+			               <span title="Set any special note for the evidence piece" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div>
+
+                        <div id="comment_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="comment">Comment: (e.g. "lunch at the seminar")</label>
+                            <input type="text" id="comment" name="comment" value=""/>
+			    <span title="Some comments you want to add with this value." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div> 
+
+                        <div id="time_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="time">User preferred date: (e.g. 10/12/2011)</label>
+                            <input type="text" id="time" name="time" value=""/>
+			    <span title="A date you want to attach with this value. " class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div> 
+
+                        <div id="useby_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="useby">Use by date: (e.g. 10/12/2011)</label>
+                            <input type="text" id="useby" name="useby" value=""/>
+			    <span title="An expiry date you want to add with this value. This evidence will go to archival after this date." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                            <label for="default_useby">
+				<input class="checkbox" id="default_useby" name="default_useby" value="default" type="checkbox"/>Use default use-by date
+			        <span title="Default date will be used as expiry date" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+		            </label>
+                        </div> 
+
+		        <div>* field must be filled
+                            <input class="button" type="button" value="" id="add_to_model"/>
+                        </div>
+                     </form>
+  		    </div>
+           <div class="demo hideable">
+		    <div id="dialog-confirm" title="Delete this element" style="font-size:10px;width:200px;height:500px">
+			   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			   	   Are you sure?
+			   </p>
+			</div>
+          </div>
+</body>
+<xi:include href="layout_footer.html" />
+</html>

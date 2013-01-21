@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"> 
+      <xi:include href="layout_browse_new.html" />
+  <head>
+    <title>Model: $title</title>
+    
+	<script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+    
+    <script type="text/javascript" src="/static/jquery.expander.js"></script>
+    <script type="text/javascript" src="/static/jquery.contextmenu.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/jquery.contextmenu.css" media="all"/>
+          
+	<script src="/static/jquery.history.js" type="text/javascript"></script>
+	
+	<script src="/static/grid.locale-en.js" type="text/javascript"></script>
+ 	<link rel="stylesheet" type="text/css" media="screen" href="/static/ui.jqgrid.css" />
+	<script src="/static/jquery.jqGrid.min.js" type="text/javascript"></script>		 
+    
+    <script type="text/javascript">
+	  	    $(document).ajaxSend(function(event, request, settings) {
+			   //$('#loading-indicator').show();
+				$('.myloading').show();
+			 });
+			 
+		    $(document).ajaxComplete(function(event, request, settings) {
+			   //$('#loading-indicator').hide();
+			       $('.myloading').hide();
+			 });
+
+             $(function(){
+             	        
+                        var checked1, checked2 = false;
+                        var prev_context="", new_context="";
+                        var add_val;
+                        var log_events = [];
+                        var index = 0;
+		                
+                        $('.error').hide();   	
+                        var page_track = 1; 
+                        $('div.expander').expander();
+			            var createEvidenceGrid = function(){
+				        $('#evidence').jqGrid({
+								url:'/users_json',
+								datatype: "json",
+								colNames:['ID','Value','Flags','Source','Type','Time(added to model)', 'Time(event occurred)', 'Expiry Date','Owner','Comment'],
+								colModel:[
+								    {name: 'ID', key: true, width: 80, align: "center", hidden: true },
+								    {name:'value',index:'value',width:200},
+								    {name:'flags',index:'flags',width:300},
+								    {name:'source',index:'source',width:210},
+								    {name:'evidence_type',index:'evidence_type',width:220},
+								    {name:'creation_time', index:'creation_time', width:450},
+								    {name:'time',index:'time', width:450},
+								    {name:'useby',index:'useby', width:450},
+								    {name:'owner',index:'owner', width:210},
+								    {name:'comment',index:'comment',width:480}
+								],
+								rowNum:10,
+								rowList:[10,20,30],
+								multiselect: true,
+								width: 1000,
+								height: "100%",
+								pager: '#pevd',
+								sortname: 'creation_time',
+								viewrecords: true,
+				                altRows:true,
+								sortorder: "desc",
+								caption: "Evidence List"
+					    });
+				};
+
+                createEvidenceGrid();
+			    //$('#evidence').jqGrid().navGrid("#pusers",{edit:true,add:true,del:false},{},{width:350},{});
+		        $('#evd_boxclose').click(function(){
+                              var comment = "notice_Browse subdir Page: Evidence boxclose icon clicked";
+		                      log_events[index++] = comment; 
+
+
+					            $('#evidence_box').animate({'top':'-600px'},500,function(){
+					               $('#overlay').fadeOut('fast');
+			                               $("#main").css({ opacity: 1 }); 
+					            });
+		        });
+
+		        $('#add_boxclose').click(function(){
+                      var comment = "notice_Browse subdir Page: Add evidence boxclose icon clicked";
+		              log_events[index++] = comment; 
+
+		              $('#add_edit_box').animate({'top':'-800px'},500,function(){
+		                   $("#evidence_box").css({ opacity: 1 });
+                               
+		            });
+		        });
+
+                //<![CDATA[ 
+                $('#back_button').click(function(){
+                       var comment = "notice_Browse subdir Page: Back button clicked";
+ 		               log_events[index++] = comment; 
+                               //send_comments(log_events);
+				       $.ajax({  
+						    type: "POST",  
+						    url: "/get_prev_context",  
+						    data: "",  
+		                    processdata:true,
+						    success: function(data){
+        		               if((data.indexOf('Error')==-1) && (data != 'Main')){
+						            console.log("Previous context"+data);           
+						            document.location.href = "/show_sub_context?context="+data; 
+		                            return true;
+                               }
+                               else if(data == 'Main'){
+                                    console.log("Last context"+data); 
+			 				        document.location.href = "/browse/";
+                                             return true;	
+                                          }
+ 
+				                 }                     
+			              }); 
+                       return false;  
+                  });
+                //]]>
+             function send_componentid(component){
+			     $.ajax({  
+				     type: "POST",  
+				     url: "/get_component?componentid="+component,  
+				     data: "",  
+				     success: function(data){
+                              if(data.indexOf('Success')!=-1){
+								     createEvidenceGrid(); 
+						             $('#evidence').jqGrid().trigger('reloadGrid');
+                              }
+ 
+						},                        
+			    	});   
+              }
+              $("#Compact_evidence_list,#Add_evd, #Edit_evd, #Archive_evidence, #Block_evidence").live('click',function(e){
+              	  alert("Work in progress.....");              	
+              });
+		      $('#form_context a').live('click', function(e){
+	              var context = $(this).attr('id');
+	              var title = $(this).attr('data-div-id');            
+	              var new_context = title+"/"+context;
+	              var comment = "notice_Browse subdir Page: Context "+context+" clicked";
+	              log_events[index++] = comment; 
+	              send_comments("/show_sub_context?context="+new_context);
+				  console.log('New context:'+new_context);
+				  //document.location.href = "/show_sub_context?context="+new_context;  
+             });
+             /*$('#form_context').live('click',function(e){
+             	var check = -1;
+             	$('#form_context input').each(function(){
+				    //console.log('get val')
+				    if($(this).attr('checked')){
+				            check = 0;
+				    }
+				 });
+				 if(check == 0){
+				 	$('#contextnav').show('slow');
+				 }
+				 else{
+				 	$('#contextnav').hide('slow');
+				 }
+             	  
+             });
+             $('#form_component').live('click',function(e){
+             	var check = -1;
+             	$('#form_component input').each(function(){
+				    //console.log('get val')
+				    if($(this).attr('checked')){
+				            check = 0;
+				    }
+				 });
+				 if(check == 0){
+				 	$('#compnav').show('slow');
+				 }
+				 else{
+				 	$('#compnav').hide('slow');
+				 }
+             	  
+             });*/
+             var component;
+			 $('a.component').live('click', function(e){ 
+			    component = $(this).attr('data-div-id');
+                var grid;
+			    console.log(component);			              
+                send_componentid(component);
+                var comment = "notice_Browse subdir Page: Component "+component+" clicked";
+                log_events[index++] = comment; 
+
+			    $('#evidence').jqGrid().trigger('reloadGrid');
+  			    createEvidenceGrid(); 
+			    $('#overlay').fadeIn('fast',function(){
+                      $('#evidence_box h1').text("Evidence list:"+component); 
+                      $('#evidence_box').css({left:'100px',top:'50px'}); 
+                      $('#evidence_box').height('500px');
+	 				  $('#evidence_box').width('1000px');
+				      $('#evidence_box').animate({'top':'100px'},500);
+
+                      //$('#evidence_box').draggable({'scroll':false}); 
+				     /*var ccm = $("#evidence").getGridParam();
+				      ccm.datatype = 'jsonstring';
+				      $("#evidence").jqGrid("GridUnload");
+				      $("#evidence").jqGrid(ccm);
+                      $('#evidence').jqGrid().setGridWidth('700px',true) ;
+                      $('#evidence_box').draggable(); */
+				     //console.log($('#evidence').jqGrid('getGridParam','selarrrow'));
+                  });
+			    /*  $('#Add_evd').click(function(){
+
+                      var comment = "notice_Browse subdir Page: Add Evidence icon clicked";
+		              log_events[index++] = comment; 
+		                            			      
+				      $('#value').val('');              
+ 		              $('#flags').val('');
+					  $('#comment').val('');   
+					  $('#useby').val('');
+					  $('#time').val('');
+			          $("#evidence_box").css({ opacity: 0.5 });		 
+			    
+                      $('#add_edit_box h1').text('Add new evidence'); 
+                      $('#add_edit_box').css({right:'10px',left:'500px'}); 
+				      $('#add_edit_box').width('420px');                                                
+				      $('#add_edit_box').height('520px');                                    
+                      $('#add_to_model').val('Add Evidence');
+				      $('#add_edit_box').show();
+				      $('#add_edit_box').animate({'top':'50px'},500);
+                      $('#add_edit_box').draggable();
+
+
+		           });*/
+                   $('#next, #prev').click(function(){
+                            page_track = page_track + 1;
+                            console.log(component+":"+page_track);
+				            send_componentid(component);
+                            $("#evidence").trigger("reloadGrid", [{page:page_track}]);
+                            //if (page_track%2 != 0){
+                                //  console.log("odd");
+                            //}
+                   });
+
+                   //<![CDATA[
+                  /* $('#Edit_evd').click(function(){
+                             var comment = "notice_Browse subdir Page: Edit Evidence icon clicked";
+		                     log_events[index++] = comment; 
+                                    
+				             var ids = jQuery('#evidence').getGridParam('selarrrow');
+                             console.log(ids.length);
+				             if(ids.length == 1){ 
+                                  $("#evidence_box").css({ opacity: 0.5 });
+					              console.log('edit box show'); 
+		                          $('#add_edit_box h1').text('Edit evidence');
+		                          $('#add_edit_box').css({right:'10px',left:'500px'}); 
+					              $('#add_edit_box').width('420px');                                                
+					              $('#add_edit_box').height('520px');
+                                  $('#add_edit_box').draggable();
+                                  var colModel = $("#evidence").getGridParam('colModel'); 
+                                            for(var i = 0; i < colModel.length; i++){
+                                                if(colModel[i].name != 'cb'){
+                                                   var _data = jQuery('#evidence').getCell(ids, colModel[i].name);
+						                           console.log(colModel[i].name+':'+_data);
+                                                   if($('#'+colModel[i].name).length > 0){ 
+                                                     if(_data.length > 0){                                                      
+                                                       $('#'+colModel[i].name).val(_data);                                                        
+                                                     }    
+                                                     else 
+                                                       $('#'+colModel[i].name).val('');
+						                          }
+                                               }
+                                            }
+                                   $('#add_edit_box').show();        
+                                   $('#add_to_model').val('Edit Evidence');
+					               $('#add_edit_box').animate({'top':'150px'},500);
+ 				                   $("#evidence_box").css({ opacity: 0.5 });		
+                           } 
+                           else{
+                                          alert('Please select one evidence to edit');
+                                    } 
+                                    //jQuery('#evidence').resetSelection();
+
+                });*///]]>
+                
+   		       });
+			  $("#useby").datepicker({
+					changeMonth: true,
+				        changeYear: true,
+					dateFormat: 'dd/mm/yy',
+			       });
+			  $("#time").datepicker({
+					changeMonth: true,
+				    changeYear: true,
+					dateFormat: 'dd/mm/yy',
+			       });
+
+			 $('#default_useby').click(function(){
+				console.log("default");
+				if($('#default_useby').is(':checked'))
+				     $('#useby').val('01/01/2012');
+				else
+				     $('#useby').val('');
+			 });
+            //<![CDATA[
+            $('#Delete_evidence').live('click',function(e){
+               //var component = $(this).attr('data-div-id');
+               var ids = jQuery('#evidence').getGridParam('selarrrow');
+               //alert(ids.length);
+               if( ids != null ){
+      		     if(ids.length == 1){ 
+                 var colModel = $("#evidence").getGridParam('colModel');
+                 //jQuery("#evidence").jqGrid('delGridRow',ids,{reloadAfterSubmit:false}); 
+                 for(var i = 0; i < colModel.length; i++){
+                 	var tobedeleted = component+",";
+                    if(colModel[i].name != 'cb'){
+                      var _data = jQuery('#evidence').getCell(ids, colModel[i].name);
+				      console.log(colModel[i].name+':'+_data);
+                      if($('#'+colModel[i].name).length > 0){ 
+                       if(_data.length > 0){                                                      
+                         $('#'+colModel[i].name).val(_data);
+                         tobedeleted += _data+",";                                                                                 
+                        }    
+                      else 
+                        $('#'+colModel[i].name).val('');
+                        tobedeleted += "None,";
+					 }
+				    
+                   }
+                 }
+                 $.ajax({  
+					     type: "POST",  
+					     url: "/delete_evidence?data="+tobedeleted,  
+					     data: "",  
+					     success: function(data){
+	                              if(data.indexOf('Success')!=-1){
+	                              	     alert("Successfully deleted");
+									     createEvidenceGrid(); 
+							             $('#evidence').jqGrid().trigger('reloadGrid');
+	                              }
+	 
+							},                        
+			    	});   
+			  }
+		      else{
+                    alert('Please select one evidence to edit');
+               } 
+              }
+  			  else
+              alert("Please Select Row to delete!");
+	
+				             		
+            });  
+            //]]> 
+			$('#add_to_model').click(function(){
+                  var comment = "notice_Browse subdir Page: Evidence Add to model button clicked";
+		          log_events[index++] = comment; 
+
+			      var index = 0;
+                              
+			      var cid = $('#evidence_box h1').text().split(':');
+			      console.log($('#evidence_box h1').text());
+			      var component = cid[1].split('.')
+			      console.log(component[0]);                               
+			          
+			      var value = $('#value').val();              
+                  if(value == ""){
+						$('#value_error').show();
+						$('#value').focus();
+			      }
+                  else{
+                                index = 1;
+                  } 
+                          
+			      console.log(value);
+                  var flags = $('#flags').val();
+                  if(!flags.length) flags = 'None' 
+			      console.log(flags);			      
+			      var comment = $('#comment').val();   
+                  if(!comment.length) comment = 'None' 
+			      console.log(comment);  
+			      var useby_date = $('#useby').val();
+                  if(!useby_date.length) useby_date = 'None' 
+			      console.log(useby_date);
+			      var time = $('#time').val();
+                  if(!time.length) time = 'None' 
+			      console.log(time);
+			      			      
+			      var data = component[0]+"_"+value+"_"+flags+"_"+comment+"_"+time+"_"+useby_date;
+
+			      //var array_act = ['Activity', 'Sleep', 'Device', 'People', 'Food'];
+			      var show_text = "New value "+value+" added to comoponent "+component[0]
+				  $('#add_edit_box').animate({'top':'-600px'},500,function(){
+                         $("#evidence_box").css({ opacity: 1 });
+                                    
+			      });
+                  if(index == 1){
+				      $.ajax({  
+						    type: "POST",  
+						    url: "/add_new_evidence?data="+data,  
+						    data: "",  
+						    processdata:true,
+						    success: function(data){
+		                            if(data.indexOf('Success') != -1)
+								      $("#dialog-message").text(data + show_text);
+		                            else
+		                              $("#dialog-message").text(data);
+								    send_componentid(component[0]);
+		                            
+								    $("#dialog-message").dialog({
+ 									    height: 200,
+										modal: true,   
+                                        position:'center',                          
+										buttons: {
+											Ok: function() {
+												$(this).dialog('close');
+                                                                                                
+											}
+										}
+								});
+                                     $( "#dialog-message" ).dialog( "option", "position", "center" );
+						                //  $('#'+component[0]).append("Last value "+ value); 
+				
+							},
+						    //dataType="text";
+					       });
+                                    
+				   }                               
+				       return false;
+			    });
+
+ 
+	      
+             var new_context = "",type;
+	         $(".scroll").jScroll();
+             /*$("a").mousedown(function(event){                 
+                  value = $(this).attr('id');
+                  type = $(this).attr('name');
+                  prev = $(this).attr('data-div-id');
+                  new_context = prev+'/'+value
+                  console.log(type+":"+new_context);
+              });  */
+
+
+             $("#from_date,#to_date").datepicker({
+					changeMonth: true,
+				    changeYear: true,
+					dateFormat: 'dd/mm/yy',
+		    });
+         });
+
+  	</script>
+ 
+
+  </head>
+  <body>
+	<div id="dialog-message"> </div>
+         <div id="button_div" class="show_list" style="padding:3% 2% 13% 5%;">
+         	<input type="button" id="back_button" class="button backbutton" value="Back" size="20"/>
+         	<div id="rightnav"> 
+		      <ul class="no_list_style">
+		       <li class="name"> Archive </li>		      	
+		       <li><a href="#" class="archive tooltip2" id="Archive" title="This is for moving your data collection and records to a back up storage."></a></li>
+		       <li class="name"> Compact </li>     
+		       <li><a href="#" class="compact_data tooltip2" id="Compact" title="This is for making summaries of your fine grained data and move them to back up."></a></li>
+		       <!--<li class="name"> Block </li>
+		       <li><a href="#" class="block_data tooltip2" id="Block" title="This is for hiding your data collection and records from being used."></a></li>-->
+		       <li class="name"> Delete </li>     
+		       <li><a href="#" class="delete tooltip2" id="Delete" title="This is for removing your data collection and records."></a></li>
+		      </ul>
+		    </div>        
+ 
+         </div>
+         <div id="leftheading" class="border" align="center"><h2>Collections in ${title}</h2></div>
+         <div id="lefttxtblank">
+           <div id="lefttxt">  
+              <div py:choose="">
+                <ul id="context_ul" class="no_list_style">  				    	
+                  <span py:when="len(subdirs)!=0">
+                   <div id="form_context" class="show_list" style="margin:1%;padding:5%;width:83%"> 
+                    <py:for each="i in range(len(subdirs))">                                
+	 		 	     <li>
+				      <input type="checkbox" value="${subdirs[i]}" style="margin:0 8px 0 0;"/>
+				        <a href="#" class="internal cmenu2" data-div-id="${title}" name="context" id="${subdirs[i]}" title="Click to see list of associated collections and records OR Select the checkbox on the left if you want to archive, compact, block or delete this collection." style="color: #4E4E4E;font-size:1.1em">${subdirs[i]}</a>
+                        <span title="A collection is somewhat similar to a directory. This means it holds a number of sub-collections and records." class="ui-state-default ui-corner-all ui-icon ui-icon-folder-collapsed"></span>
+						<span title="Information about ${subdirs[i]}" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        <div class="clear_space"></div>
+				     </li>                 
+				   </py:for>                 
+                  </div>
+                 </span>
+                 </ul>                  
+                 <span py:when="len(subdirs)==0">
+                  <div style="text-align:center" id="no_context">No available collections</div>
+                </span>                
+               </div>
+		     </div>
+            </div>
+         
+          <div id="leftheading" class="border" align="center"><h2>Records in ${title}</h2>         
+          </div>
+          <!--<div id="compnav" class="compnav show_list hideable" style="margin:20px;padding:10px">
+		   <div id="rightnav"> 
+		    <ul class="no_list_style">
+		     <li><a href="" class="archive tooltip2" id="ArchiveComponent"></a></li>     
+		     <li><a href="" class="compact_data tooltip2" id="CompactComponent"></a></li>
+		     <li><a href="" class="block_data tooltip2" id="BlockComponent"></a></li>     
+		     <li><a href="" class="delete tooltip2" id="DeleteComponent"></a></li>
+		   </ul>
+		  </div>
+         </div>-->
+
+            <div id="lefttxtblank"> 
+             <div id="lefttxt">  
+              <div py:choose="">
+              <ul class="no_list_style">                          		        	
+               <span py:when="len(components)!=0">           
+                <div id="form_component" class="show_list" style="margin:1%;padding:5%;width:83%"> 
+  	             <py:for each="cobj in components">               
+		          <li>
+				    <table>
+	                   <tr>
+				         <td><input type="checkbox" value="${cobj.Identifier}" data-div-id="$where" style="margin:0 8px 0 0;"/></td>
+				         <td><a href="#" class="internal cmenu2 component" data-div-id="${cobj.Identifier}" name="component" title="Click to see the fine grained data in this record OR Select the checkbox on the left if you want to archive, compact, block or delete it." style="color: #4E4E4E;font-size:1.1em">${cobj.Identifier}</a></td>
+	                     <td><span title="A record is the one that holds your personal data." class="ui-state-default ui-corner-all ui-icon ui-icon-document"></span></td>
+				         <td><span title="Information about ${cobj.Identifier}" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span></td>
+	                   </tr>
+	                </table>  
+	                <div id="last_evidence">
+					  <ol py:if="cobj.evidencelist">
+						     Last evidence: ${cobj.evidencelist[-1].value} provided by ${cobj.evidencelist[-1].source} on 
+						     <?python import datetime                                      
+			                    ?>${datetime.datetime.fromtimestamp(int(cobj.evidencelist[-1].creation_time)).strftime('%d/%m/%Y')}
+		                 <span title="This is the most recent data added to ${cobj.Identifier}." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+	                   </ol>
+	                 </div>
+	                 <div class="clear_space"></div>
+		         </li>   
+		        </py:for>
+               </div>     
+             </span>
+             <span py:when="len(components)==0">
+                 <div style="text-align:center" class="show_list">No available records</div>
+             </span>
+            </ul>
+           </div>  
+	     </div>
+       </div>
+
+		  <div class="ui-widget-overlay hideable" id="overlay"></div>
+          <!--Archive box-->
+          <div class="myBox" id="archive_box">
+		    <a class="boxclose" id="archive_boxclose"></a>
+		     <h1>Archive my data</h1>
+		         <div style="float:left;display:inline-block;">
+		         <label style="color:#fff;font-size:1em;width:500px;margin:7px;padding:5px;">
+			       Archive all the data related to this element 
+		           <select name="archive_time" id="archive_time" style="display:inline-block;">
+		           	     <option value="now">Right now</option>
+						 <option value="day">Every Day</option>
+						 <option value="week">Every Week</option>
+						 <option value="forthnight">Every Fortnight</option>
+						 <option value="month">Every Month</option>
+						 <option value="year">Every Year</option>
+			 	   </select>
+                  <span style="display:inline-block;" title="This rule allows moving your fine grained data to the 'Archival' during the period you specify. It does not keep a summary form in working store." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule2_help">?</span>
+				 </label></div>
+  		         <div style="float:left;display:inline-block;">
+		         <label style="color:#fff;font-size:1em;width:550px;margin:7px;padding:5px;">
+			       Choose archival storage 
+		           <select name="archive_type" id="archive_type" style="display:inline-block;">
+		           	     <option value="active">Active archival</option>
+						 <option value="inactive">Inactive archival</option>
+			 	   </select>			 	   
+                  <span style="display:inline-block;" title="Choose the storage where you want to archive your data." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule1_help">?</span>                  
+				 </label>
+				 <div id="archive_type_comment" class="myFont" style="color:#fff;font-size:1em;width:490px;margin:7px;padding:5px;background-color:#336699"> If you choose <strong>Active archival</strong> as your back up storage, your data will still be accessible to external applications.</div>
+				 </div>
+                 
+                 <div style="float:left;display:inline-block;">
+                 <label style="color:#fff;font-size:1em;width:500px;margin:7px;padding:5px;">
+  				   Remove the detailed data from the archival    
+		            <select name="del1_time" id="del1_time" style="display:inline-block;">
+					  <option value="never">Never</option>
+					  <option value="ten_y">After 10 years</option>
+					  <option value="five_y">After 5 years </option>
+					  <option value="one_y">After 1 year </option>
+					  <option value="six">After 6 months </option>
+					  <option value="three">After 3 months </option>
+	 			    </select>
+		            <span style="display:inline-block;" title="This rule removes your data from archival after the period you specify'." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule3_help">?</span>
+				  </label></div> 
+  		         <div id="button_div" style="margin-left:2%">
+                       <input class="button" type="button" id="apply_archive" value="Apply"/>                             
+              	 </div>
+ 	      </div>
+          <!--Delete box-->
+          <div class="myBox" id="delete_box">
+		    <a class="boxclose" id="delete_boxclose"></a>
+		     <h1>Delete my data</h1>
+		         <div style="float:left;display:inline-block;">
+		         <label style="color:#fff;font-size:1em;width:500px;margin:7px;padding:5px;">
+			       Delete all the data related to this element 
+		           <select name="delete_time" id="delete_time" style="display:inline-block;">
+		           	     <option value="now">Right now</option>
+						 <option value="day">Every Day</option>
+						 <option value="week">Every Week</option>
+						 <option value="forthnight">Every Fortnight</option>
+						 <option value="month">Every Month</option>
+						 <option value="year">Every Year</option>
+			 	   </select>
+                  <span style="display:inline-block;" title="This rule allows removing your fine grained data during the period you specify. It does not keep a summary form in working store." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule2_help">?</span>
+				 </label></div>		     
+		         <div style="float:left;display:inline-block;">
+		         <label style="color:#fff;font-size:1em;width:550px;margin:7px;padding:5px;">
+			       <table id="delete_table"><tr>
+		              <td> <label for="trash" class="myFont" style="color:#fff;font-size:1em;width:200px">
+		              	   <input type="radio" name="del_group" id="trash" value="trash" checked="checked"/>Move all data to the Trash </label></td>
+				   	  <td> <span title="Deleted data will remain in the Trash for a period you specify below." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="del_trash_help">?</span></td>
+				   	  <td></td>
+		              <td> <label for="notrash" class="myFont" style="color:#fff;font-size:1em;width:120px">
+		              	   <input type="radio" name="del_group" id="notrash" value="notrash" class="myFont"/>Delete forever </label> </td>
+					  <td> <span title="Deleted data will be removed from the store forever" class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="del_notrash_help">?</span> </td> 
+			       </tr></table>                  
+				 </label></div>
+				 <div style="float:left;display:inline-block;" id="trash_time">
+                 <label style="color:#fff;font-size:1em;width:500px;margin:7px;padding:5px;">
+  				    Remove the deleted data from the trash    
+		            <select name="del1_time" id="del1_time" style="display:inline-block;">
+					  <option value="never">Never</option>
+					  <option value="ten_y">After 10 years</option>
+					  <option value="five_y">After 5 years </option>
+					  <option value="one_y">After 1 year </option>
+					  <option value="six">After 6 months </option>
+					  <option value="three">After 3 months </option>
+	 			    </select>
+		            <span style="display:inline-block;" title="This rule removes your data from trash after the period you specify'." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule3_help">?</span>
+				  </label></div> 
+  		         <div id="button_div" style="margin-left:2%">
+                       <input class="button" type="button" id="apply_delete" value="Apply"/>                             
+              	 </div>
+                
+ 	      </div>
+ 	      
+		   <div class="myBox" id="evidence_box">
+		    <a class="boxclose" id="evd_boxclose"></a>
+		     <h1></h1>
+		     <table width="100%">
+		      <tr>
+		       <td width="50%">
+  		        <div class="contextnav show_list" style="width:500px;height:60px">  
+		         <!--<div id="week" style="float:left;margin:5px;padding:1px;width:100px">
+			       <select name="week_list" id="week_list">
+			          <option value="day">Intraday</option>
+					  <option value="week">Week</option>
+					  <option value="forthnight">Fortnight</option>
+					  <option value="month">Month</option>
+					  <option value="month">Year</option>
+		   	       </select>
+		         </div> 
+		         <bold>OR</bold> -->
+		         
+		         <div id="from" style="float:left;margin:15px;padding:1px;width:150px">
+			       <label for="from_date" style="color:#fff; font-size: 12px; font-weight: bold">From 
+				    <input type="text" id="from_date" name="from_date" value="Today:" style="font-size: 12px;width:100px;"/>
+			       </label> 
+		          </div>
+		          <div id="to" style="float:left;margin:15px;padding:1px;width:150px">
+			       <label for="to_date" style="color:#fff; font-size: 12px; font-weight: bold">To  
+				       <input type="text" id="to_date" name="to_date" value="Today:" style="font-size: 12px;width:100px;"/>			      
+		           </label>
+		          </div>
+		          <div style="float:left;width:100px;margin:15px"><input type="button" class="button" value="Show evidence"/></div> 
+		       		          
+		   </div>
+	      </td>
+	      <td width="60%">	        
+			 <div id="evdbox" style="width:250px;height:60px;margin-left:215px" class="show_list"> 
+			  <ul class="no_list_style">
+			    <!--<li><a href="#" class="add_evidence tooltip2 internal" id="Add_evd"></a></li>     
+			    <li><a href="#" class="edit_evidence tooltip2 internal" id="Edit_evd"></a></li>  -->   
+			    <ul class="no_list_style">
+			       <li class="name"> Archive </li>		      	
+			       <li><a href="" class="archive" id="Archive_evd" title="This is for moving your data."></a></li>
+			       <li class="name"> Compact </li>     
+			       <li><a href="" class="compact_data" id="Compact_evd"  title="This is for making summaries of your fine grained data and move them to back up."></a></li>
+			       <li class="name"> Block </li>
+			       <li><a href="" class="block_data" id="Block_evd" title="This is for hiding your data from being used."></a></li>
+			       <li class="name"> Delete </li>     
+			       <li><a href="" class="delete" id="Delete_evd" title="This is for removing your data."></a></li>
+		        </ul>
+			  </ul>
+			</div>
+		   
+		  </td></tr>
+		  </table> 
+                     <div class="clear_space"></div>  
+                     <div class="clear_space"></div>  
+  		     <div id="data"  style="position:relative;" >
+			  <table id="evidence" class="scroll" cellpadding="0" cellspacing="0"><tr><td></td></tr></table>
+			  <div id="pevd"></div>
+			</div>
+  		    </div>
+
+		   <div class="myBox hideable" id="add_edit_box">
+		    <a class="boxclose" id="add_boxclose"></a>
+		     <h1></h1>
+  		     <form id="add_edit_frm" name="add_edit_frm" action="" method="post" class="show_list" style="margin:10px;padding:10px;">
+                        <div id="value_div" class="border" style="margin:10px;padding:10px;">
+		                 <label for="value">Value:* (e.g. Weight:60kg)</label>
+                         <input type="text" id="value" name="value" value=""/>
+			             <span title="The value you want add." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                         <label class="error" for="value" id="value_error">Please insert a value</label> 
+                        </div>
+
+                        <div id="flags_div" class="border" style="margin:10px;padding:10px;">
+		                 <label for="flags">Flag: (e.g. "Goal" if this your goal weight)</label>
+                          <input type="text" id="flags" name="flags" value=""/>
+			               <span title="Set any special note for the evidence piece" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div>
+
+                        <div id="comment_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="comment">Comment: (e.g. "lunch at the seminar")</label>
+                            <input type="text" id="comment" name="comment" value=""/>
+			    <span title="Some comments you want to add with this value." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div> 
+
+                        <div id="time_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="time">User preferred date: (e.g. 10/12/2011)</label>
+                            <input type="text" id="time" name="time" value=""/>
+			    <span title="A date you want to attach with this value. " class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                        </div> 
+
+                        <div id="useby_div" class="border" style="margin:10px;padding:10px;"> 
+		            <label for="useby">Use by date: (e.g. 10/12/2011)</label>
+                            <input type="text" id="useby" name="useby" value=""/>
+			    <span title="An expiry date you want to add with this value. This evidence will go to archival after this date." class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+                            <label for="default_useby">
+				<input class="checkbox" id="default_useby" name="default_useby" value="default" type="checkbox"/>Use default use-by date
+			        <span title="Default date will be used as expiry date" class="ui-state-default ui-corner-all ui-icon ui-icon-help">?</span>
+		            </label>
+                        </div> 
+
+		        <div>* field must be filled
+                            <input class="button" type="button" value="" id="add_to_model"/>
+                        </div>
+                     </form>
+  		    </div>
+           <!--<div class="demo hideable">
+		    <div id="dialog-confirm" title="Delete this element" style="font-size:10px;width:200px;height:500px">
+			   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			   	   Are you sure?
+			   </p>
+			</div>
+          </div>-->
+          
+  		       <!--<div style="float:left;display:inline-block;">
+		         <label style="color:#fff;font-size:0.9em;width:350px">
+			       Archive all the data related to this element 
+		           <select name="archive_time" id="archive_time" style="display:inline-block;">
+		           	     <option value="now">Now</option>
+						 <option value="day">Every Day</option>
+						 <option value="week">Every Week</option>
+						 <option value="forthnight">Every Fortnight</option>
+						 <option value="month">Every Month</option>
+						 <option value="year">Every Year</option>
+			 	   </select>
+                  <span style="display:inline-block;" title="This rule allows moving your fine grained data to the 'Archival' during the period you specify. It does not keep a summary form in working store." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule2_help">?</span>
+				  </label></div>
+                 <div style="float:left;display:inline-block;">
+                 <label style="color:#fff;font-size:0.9em;width:350px">
+  				   Remove the detailed data from the archival    
+		            <select name="del1_time" id="del1_time" style="display:inline-block;">
+					  <option value="never">Never</option>
+					  <option value="ten_y">After 10 years</option>
+					  <option value="five_y">After 5 years </option>
+					  <option value="one_y">After 1 year </option>
+					  <option value="six">After 6 months </option>
+	 			    </select>
+		            <span style="display:inline-block;" title="This rule removes your data from archival after the period you specify'." class="ui-state-default ui-corner-all ui-icon ui-icon-help" id="rule3_help">?</span>
+				  </label></div> 
+  		         <div id="button_div">
+                       <input class="button" type="button" id="apply_archive" value="Apply"/>                             
+              	 </div>
+              </div>-->
+</body>
+<xi:include href="layout_footer.html" />
+</html>

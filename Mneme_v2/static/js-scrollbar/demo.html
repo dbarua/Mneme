@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="UTF-8" />
+		
+		<title>JavaScript Scrollbars v2 - APL Web Development</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/scrollbars.css" />
+		<!--<link rel="stylesheet" type="text/css" href="css/scrollbars-itunes.css" />-->
+		<link rel="stylesheet" type="text/css" href="css/scrollbars-black.css" />
+
+		<style>
+			body {
+				background-color: #333;
+			}
+		
+			#scrollTest {
+				width: 400px;
+				position: absolute;
+				top: 20px;
+				left: 60px;
+				height: 300px;
+				overflow: auto;
+				
+				/*background-color: white;
+				color: #666;*/
+				
+				background-color: #222222;
+				color: #AAA;
+			}
+		</style>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script src="http://threedubmedia.googlecode.com/files/jquery.event.drag-2.0.min.js"></script>
+		<script src="http://github.com/cowboy/jquery-resize/raw/v1.1/jquery.ba-resize.min.js"></script>
+		<script src="http://remysharp.com/demo/mousehold.js"></script>
+		<script src="https://raw.github.com/brandonaaron/jquery-mousewheel/master/jquery.mousewheel.js"></script>
+		
+		<script src="js/aplweb.scrollbars.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				$("#scrollTest").scrollbars();
+			});
+		</script>
+	</head>
+	<body>
+		<div id="scrollTest">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam turpis elit, ornare ut eleifend id, 
+				sagittis sit amet nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere 
+				cubilia Curae; Maecenas ut mattis eros. Ut porttitor faucibus turpis sed tincidunt. Aliquam convallis 
+				varius tellus ac commodo. Donec mollis, felis eu consectetur gravida, tortor tortor faucibus sem, eu 
+				posuere risus enim et quam. Integer eleifend augue eu libero pretium imperdiet. Vivamus elit odio, 
+				egestas ac rutrum et, venenatis ut libero. Mauris congue gravida venenatis. Curabitur commodo, nulla 
+				vel malesuada hendrerit, lectus ipsum ornare urna, sed cursus sapien arcu in nunc. Vestibulum volutpat 
+				pellentesque est, at ultrices leo scelerisque ut. Maecenas arcu lectus, egestas nec condimentum id, 
+				pellentesque a nunc. Nullam interdum tincidunt augue, eu pretium quam congue nec. Ut eu congue turpis.
+			</p>
+			
+			<p style="display: inline-block; width: 500px;">
+				Pellentesque tristique, justo et rutrum rhoncus, dolor tellus rhoncus est, ut varius tellus ipsum at 
+				dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In quam 
+				eros, fermentum a aliquet vestibulum, sagittis vel justo. Sed pharetra sollicitudin lacus sagittis 
+				dignissim. Maecenas vestibulum enim at magna suscipit in interdum urna adipiscing. Ut imperdiet 
+				condimentum nisi, eu porta purus vehicula at. Aliquam erat volutpat. Nullam tellus libero, rhoncus in 
+				euismod a, rhoncus vitae ligula. Aenean at venenatis lectus.
+			</p>
+			
+			<p>
+				Vivamus sollicitudin laoreet luctus. Fusce 
+				eu sapien lectus. Etiam laoreet auctor est at lobortis. Quisque dignissim, dui nec convallis luctus, 
+				odio lorem malesuada justo, nec porttitor quam ligula at lorem. Donec ipsum elit, cursus non porttitor 
+				a, auctor ut velit. Sed semper tellus in mi scelerisque ac elementum tortor eleifend. Quisque convallis 
+				scelerisque ipsum, in venenatis diam posuere vel. Proin aliquet egestas erat, id cursus magna tincidunt 
+				eu. Nulla ut risus lacus, sit amet malesuada turpis. Donec vitae mi velit, nec viverra nibh. Quisque 
+				adipiscing ante odio. 
+			</p>
+		</div>
+	</body>
+</html>

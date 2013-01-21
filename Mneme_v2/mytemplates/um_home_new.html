@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:py="http://genshi.edgewall.org/" py:strip="">
+ <head>
+  <title>$title</title>
+   
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" media="screen" href="/static/style.css" type="text/css" charset="utf-8"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="/static/menu.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui-1.9m1/ui/jquery.ui.tooltip.js"></script>
+    <script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/jquery.expander.js"></script>
+    <script type="text/javascript" src="/static/unobtrusivelib.js"></script>
+    <script type="text/javascript" src="/static/jquery.carousel.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.expander.js"></script><!--<script src="http://cdn.jquerytools.org/1.2.6/jquery.tools.min.js"></script>--><!--<link rel="stylesheet" href="http://thomlx.free.fr/jquery/styles/doc.css" type="text/css" charset="utf-8" media="screen"/>-->
+  
+  <style>
+		.ui-icon { display: inline-block; }
+		fieldset div {
+			margin-bottom: 2em;
+		}
+		.ui-tooltip { width: 210px; }
+		.ui-dialog .ui-dialog-content { 
+			background-color: #4E4E4E; 
+			font-size:14px;
+                        font-family:Trebuchet-MS;
+                }
+		.ui-dialog .ui-dialog-buttonpane{background-color: #4E4E4E; }
+
+
+	</style>
+  
+</head>
+<body>
+  <div id="main">
+   <div id="contentbg">
+     <div id="contenttxtblank">
+     <div id="menu">
+        <h1>Mneme</h1>
+        <h2>Managing Personal Lifelong Information</h2>
+        <ul id="nav">
+          <li><a href="/browse/" class="highlighted main_menu" id="Home">Home</a></li>
+          <li class="menusap"></li>
+          <li><a href="/show_sub_context?context=Apps/" class="main_menu" id="UMBrowser" style="background-color:#336699">Model Browser</a></li>
+          <li class="menusap"></li>
+          <li><a href="/./" class="main_menu">Log out</a></li>
+          <li class="menusap"></li>  
+         </ul>
+      </div><!--end of menu-->
+     <div id="contentleft_home" class="border"> 
+	    <div id="topbuttonsblank">
+ 	      <div class="leftboldtext">You are logged in as <a class="lefttxt02">$who</a> and now in <a class="lefttxt02">$where</a>
+          </div>
+        </div> 
+        <div style="height:60px"></div>
+        <div id="app_table" class="show_list darkbackcolor hideable">
+	     You have no installed plugins at this moment. Please install a plugin for Fitbit Sensor.
+	      <div id="app_list">
+	       <table id="app1">
+		        <tr>
+                       <td><a id="Fitbit" data-div-id="Extracts fitbit data about activity."> 
+                        <img src="/static/images/fitbit.png" alt="example" width="150" height="50" title="Extract fitbit data about activity."/> 
+                        </a></td>
+                       <td> <a id="Fitbit" data-div-id="Extracts fitbit data about activity."> 
+                            <!--<label id="1" for="Fitbit" style="margin-left:40px;font-size:18px;color:#F1F1F1" >Fitbit </label>-->
+                            <input type="button" class="button install" id="Fitbit" data-div-id="Extracts fitbit data about activity." value="Install" style="background-color:#CD3333"/>  
+                       </a></td> 
+                                             
+	                 
+                </tr>
+           </table>
+         </div>  
+    </div>
+</div>  
+<div id="contentright_home">
+ <div id="user_feedback" class="show_list" style="margin: 10px; padding: 10px;">
+    <form id="feedback_form" method="" action=""> <label>This is a research prototype system. <br/> Please leave comments here.</label> 
+      <textarea id="comment" name="comment" class="textarea"></textarea>
+      <div><input class="button" id="log_comment" value="Submit" type="button"/></div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div> <!--end of contentbg-->
+</div><!--end of main-->
+
+
+
+<xi:include href="layout_footer.html"></xi:include>
+</body></html>

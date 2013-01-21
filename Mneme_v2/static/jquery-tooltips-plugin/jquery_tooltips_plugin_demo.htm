@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="web design, website development, web application development, print design, database development, ecommerce websites, search engine optimization, packaging design" />
+<meta name="description" content="Tutorial demo showing how to add fading jQuery captions to an image thumbnail gallery" />
+<meta name="robots" content="all" />
+<title>jQuery Demo - Slick jQuery Captions - Fade In/Out</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" src="js/jquery.dctooltip.1.0.js"></script>
+<script type="text/JavaScript">
+$(document).ready(function() {
+	$('#demo-list li a').dcTooltip();
+	$('#demo-2').dcTooltip({
+    classWrapper: 'tooltip-2',
+	distance: 10
+    });
+});
+</script>
+<style type="text/css">
+body,html,div,blockquote,img,label,p,h1,h2,h3,h4,h5,h6,pre,ul,ol,li,dl,dt,dd,form,a,fieldset,input,th,td{border:0;outline:none;margin:0;padding:0;}
+body{height:100%;background:#fff;color:#1f1f1f;font-family:"Lucida Sans Unicode","Lucida Grande",Arial,Verdana,sans-serif;font-size:13px;padding:7px 0;}
+ul{list-style:none;}
+.text-center {text-align: center; padding: 10px 0;}
+.wrap {width: 660px; margin: 0 auto; padding-top: 50px;}
+a {text-decoration: none;}
+h2, h3 {margin-bottom: 0.5em;}
+
+/* Tutorial CSS */
+#demo-list li {display: inline;}
+#demo-list li img {padding: 5px; background: #efefef; border: 1px solid #ccc;}
+#demo-list li a {display: block; float: left; margin: 0 5px 5px 0;}
+#demo-list li a:hover {background: none;}
+
+.tooltip, .tooltip-2 {
+width: 256px; 
+position: absolute; 
+bottom: 0; 
+left: 0;
+display: none;
+font-weight: normal;
+font-size: 12px; 
+line-height: 1.5em; 
+color: #fff;
+z-index: 50; 
+}
+.tooltip .text {
+padding: 5px 15px 35px 15px; 
+background: url(images/tooltip.png) no-repeat 0 100%;
+}
+.tooltip .top {
+height: 10px; 
+background: url(images/tooltip.png) no-repeat 0 0;
+}
+
+.tooltip-2 {color: #000;}
+.tooltip-2 .text {
+padding: 5px 15px 35px 15px; 
+background: url(images/tooltip_2.png) no-repeat 0 100%;
+}
+.tooltip-2 .top {
+height: 10px; 
+background: url(images/tooltip_2.png) no-repeat 0 0;
+}
+
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2 class="text-center">jQuery Tooltips Plugin Demo</h2>
+		<h3 class="margin-bottom">Demo 1</h3>
+		<ul id="demo-list">
+		  <li><a href="#" title="Thailand Paradise Homes Property Website: Custom built property website and database"><img src="http://www.designchemical.com/media/portfolio/thumb/thailandparadisehomes.jpg" alt="" /></a></li>
+		  <li><a href="#" title="Design Chemical Portfolio: Development of our own portfolio website & custom Wordpress blog"><img src="http://www.designchemical.com/media/portfolio/thumb/designchemical.com_site.jpg" alt="" /></a></li>
+		  <li><a href="#" title="Centara Hotels Directory 2010: Centara Hotels Directory 2010 Website"><img src="http://www.designchemical.com/media/portfolio/thumb/centara_11.jpg" alt="" /></a></li>
+		  <li><a href="#" title="Homelandasia Property Website: Custom built property website and database"><img src="http://www.designchemical.com/media/portfolio/thumb/homelandasia.jpg" alt="" /></a></li>
+		  <li><a href="#" title="Cutlery Project Online Store: Online store with custom Magento theme"><img src="http://www.designchemical.com/media/portfolio/thumb/cutleryproject.jpg" alt="" /></a></li>
+		  <li><a href="#" title="Gallery Asie Website: Website for australian contemporary art gallery"><img src="http://www.designchemical.com/media/portfolio/thumb/galleryasie.jpg" alt="" /></a></li>
+		</ul>
+		<h3 class="clear">Demo 2</h3>
+		  <p>Lorem ipsum vel aeque audire accusamus at, sit te timeam imperdiet, et choro ignota usu. Et vel solum eirmod appareat. Mei mollis appetere dissentias ea. Pri id rationibus sententiae necessitatibus, in per ubique fastidii <a href="#" title="Et vel solum eirmod appareat. Mei mollis appetere dissentias ea. Pri id rationibus sententiae necessitatibus" id="demo-2">voluptaria</a>, laoreet instructior eu sed. Animal eruditi ancillae vim te, sea at diceret imperdiet forensibus. Per appareat luptatum repudiandae ne, per nisl eius harum id.</p>
+<p class="text-center"><a href="http://www.designchemical.com/blog/index.php/jquery/jquery-tooltips-create-your-own-tooltip-plugin">View blog post</a></p>
+</body>
+</html>

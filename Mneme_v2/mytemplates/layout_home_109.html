@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/" py:strip="">   
+ 	  <py:match path="head" once="true">
+  	  <head py:attrs="select('@*')">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+          <title py:with="title = list(select('title/text()'))">
+       	   Mneme<py:if test="title">: ${title}</py:if>
+          </title>
+        
+        <!--My custom style sheet-->
+        <link rel="stylesheet" type="text/css" href="/static/style_new.css" media="screen"/>
+        
+        <!--Style sheet for vertical menu plugin superfish-->
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish.css"/> 
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/superfish-1.4.8/css/superfish-vertical.css"/> 
+        
+        <!--jquery-->
+        <script type="text/javascript" src="/static/jquery-1.6.1.js"></script>
+
+        <!-- jquery UI plugin-->
+        <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/ui-darkness/jquery-ui.css" />
+        <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>-->
+        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/ui-darkness/jquery-ui.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>-->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/ui-darkness/jquery-ui.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        
+        <!-- custom scrollbars plugin -->
+		<script src="/static/custom-scrollbar-plugin/jquery.mousewheel.min.js"></script>		
+		<script type="text/javascript" src="/static/custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+		
+		<!-- custom scrolling plugin -->
+		<script type="text/javascript" src="/static/jquery.jscroll.min.js"></script>
+		
+		<!-- custom expander plugin -->
+        <script type="text/javascript" src="/static/jquery.expander.js"></script>
+    
+
+		<!-- link to the JavaScript files superfish plugin (hoverIntent is optional) -->
+		<script type="text/javascript" src="/static/superfish-1.4.8/js/hoverIntent.js"></script> 
+		<script type="text/javascript" src="/static/superfish-1.4.8/js/superfish.js"></script> 
+	
+	    <script src="/static/menu.js" type="text/javascript"></script>
+	    
+	    <!--Global variable for logging-->
+    	<script type="text/javascript">
+       		var log_events = [], log_index = 0;
+    	</script>
+    
+		<!--Custom Javascript files with necessary functionalities-->    
+	    <script type="text/javascript" src="/static/mneme.js" ></script>
+	    <script type="text/javascript" src="/static/goals.js"></script>
+	    <script type="text/javascript" src="/static/size_pie.js"></script>
+
+    <style>
+	/*Inline styles for custom tooltip design inherited from Jquery UI samples*/
+	.ui-tooltip, .arrow:after {
+		background-image: linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -o-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -moz-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -webkit-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+		background-image: -ms-linear-gradient(bottom, rgb(232,230,235) 13%, rgb(209,209,209) 57%, rgb(214,214,214) 71%);
+	
+		background-image: -webkit-gradient(
+			linear,
+			left bottom,
+			left top,
+			color-stop(0.13, rgb(232,230,235)),
+			color-stop(0.57, rgb(209,209,209)),
+			color-stop(0.71, rgb(214,214,214))
+	       );
+		  color: #4E4E4E;
+		  border: 2px solid white;
+	    }
+	.ui-tooltip {
+		padding: 10px 20px;
+		color: #4E4E4E;
+		border-radius: 20px;
+		font-family:"Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif;
+		font-size:0.9em;
+		box-shadow: 0 0 7px black;
+		text-align:justify;
+	    }
+	.arrow {
+		width: 70px;
+		height: 16px;
+		overflow: hidden;
+		position: absolute;
+		left: 50%;
+		margin-left: -35px;
+		bottom: -16px;
+	    }
+	.arrow.top {
+		top: -16px;
+		bottom: auto;
+	    }
+	.arrow.left {
+		left: 20%;
+	    }
+	.arrow:after {
+		content: "";
+		position: absolute;
+		left: 20px;
+		top: -20px;
+		width: 25px;
+		height: 25px;
+		box-shadow: 6px 5px 9px -9px black;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		tranform: rotate(45deg);
+	    }
+	.arrow.top:after {
+		bottom: -20px;
+		top: auto;
+	    }
+</style>
+<script type="text/javascript">
+   $( document ).ready( function() {
+	         var log_events = [], log_index = 0;
+             	//<![CDATA[
+		$("ul.sf-menu").superfish({ 
+				    animation: {height:'show'},   // slide-down effect without fade-in 
+				    delay:     1200,               // 1.2 second delay on mouseout 
+		            hoverIntent:false
+				});		
+
+		   var where = $('#menu_left').attr('data-div-id');                
+           if(where == 'Home'){
+                   $('#option a').text('Create New');
+                   $('#option a').attr('id','new_element');
+                   $('#Goals').removeClass('highlighted');
+                   //$('#Home').addClass('highlighted');
+                  
+                }
+                   $('#Home').addClass('highlighted'); 
+				   handleMenuBar(where);                 
+  		           handleSideBar(where);                
+		           handleCreateButton();
+		           handleRightSidebar();
+	        /*else{
+		           $('#option a').text('Set New Goals');
+                   $('#option a').attr('id','create_goal');
+                   $('#Goals').addClass('highlighted');
+                   $('#Home').removeClass('highlighted');
+
+  		   handleSideBar(where);                
+                   initGoalOptions();
+                }*/
+                
+	        $('div.expander').expander();
+	        $('.scroll').jScroll();
+                $('.error').hide();
+                $('#create').live('click', function(e){
+		    	var comment = "notice_Model Browser Page: Create New click event";
+		    	log_events[log_index++] = comment; 
+                console.log('Hello');
+                //$(this).removeClass().addClass('visited');
+	       });
+		    //---Scroll bar
+      		/*$("#advanced_options").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});*/
+                
+            //$('#nav ul li#home').addClass('highlighted');
+			$(window).resize(function() {
+    			var width = $(window).width();
+				 
+				if(width < 840){
+				       console.log("Changing div size"+width);
+				       console.log("content left"+$('#contentleft').width());
+				       console.log("content left left"+$('#contentleft_left').width());
+				       console.log("content left right"+$('#contentleft_right').width());
+				       
+				       console.log("content right"+$('#contentright').width());
+				       $('#contentright').width(width*0.15+'px');
+				       $('.footerlinks').height('2em');
+				       
+				       //$('#contentright div').css('display','inline');
+				   }
+				else{
+                   					   	
+				   $('#contentright').width(width*0.59+'px');				   					   	
+				   $('#contentright').width(width*0.185+'px');
+				   $('#footerbg').width(width);
+				       
+				}       
+			});
+	       //]]> 
+	   });
+	
+	</script>
+        ${select('*[local-name()!="title"]')} 
+
+   </head>
+ </py:match>
+ <py:match path="body" once="true">
+ <body py:attrs="select('@*')">
+ <div id="main">
+  <div id="contentbg">
+    <div id="contenttxtblank">
+     <div id="menu">
+        <h1>Mneme</h1>
+        <h2>Managing Personal Lifelong Information</h2>
+        <ul id="nav">
+          <li><a href="#" class="highlighted main_menu" id="Home" style="background-color:#336699">Dashboard</a></li>
+          <li class="menusap"></li>
+          <li><a href="#" class="main_menu" id="UMBrowser">Model Browser</a></li>
+          <li class="menusap"></li>
+          <!--<li><a href="/browse_goals/" class="main_menu" id="Goals">Goals</a>
+           <ul id="nav2">
+             <li><a href="/show_unreg_apps/">Set goals</a></li>
+             <li><a href="/show_reg_apps/">Manage goals</a></li>
+           </ul> 
+          </li>
+          <li class="menusap"></li>
+          <li><a href="/show_unreg_apps/" class="main_menu">Applications</a>
+            <ul id="nav2">
+             <li><a href="/show_unreg_apps/">Install Apps</a></li>
+             <li><a href="/show_reg_apps/">Manage Apps</a></li>
+           </ul> 
+          </li>
+          <li class="menusap"></li>-->
+          <li><a href="/./" class="main_menu">Log out</a></li>
+          <li class="menusap"></li>  
+          <!--<li><a href="/help_um/" class="main_menu">Help</a></li>
+          <li class="menusap"></li>-->
+         </ul>
+      </div><!--end of menu-->
+
+      <div id="contentleft">      	
+        <div id="topbuttonsblank" style="inline-block">
+ 	     <div class="leftboldtext">You are logged in as <a class="lefttxt02">$who</a> and now in <a class="lefttxt02">$where</a>
+         <input type="button" class="button" id="about_dashboard" value="About Mneme Dashboard" data-div-id="${about}"/>
+       		
+         </div>
+          </div> 
+        <div style="height:60px"></div>
+          <div id="contentleft_left">
+         	<h3 style="padding-left:5px;color:#4E4E4E">Installed Plugins</h3>
+			 <div py:choose="">
+          	   <span py:when="len(plugin_list)!=0">  
+          	    <ul id="menu_left" data-div-id="$where" class="menu collapsible">		   
+                  <py:for each="plugin in plugin_list">
+                  	 <li id="${plugin}">
+                      <a href="Javascript:void(0);" style="font-size:0.9em;" data-div-id="${plugin}">${plugin}</a> 
+	             	 </li>                             
+                 </py:for>
+                </ul> 
+           	  </span> 
+              <span py:when="len(plugin_list)==0">
+           		<div style="padding-left:10px;color:red" id="no_install"> None installed </div>           		                            
+           	 </span>
+           </div>
+           <ul py:if="uninstalled_plugin_list" class="menu" style="width:100%">
+  	         <div style="margin-top:15px" id="side_bar_plugins"> 
+               <h3 style="padding-left:5px;color:#CD3333"> Available plugins to install</h3>
+                <div id="apps_list" class="show_list darkbackcolor" style="width:90%; margin:10px 0 0 5px; padding:5px 0 0 0"> 
+                  <py:for each="app in uninstalled_plugin_list">
+			       <div py:choose="">
+          	   	 	<span py:when="app=='Fitbit'">  	              
+			          <li style="list-style: none" id="fitbit_app">
+		                  	<!--<a id="Fitbit" data-div-id="Extracts fitbit data about activity.">--> 
+		                      <img id="Fitbit" src="/static/images/fitbit.png" alt="example" title="Extract fitbit data about activity." style="width:100%;height:50px"/>
+		                      <input type="button" style="background-color: #B22222; margin:0 0 5% 20%" value="Install ${app}" class="button" id="Fitbit"  title="Extract fitbit data about activity." /> 
+		                    <!--</a>-->
+					  </li>
+		            </span>
+		            <span py:when="app!='Fitbit'">  	              
+			          <li id="${app}">
+                  		<a href="Javascript:void(0);" style="font-size:0.9em;" data-div-id="${app}">${app}</a> 
+	               	  </li>
+		            </span>
+		          </div>
+		        </py:for>
+		       </div>                
+              </div>                           		
+             </ul>
+	            
+        </div>
+        
+        <div id="contentleft_right">
+             ${select('*|text()')}
+        </div>
+         
+       
+     <div id="contentright">
+         <div id="user_feedback" class="show_list darkbackcolor">
+           <form id="feedback_form" method="" action="">    
+             <label>Mneme is a research system. We welcome your feedback and comments.</label>
+             <textarea id="comment" name="comment" rows="5" class="boxsizingBorder roundcorner"></textarea>
+             <div style="margin:0 0 10px 10px "><input type="button" class="button" id="log_comment" value="Submit"/></div>
+           </form>    
+         </div>  
+   
+       <div id="about" class="expander show_list darkbackcolor" style="padding:5px;">
+            <a class="boxclose" id="aboutboxclose"></a>
+	 	<label class="about_header" style="padding:5px;">About this page</label>
+		<p style="margin:10px;padding:5px;">$about</p>
+       </div>  
+       <!--<div py:if="browser_activity" id="morelinksheading" class="border">
+			  <h5>Recent activities</h5>
+       </div>
+         <div py:if="browser_activity" id="morelinks" class="border">
+             <ul py:if="browser_activity" class="browser_activity" style="margin:5px; padding:3px;">
+	      <ul id="activities" style="list-style:none;margin-left:3px; padding-left:0px;">   
+		<py:for each="i in range(len(browser_activity[-10:]))">               
+		   <li class="linkblank">
+		      <a href="#" class="link" style="font-size:16px;"> ${browser_activity[i].value}
+                                  <?python import datetime                                      
+ 	                          ?> on ${(datetime.datetime.fromtimestamp(browser_activity[i].creation_time)).date()} 	
+		      </a>
+                 
+		  </li>
+		</py:for>
+               </ul>
+              </ul>
+	    </div>  -->
+            <div class="clear_space"></div>          
+      </div>
+     </div>
+     
+   </div>
+  </div> <!--end of contentbg-->
+  </div><!--end of main-->
+   <div id="dialog-message" title="Apps Plugin"> </div>
+       <div class="box" id="user_feedback_box">
+         	<a class="boxclose" id="feedback_box_close"></a>
+         	<form id="feedback_form" method="" action="" class="show_list darkbackcolor">    
+             <label>Mneme is a research system. We welcome your feedback and comments.</label>
+             <textarea id="comment" name="comment" rows="5" class="boxsizingBorder roundcorner"></textarea>
+             <div style="margin:0 0 10px 10px "><input type="button" class="button" id="log_comment" value="Submit"/></div>
+           </form>             	
+         </div>
+
+
+  </body>
+</py:match>
+</html>
